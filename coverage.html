@@ -1,0 +1,328 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>5. Increase Test Coverage &mdash; Devguide 2015.08.08 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '2015.08.08',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Devguide 2015.08.08 documentation" href="index.html" />
+    <link rel="next" title="6. Helping with Documentation" href="docquality.html" />
+    <link rel="prev" title="4. Running &amp; Writing Tests" href="runtests.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="increase-test-coverage">
+<span id="coverage"></span><h1>5. Increase Test Coverage<a class="headerlink" href="#increase-test-coverage" title="Permalink to this headline">¶</a></h1>
+<p>Python development follows a practice that all semantic changes and additions
+to the language and <abbr title="standard library">stdlib</abbr> are accompanied by
+appropriate unit tests. Unfortunately Python was in existence for a long time
+before the practice came into effect. This has left chunks of the stdlib
+untested which is not a desirable situation to be in.</p>
+<p>A good, easy way to become acquainted with Python&#8217;s code and to help out is to
+help increase the test coverage for Python&#8217;s stdlib. Ideally we would like to
+have 100% coverage, but any increase is a good one. Do realize, though, that
+getting 100% coverage is not always possible. There could be platform-specific
+code that simply will not execute for you, errors in the output, etc. You can
+use your judgement as to what should and should not be covered, but being
+conservative and assuming something should be covered is generally a good rule
+to follow.</p>
+<p>Choosing what module you want to increase test coverage for can be done in a
+couple of ways.
+You can simply run the entire test suite yourself with coverage turned
+on and see what modules need help. This has the drawback of running the entire
+test suite under coverage measuring which takes some time to complete, but you
+will have an accurate, up-to-date notion of what modules need the most work.</p>
+<p>Another is to follow the examples below and simply see what
+coverage your favorite module has. This is &#8220;stabbing in the dark&#8221;, though, and
+so it might take some time to find a module that needs coverage help.</p>
+<p>Do make sure, though, that for any module you do decide to work on that you run
+coverage for just that module. This will make sure you know how good the
+explicit coverage of the module is from its own set of tests instead of from
+implicit testing by other code that happens to use the module.</p>
+<div class="section" id="common-gotchas">
+<h2>5.1. Common Gotchas<a class="headerlink" href="#common-gotchas" title="Permalink to this headline">¶</a></h2>
+<p>Please realize that coverage reports on modules already imported before coverage
+data starts to be recorded will be wrong. Typically you can tell a module falls
+into this category by the coverage report saying that global statements that
+would obviously be executed upon import have gone unexecuted while local
+statements have been covered. In these instances you can ignore the global
+statement coverage and simply focus on the local statement coverage.</p>
+<p>When writing new tests to increase coverage, do take note of the style of tests
+already provided for a module (e.g., whitebox, blackbox, etc.). As
+some modules are primarily maintained by a single core developer they may have
+a specific preference as to what kind of test is used (e.g., whitebox) and
+prefer that other types of tests not be used (e.g., blackbox). When in doubt,
+stick with whitebox testing in order to properly exercise the code.</p>
+</div>
+<div class="section" id="measuring-coverage">
+<h2>5.2. Measuring Coverage<a class="headerlink" href="#measuring-coverage" title="Permalink to this headline">¶</a></h2>
+<p>It should be noted that a quirk of running coverage over Python&#8217;s own stdlib is
+that certain modules are imported as part of interpreter startup. Those modules
+required by Python itself will not be viewed as executed by the coverage tools
+and thus look like they have very poor coverage (e.g., the <a class="reference external" href="https://docs.python.org/library/stat.html#module-stat" title="(in Python v2.7)"><code class="xref py py-mod docutils literal"><span class="pre">stat</span></code></a>
+module). In these instances the module will appear to not have any coverage of
+global statements but will have proper coverage of local statements (e.g.,
+function definitions will be not be traced, but the function bodies will).
+Calculating the coverage of modules in this situation will simply require
+manually looking at what local statements were not executed.</p>
+<div class="section" id="using-coverage-py">
+<h3>5.2.1. Using coverage.py<a class="headerlink" href="#using-coverage-py" title="Permalink to this headline">¶</a></h3>
+<p>One of the most popular third-party coverage tools is <a class="reference external" href="http://nedbatchelder.com/code/coverage/">coverage.py</a> which
+provides very nice HTML output along with advanced features such as
+<a class="reference internal" href="#branch-coverage"><span>branch coverage</span></a>. If you prefer to stay with tools only
+provided by the stdlib then you can by <a class="reference internal" href="#coverage-by-regrtest"><span>using test.regrtest</span></a>.</p>
+<p>Because the in-development version of Python is bleeding-edge, it is possible
+that the latest release version of coverage.py will not work. In that case you
+should try using the in-development of coverage.py to see if it has been
+updated as needed. To do this you should clone/check out the development version
+of coverage.py:</p>
+<div class="highlight-python"><div class="highlight"><pre>hg clone https://bitbucket.org/ned/coveragepy
+</pre></div>
+</div>
+<p>Another option is to use an installed copy of coverage.py if you already have an
+installed copy. But if you do not already have it installed then it is preferred
+you use a clone of coverage.py for gathering coverage results.</p>
+<p>If you are using a clone of coverage.py, the following should work (substitute
+<code class="docutils literal"><span class="pre">COVERAGEDIR</span></code> with the directory where your clone exists, e.g.
+<code class="docutils literal"><span class="pre">../coveragepy</span></code>):</p>
+<div class="highlight-python"><div class="highlight"><pre>./python COVERAGEDIR
+</pre></div>
+</div>
+<p>Coverage.py will print out a little bit of helper text verifying that
+everything is working. If you are using an installed copy, you can do the
+following instead:</p>
+<div class="highlight-python"><div class="highlight"><pre>./python -m coverage
+</pre></div>
+</div>
+<p>The rest of the examples on how to use coverage.py will assume you are using a
+cloned copy, but you can substitute the above and all instructions should still
+be valid.</p>
+<p>To run the test suite under coverage.py, do the following:</p>
+<div class="highlight-python"><div class="highlight"><pre>./python COVERAGEDIR run --pylib Lib/test/regrtest.py
+</pre></div>
+</div>
+<p>To run only a single test, specify the module/package being tested
+in the <code class="docutils literal"><span class="pre">--source</span></code> flag (so as to prune the coverage reporting to only the
+module/package you are interested in) and then append the name of the test you
+wish to run to the command:</p>
+<div class="highlight-python"><div class="highlight"><pre>./python COVERAGEDIR run --pylib --source=abc Lib/test/regrtest.py test_abc
+</pre></div>
+</div>
+<p>To see the results of the coverage run, you can view a text-based report with:</p>
+<div class="highlight-python"><div class="highlight"><pre>./python COVERAGEDIR report
+</pre></div>
+</div>
+<p>You can use the <code class="docutils literal"><span class="pre">--show-missing</span></code> flag to get a list of lines that were not
+executed:</p>
+<div class="highlight-python"><div class="highlight"><pre>./python COVERAGEDIR report --show-missing
+</pre></div>
+</div>
+<p>But one of the strengths of coverage.py is its HTML-based reports which let
+you visually see what lines of code were not tested:</p>
+<div class="highlight-python"><div class="highlight"><pre>./python COVERAGEDIR html -i --include=`pwd`/Lib/* --omit=&quot;Lib/test/*,Lib/*/tests/*&quot;
+</pre></div>
+</div>
+<p>This will generate an HTML report in a directory named <code class="docutils literal"><span class="pre">htmlcov</span></code> which
+ignores any errors that may arise and ignores modules for which test coverage is
+unimportant (e.g. tests, temp files, etc.). You can then open the
+<code class="docutils literal"><span class="pre">htmlcov/index.html</span></code> file in a web browser to view the coverage results along
+with pages that visibly show what lines of code were or were not executed.</p>
+<div class="section" id="branch-coverage">
+<span id="id1"></span><h4>5.2.1.1. Branch Coverage<a class="headerlink" href="#branch-coverage" title="Permalink to this headline">¶</a></h4>
+<p>For the truly daring, you can use another powerful feature of coverage.py:
+branch coverage. Testing every possible branch path through code, while a great
+goal to strive for, is a secondary goal to getting 100% line
+coverage for the entire stdlib (for now).</p>
+<p>If you decide you want to try to improve branch coverage, simply add the
+<code class="docutils literal"><span class="pre">--branch</span></code> flag to your coverage run:</p>
+<div class="highlight-python"><div class="highlight"><pre>./python COVERAGEDIR run --pylib --branch &lt;arguments to run test(s)&gt;
+</pre></div>
+</div>
+<p>This will lead to the report stating not only what lines were not covered, but
+also what branch paths were not executed.</p>
+</div>
+<div class="section" id="coverage-results-for-modules-imported-early-on">
+<h4>5.2.1.2. Coverage Results For Modules Imported Early On<a class="headerlink" href="#coverage-results-for-modules-imported-early-on" title="Permalink to this headline">¶</a></h4>
+<p>For the <em>truly truly</em> daring, you can use a hack to get coverage.py to include
+coverage for modules that are imported early on during CPython&#8217;s startup (e.g.
+the encodings module). Do not worry if you can&#8217;t get this to work or it doesn&#8217;t
+make any sense; it&#8217;s entirely optional and only important for a small number of
+modules.</p>
+<p>If you still choose to try this, the first step is to build coverage.py&#8217;s C
+extension code. Assuming that coverage.py&#8217;s clone is at <code class="docutils literal"><span class="pre">COVERAGEDIR</span></code> and
+your clone of CPython is at <code class="docutils literal"><span class="pre">CPYTHONDIR</span></code>, you execute the following in your
+coverage.py clone:</p>
+<div class="highlight-python"><div class="highlight"><pre>CPPFLAGS=&quot;-I CPYTHONDIR -I CPYTHONDIR/Include&quot; CPYTHONDIR/python setup.py build_ext --inplace
+</pre></div>
+</div>
+<p>This will build coverage.py&#8217;s C extension code in-place, allowing the previous
+instructions on how to gather coverage to continue to work.</p>
+<p>To get coverage.py to be able to gather the most accurate coverage data on as
+many modules as possible
+<strong>with a HORRIBLE HACK that you should NEVER use in your own code</strong>, run the
+following from your CPython clone:</p>
+<div class="highlight-python"><div class="highlight"><pre>PYTHONPATH=COVERAGEDIR/coverage/fullcoverage ./python COVERAGEDIR run --pylib Lib/test/regrtest.py
+</pre></div>
+</div>
+<p>This will give you the most complete coverage possible for CPython&#8217;s standard
+library.</p>
+</div>
+</div>
+<div class="section" id="using-test-regrtest">
+<span id="coverage-by-regrtest"></span><h3>5.2.2. Using test.regrtest<a class="headerlink" href="#using-test-regrtest" title="Permalink to this headline">¶</a></h3>
+<p>If you prefer to rely solely on the stdlib to generate coverage data, you can
+do so by passing the appropriate flags to <code class="xref py py-mod docutils literal"><span class="pre">test.regrtest</span></code> (along with
+any other flags you want to):</p>
+<div class="highlight-python"><div class="highlight"><pre>./python -m test --coverage -D `pwd`/coverage_data &lt;test arguments&gt;
+</pre></div>
+</div>
+<p>Do note the argument to <code class="docutils literal"><span class="pre">-D</span></code>; if you do not specify an absolute path to where
+you want the coverage data to end up it will go somewhere you don&#8217;t expect.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If you are running coverage over the entire test suite, make sure to
+add <code class="docutils literal"><span class="pre">-x</span> <span class="pre">test_importlib</span> <span class="pre">test_runpy</span> <span class="pre">test_trace</span></code> to exclude those tests as
+they trigger exceptions during coverage; see
+<a class="reference external" href="http://bugs.python.org/issue10541">http://bugs.python.org/issue10541</a> and <a class="reference external" href="http://bugs.python.org/issue10991">http://bugs.python.org/issue10991</a>.</p>
+</div>
+<p>Once the tests are done you will find the directory you specified contains
+files for each executed module along with which lines were executed how many
+times.</p>
+</div>
+</div>
+<div class="section" id="filing-the-issue">
+<h2>5.3. Filing the Issue<a class="headerlink" href="#filing-the-issue" title="Permalink to this headline">¶</a></h2>
+<p>Once you have increased coverage, you need to
+<a class="reference internal" href="patch.html#patch"><span>generate the patch</span></a> and submit it to the <a class="reference external" href="http://bugs.python.org">issue tracker</a>. On the
+issue set the &#8220;Components&#8221; to &#8220;Test&#8221; and &#8220;Versions&#8221; to the version of Python you
+worked on (i.e., the in-development version).</p>
+</div>
+<div class="section" id="measuring-coverage-of-c-code-with-gcov-and-lcov">
+<h2>5.4. Measuring coverage of C code with gcov and lcov<a class="headerlink" href="#measuring-coverage-of-c-code-with-gcov-and-lcov" title="Permalink to this headline">¶</a></h2>
+<p>It&#8217;s also possible to measure the function, line and branch coverage of
+Python&#8217;s C code. Right now only GCC with <a class="reference external" href="http://gcc.gnu.org/onlinedocs/gcc/Gcov.html">gcov</a> is supported. In order to
+create an instrumented build of Python with gcov, run:</p>
+<div class="highlight-python"><div class="highlight"><pre>make coverage
+</pre></div>
+</div>
+<p>Then run some code and gather coverage data with the <code class="docutils literal"><span class="pre">gcov</span></code> command. In
+order to create a HTML report you can install <a class="reference external" href="http://ltp.sourceforge.net/coverage/lcov.php">lcov</a>. The command:</p>
+<div class="highlight-python"><div class="highlight"><pre>make coverage-lcov
+</pre></div>
+</div>
+<p>assembles coverage data, removes 3rd party and system libaries and finally
+creates a report. You can skip both steps and just run:</p>
+<div class="highlight-python"><div class="highlight"><pre>make coverage-report
+</pre></div>
+</div>
+<p>if you like to generate a coverage report for Python&#8217;s stdlib tests. It takes
+about 20 to 30 minutes on a modern computer.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Multiple test jobs may not work properly. C coverage reporting has only
+been tested with a single test process.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">5. Increase Test Coverage</a><ul>
+<li><a class="reference internal" href="#common-gotchas">5.1. Common Gotchas</a></li>
+<li><a class="reference internal" href="#measuring-coverage">5.2. Measuring Coverage</a><ul>
+<li><a class="reference internal" href="#using-coverage-py">5.2.1. Using coverage.py</a><ul>
+<li><a class="reference internal" href="#branch-coverage">5.2.1.1. Branch Coverage</a></li>
+<li><a class="reference internal" href="#coverage-results-for-modules-imported-early-on">5.2.1.2. Coverage Results For Modules Imported Early On</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#using-test-regrtest">5.2.2. Using test.regrtest</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#filing-the-issue">5.3. Filing the Issue</a></li>
+<li><a class="reference internal" href="#measuring-coverage-of-c-code-with-gcov-and-lcov">5.4. Measuring coverage of C code with gcov and lcov</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="runtests.html" title="previous chapter">4. Running &amp; Writing Tests</a></li>
+      <li>Next: <a href="docquality.html" title="next chapter">6. Helping with Documentation</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/coverage.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Carol Willing.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.6</a>
+      
+      |
+      <a href="_sources/coverage.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

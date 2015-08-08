@@ -1,0 +1,275 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>10. Issue Tracking &mdash; Devguide 2015.08.08 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '2015.08.08',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Devguide 2015.08.08 documentation" href="index.html" />
+    <link rel="next" title="11. Triaging an Issue" href="triaging.html" />
+    <link rel="prev" title="9. Fixing “easy” Issues (and Beyond)" href="fixingissues.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="issue-tracking">
+<h1>10. Issue Tracking<a class="headerlink" href="#issue-tracking" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="using-the-issue-tracker">
+<span id="tracker"></span><h2>10.1. Using the Issue Tracker<a class="headerlink" href="#using-the-issue-tracker" title="Permalink to this headline">¶</a></h2>
+<p>If you think you found a bug in Python, you can report it to the
+<a class="reference external" href="http://bugs.python.org/">issue tracker</a>.  Documentation bugs can also be reported there.
+Issues about the tracker should be reported to the <a class="reference external" href="http://psf.upfronthosting.co.za/roundup/meta/">meta tracker</a>.</p>
+<div class="section" id="checking-if-a-bug-already-exists">
+<h3>10.1.1. Checking if a bug already exists<a class="headerlink" href="#checking-if-a-bug-already-exists" title="Permalink to this headline">¶</a></h3>
+<p>The first step in filing a report is to determine whether the problem has
+already been reported.  The advantage in doing so, aside from saving the
+developers time, is that you learn what has been done to fix it; it may be that
+the problem has already been fixed for the next release, or additional
+information is needed (in which case you are welcome to provide it if you can!).</p>
+<p>To do this, search the bug database using the search box on the top of the page.
+An <a class="reference external" href="http://bugs.python.org/issue?&#64;template=search">advanced search</a> is also available by clicking on &#8220;Search&#8221; in
+the sidebar.</p>
+</div>
+<div class="section" id="reporting-an-issue">
+<h3>10.1.2. Reporting an issue<a class="headerlink" href="#reporting-an-issue" title="Permalink to this headline">¶</a></h3>
+<p>If the problem you&#8217;re reporting is not already in the <a class="reference external" href="http://bugs.python.org/">issue tracker</a>, you
+need to log in by entering your user and password in the form on the left.
+If you don&#8217;t already have a tracker account, select the &#8220;Register&#8221; link or,
+if you use OpenID, one of the OpenID provider logos in the sidebar.</p>
+<p>It is not possible to submit a bug report anonymously.</p>
+<p>Being now logged in, you can submit a bug by clicking on the &#8220;Create New&#8221; link
+in the sidebar.</p>
+<p>The submission form has a number of fields, and they are described in detail
+in the <a class="reference internal" href="triaging.html#triaging"><span>Triaging an Issue</span></a> page.  This is a short summary:</p>
+<ul class="simple">
+<li>in the <strong>Title</strong> field, enter a <em>very</em> short description of the problem;
+less than ten words is good;</li>
+<li>in the <strong>Type</strong> field, select the type of your problem (usually behavior);</li>
+<li>if you know which <strong>Components</strong> and <strong>Versions</strong> are affected by the issue,
+you can select these too;</li>
+<li>if you have JavaScript enabled, you can use the <strong>Nosy List</strong> field to search
+developers that can help with the issue by entering the name of the affected
+module, operating system, or interest area.</li>
+<li>last but not least, you have to describe the problem in detail, including
+what you expected to happen and what did happen, in the <strong>Comment</strong> field.
+Be sure to include whether any extension modules were involved, and what
+hardware and software platform you were using (including version information
+as appropriate).</li>
+</ul>
+<p>The triaging team will take care of setting other fields, and possibly assign
+the issue to a specific developer.  You will automatically receive an update
+each time an action is taken on the bug.</p>
+</div>
+</div>
+<div class="section" id="helping-triage-issues">
+<span id="helptriage"></span><h2>10.2. Helping Triage Issues<a class="headerlink" href="#helping-triage-issues" title="Permalink to this headline">¶</a></h2>
+<p>Once you know your way around how Python&#8217;s source files are
+structured and you are comfortable working with patches, a great way to
+participate is to help triage issues. Do realize, though, that experience
+working on Python is needed in order to effectively help triage.</p>
+<p>Around the clock, new issues are being opened on the <a class="reference external" href="http://bugs.python.org/">issue tracker</a> and
+existing issues are being updated. Every
+issue needs to be triaged to make sure various things are in proper order. Even
+without special privileges you can help with this process.</p>
+<div class="section" id="classifying-reports">
+<h3>10.2.1. Classifying Reports<a class="headerlink" href="#classifying-reports" title="Permalink to this headline">¶</a></h3>
+<p>For bugs, an issue needs to:</p>
+<ul class="simple">
+<li>clearly explain the bug so it can be reproduced</li>
+<li>include all relevant platform details</li>
+<li>state what version(s) of Python are affected by the bug.</li>
+</ul>
+<p>These are things you can help with once you have experience developing for
+Python. For instance, if a bug is not clearly explained enough for you to
+reproduce it then there is a good chance a core developer won&#8217;t be able to
+either. And it is always helpful to know if a bug not only affects the
+in-development version of Python, but whether it also affects other versions in
+maintenance mode. And if the bug lacks a unit test that should end up in
+Python&#8217;s test suite, having that written can be very helpful.</p>
+<p>This is all helpful as it allows triagers (i.e.,
+<a class="reference internal" href="#devrole"><span>people with the Developer role on the issue tracker</span></a>) to
+properly classify an issue so it can be handled by the right core developers in
+a timely fashion.</p>
+</div>
+<div class="section" id="reviewing-patches">
+<h3>10.2.2. Reviewing Patches<a class="headerlink" href="#reviewing-patches" title="Permalink to this headline">¶</a></h3>
+<p>If an issue has a patch attached that has not been reviewed, you can help by
+making sure the patch:</p>
+<ul class="simple">
+<li>follows the style guides</li>
+<li>applies cleanly to an up-to-date clone</li>
+<li>is a good solution to the problem it is trying to solve</li>
+<li>includes proper tests</li>
+<li>includes proper documentation changes</li>
+<li>submitter is listed in <code class="docutils literal"><span class="pre">Misc/ACKS</span></code>, either already or the patch adds them</li>
+</ul>
+<p>Doing all of this allows core developers and <a class="reference internal" href="#devrole"><span>triagers</span></a> to more
+quickly look for subtle issues that only people with extensive experience
+working on Python&#8217;s code base will notice.</p>
+</div>
+<div class="section" id="finding-an-issue-you-can-help-with">
+<h3>10.2.3. Finding an Issue You Can Help With<a class="headerlink" href="#finding-an-issue-you-can-help-with" title="Permalink to this headline">¶</a></h3>
+<p>If you want to help triaging issues, you might also want to search for issues
+that you are knowledgeable about.  An easy way to do it, is to search for
+the name of a module you are familiar with.  You can also use the
+<a class="reference external" href="http://bugs.python.org/issue?&#64;template=search">advanced search</a> and search for specific components (e.g. &#8220;Windows&#8221; if you
+are a Windows developer, &#8220;Extension Modules&#8221; if you are familiar with C, etc.).
+Finally you can use the &#8220;Random issue&#8221; link in the sidebar to pick random
+issues until you find an issue that you like.  Is not so uncommon to find old
+issues that can be closed, either because they are no longer valid, or
+because they have a patch that is ready to be committed, but no one had
+time to do it yet.</p>
+<p>In the sidebar you can also find links to summaries for easy issues and
+issues with a patch.</p>
+</div>
+</div>
+<div class="section" id="gaining-the-developer-role-on-the-issue-tracker">
+<span id="devrole"></span><h2>10.3. Gaining the &#8220;Developer&#8221; Role on the Issue Tracker<a class="headerlink" href="#gaining-the-developer-role-on-the-issue-tracker" title="Permalink to this headline">¶</a></h2>
+<p>When you have consistently shown the ability to properly
+help triage issues without guidance, you may request that you
+be given the &#8220;Developer&#8221; role on the <a class="reference external" href="http://bugs.python.org/">issue tracker</a>. You can make the request
+of any person who already has the Developer role. If they decide you are ready
+to gain the extra privileges on the tracker they will then act as a mentor to
+you until you are ready to do things entirely on your own. There is no set rule
+as to how many issues you need to have helped with before or how long you have
+been participating. The key requirements are that you show the desire to
+help, you are able to work well with others (especially those already with the
+Developer role), and that have a firm grasp of how to do things on the issue
+tracker properly on your own.</p>
+<p>Gaining the Developer role will allow you to set any value on any issue in the
+tracker, releasing you from the burden of having to ask others to set values on
+an issue for you in order to properly triage something. This will not only help
+speed up and simplify your work in helping out, but also help lessen the
+workload for everyone by gaining your help.</p>
+</div>
+<div class="section" id="the-meta-tracker">
+<h2>10.4. The Meta Tracker<a class="headerlink" href="#the-meta-tracker" title="Permalink to this headline">¶</a></h2>
+<p>If you find an issue with the <a class="reference external" href="http://bugs.python.org/">issue tracker</a>, you can report it to the
+<a class="reference external" href="http://psf.upfronthosting.co.za/roundup/meta/">meta tracker</a>.  The meta tracker is where you file issues against anything
+you come across when working with the issue tracker itself (e.g you can&#8217;t
+attach a file, the layout is broken on your browser, Rietveld gave you an
+error, etc.).</p>
+<p>If you want to contribute to the tracker you can get a checkout of the source
+and install a local instance where to experiment.  You can find detailed
+instructions on the <a class="reference external" href="http://wiki.python.org/moin/TrackerDevelopment">Tracker Development</a> page.</p>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="http://bugs.python.org/">The Python issue tracker</a></dt>
+<dd>Where to report issues about Python.</dd>
+<dt><a class="reference external" href="http://mail.python.org/mailman/listinfo/new-bugs-announce">The New-bugs-announce mailing list</a></dt>
+<dd>Where all the new issues created on the tracker are reported.</dd>
+<dt><a class="reference external" href="http://mail.python.org/mailman/listinfo/python-bugs-list">The Python-bugs-list mailing list</a></dt>
+<dd>Where all the changes to issues are reported.</dd>
+<dt><a class="reference external" href="http://psf.upfronthosting.co.za/roundup/meta/">The meta tracker</a></dt>
+<dd>Where to report issues about the tracker itself.</dd>
+<dt><a class="reference external" href="http://wiki.python.org/moin/TrackerDevelopment">The Tracker development wiki page</a></dt>
+<dd>Instructions about setting up a local instance of the bug tracker.</dd>
+<dt><a class="reference external" href="http://mail.python.org/mailman/listinfo/tracker-discuss">The Tracker-discuss mailing list</a></dt>
+<dd>Discussions about the bug tracker.</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">10. Issue Tracking</a><ul>
+<li><a class="reference internal" href="#using-the-issue-tracker">10.1. Using the Issue Tracker</a><ul>
+<li><a class="reference internal" href="#checking-if-a-bug-already-exists">10.1.1. Checking if a bug already exists</a></li>
+<li><a class="reference internal" href="#reporting-an-issue">10.1.2. Reporting an issue</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#helping-triage-issues">10.2. Helping Triage Issues</a><ul>
+<li><a class="reference internal" href="#classifying-reports">10.2.1. Classifying Reports</a></li>
+<li><a class="reference internal" href="#reviewing-patches">10.2.2. Reviewing Patches</a></li>
+<li><a class="reference internal" href="#finding-an-issue-you-can-help-with">10.2.3. Finding an Issue You Can Help With</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#gaining-the-developer-role-on-the-issue-tracker">10.3. Gaining the &#8220;Developer&#8221; Role on the Issue Tracker</a></li>
+<li><a class="reference internal" href="#the-meta-tracker">10.4. The Meta Tracker</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="fixingissues.html" title="previous chapter">9. Fixing &#8220;easy&#8221; Issues (and Beyond)</a></li>
+      <li>Next: <a href="triaging.html" title="next chapter">11. Triaging an Issue</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/tracker.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Carol Willing.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.6</a>
+      
+      |
+      <a href="_sources/tracker.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

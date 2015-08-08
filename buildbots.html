@@ -1,0 +1,320 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>18. Continuous Integration &mdash; Devguide 2015.08.08 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '2015.08.08',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Devguide 2015.08.08 documentation" href="index.html" />
+    <link rel="next" title="19. Adding to the Stdlib" href="stdlibchanges.html" />
+    <link rel="prev" title="17. Development Cycle" href="devcycle.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="continuous-integration">
+<span id="buildbots"></span><h1>18. Continuous Integration<a class="headerlink" href="#continuous-integration" title="Permalink to this headline">¶</a></h1>
+<p>To assert that there are no regressions in the <a class="reference internal" href="devcycle.html"><em>development and maintenance
+branches</em></a>, Python has a set of dedicated machines (called <em>buildbots</em> or
+<em>build slaves</em>) used for continuous integration.  They span a number of
+hardware/operating system combinations.  Furthermore, each machine hosts
+several <em>builders</em>, one per active branch: when a new change is pushed
+to this branch on the public Mercurial repository, all corresponding builders
+will schedule a new build to be run as soon as possible.</p>
+<p>The build steps run by the buildbots are the following:</p>
+<ul class="simple">
+<li>Checkout of the source tree for the changeset which triggered the build</li>
+<li>Compiling Python</li>
+<li>Running the test suite using <a class="reference internal" href="runtests.html#strenuous-testing"><span>strenuous settings</span></a></li>
+<li>Cleaning up the build tree</li>
+</ul>
+<p>It is your responsibility, as a core developer, to check the automatic
+build results after you push a change to the repository.  It is therefore
+important that you get acquainted with the way these results are presented,
+and how various kinds of failures can be explained and diagnosed.</p>
+<div class="section" id="checking-results-of-automatic-builds">
+<h2>18.1. Checking results of automatic builds<a class="headerlink" href="#checking-results-of-automatic-builds" title="Permalink to this headline">¶</a></h2>
+<p>There are three ways of visualizing recent build results:</p>
+<ul>
+<li><p class="first">The Web interface for each branch at <a class="reference external" href="http://python.org/dev/buildbot/">http://python.org/dev/buildbot/</a>,
+where the so-called &#8220;waterfall&#8221; view presents a vertical rundown of recent
+builds for each builder.  When interested in one build, you&#8217;ll have to
+click on it to know which changesets it corresponds to.  Note that
+the buildbot web pages are often slow to load, be patient.</p>
+</li>
+<li><p class="first">The command-line <code class="docutils literal"><span class="pre">bbreport.py</span></code> client, which you can get from
+<a class="reference external" href="http://code.google.com/p/bbreport/">http://code.google.com/p/bbreport/</a>. Installing it is trivial: just add
+the directory containing <code class="docutils literal"><span class="pre">bbreport.py</span></code> to your system path so that
+you can run it from any filesystem location.  For example, if you want
+to display the latest build results on the development (&#8220;default&#8221;) branch,
+type:</p>
+<div class="highlight-python"><div class="highlight"><pre>bbreport.py -q 3.x
+</pre></div>
+</div>
+</li>
+<li><p class="first">The buildbot &#8220;console&#8221; interface at <a class="reference external" href="http://buildbot.python.org/all/console">http://buildbot.python.org/all/console</a>
+This works best on a wide, high resolution
+monitor.  You can enter your mercurial username (&#8220;your name
+&lt;<a class="reference external" href="mailto:your&#37;&#52;&#48;email">your<span>&#64;</span>email</a>&gt;&#8221;) in the &#8216;personalized for&#8217; box in the upper right corner to see
+the results just for changesets submitted by you.  Clicking on the colored
+circles will allow you to open a new page containing whatever information
+about that particular build is of interest to you.  You can also access
+builder information by clicking on the builder status bubbles in the top
+line.</p>
+</li>
+</ul>
+<p>If you like IRC, having an IRC client open to the #python-dev channel on
+irc.freenode.net is useful.  Any time a builder changes state (last build
+passed and this one didn&#8217;t, or vice versa), a message is posted to the channel.
+Keeping an eye on the channel after pushing a changeset is a simple way to get
+notified that there is something you should look in to.</p>
+<p>Some buildbots are much faster than others.  Over time, you will learn which
+ones produce the quickest results after a build, and which ones take the
+longest time.</p>
+<p>Also, when several changesets are pushed in a quick succession in the same
+branch, it often happens that a single build is scheduled for all these
+changesets.</p>
+</div>
+<div class="section" id="stability">
+<h2>18.2. Stability<a class="headerlink" href="#stability" title="Permalink to this headline">¶</a></h2>
+<p>A subset of the buildbots are marked &#8220;stable&#8221;.  They are taken into account
+when making a new release.  The rule is that all stable builders must be free of
+persistent failures when the release is cut.  It is absolutely <strong>vital</strong>
+that core developers fix any issue they introduce on the stable buildbots,
+as soon as possible.</p>
+<p>This does not mean that other builders&#8217; test results can be taken lightly,
+either.  Some of them are known for having platform-specific issues that
+prevent some tests from succeeding (or even terminating at all), but
+introducing additional failures should generally not be an option.</p>
+</div>
+<div class="section" id="flags-dependent-failures">
+<h2>18.3. Flags-dependent failures<a class="headerlink" href="#flags-dependent-failures" title="Permalink to this headline">¶</a></h2>
+<p>Sometimes, while you have run the <a class="reference internal" href="runtests.html"><em>whole test suite</em></a> before
+committing, you may witness unexpected failures on the buildbots.  One source
+of such discrepancies is if different flags have been passed to the test runner
+or to Python itself.  To reproduce, make sure you use the same flags as the
+buildbots: they can be found out simply by clicking the <strong>stdio</strong> link for
+the failing build&#8217;s tests.  For example:</p>
+<div class="highlight-python"><div class="highlight"><pre>./python.exe -Wd -E -bb  ./Lib/test/regrtest.py -uall -rwW
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Running <code class="docutils literal"><span class="pre">Lib/test/regrtest.py</span></code> is exactly equivalent to running
+<code class="docutils literal"><span class="pre">-m</span> <span class="pre">test</span></code>.</p>
+</div>
+</div>
+<div class="section" id="ordering-dependent-failures">
+<h2>18.4. Ordering-dependent failures<a class="headerlink" href="#ordering-dependent-failures" title="Permalink to this headline">¶</a></h2>
+<p>Sometimes the failure is even subtler, as it relies on the order in which
+the tests are run.  The buildbots <em>randomize</em> test order (by using the <code class="docutils literal"><span class="pre">-r</span></code>
+option to the test runner) to maximize the probability that potential
+interferences between library modules are exercised; the downside is that it
+can make for seemingly sporadic failures.</p>
+<p>The <code class="docutils literal"><span class="pre">--randseed</span></code> option makes it easy to reproduce the exact randomization
+used in a given build.  Again, open the <code class="docutils literal"><span class="pre">stdio</span></code> link for the failing test
+run, and check the beginning of the test output proper.</p>
+<p>Let&#8217;s assume, for the sake of example, that the output starts with:</p>
+<div class="highlight-python"><div class="highlight"><pre>./python -Wd -E -bb Lib/test/regrtest.py -uall -rwW
+== CPython 3.3a0 (default:22ae2b002865, Mar 30 2011, 13:58:40) [GCC 4.4.5]
+==   Linux-2.6.36-gentoo-r5-x86_64-AMD_Athlon-tm-_64_X2_Dual_Core_Processor_4400+-with-gentoo-1.12.14 little-endian
+==   /home/buildbot/buildarea/3.x.ochtman-gentoo-amd64/build/build/test_python_29628
+Testing with flags: sys.flags(debug=0, inspect=0, interactive=0, optimize=0, dont_write_bytecode=0, no_user_site=0, no_site=0, ignore_environment=1, verbose=0, bytes_warning=2, quiet=0)
+Using random seed 2613169
+[  1/353] test_augassign
+[  2/353] test_functools
+</pre></div>
+</div>
+<p>You can reproduce the exact same order using:</p>
+<div class="highlight-python"><div class="highlight"><pre>./python -Wd -E -bb -m test -uall -rwW --randseed 2613169
+</pre></div>
+</div>
+<p>It will run the following sequence (trimmed for brevity):</p>
+<div class="highlight-python"><div class="highlight"><pre>[  1/353] test_augassign
+[  2/353] test_functools
+[  3/353] test_bool
+[  4/353] test_contains
+[  5/353] test_compileall
+[  6/353] test_unicode
+</pre></div>
+</div>
+<p>If this is enough to reproduce the failure on your setup, you can then
+bisect the test sequence to look for the specific interference causing the
+failure.  Copy and paste the test sequence in a text file, then use the
+<code class="docutils literal"><span class="pre">--fromfile</span></code> (or <code class="docutils literal"><span class="pre">-f</span></code>) option of the test runner to run the exact
+sequence recorded in that text file:</p>
+<div class="highlight-python"><div class="highlight"><pre>./python -Wd -E -bb -m test -uall -rwW --fromfile mytestsequence.txt
+</pre></div>
+</div>
+<p>In the example sequence above, if <code class="docutils literal"><span class="pre">test_unicode</span></code> had failed, you would
+first test the following sequence:</p>
+<div class="highlight-python"><div class="highlight"><pre>[  1/353] test_augassign
+[  2/353] test_functools
+[  3/353] test_bool
+[  6/353] test_unicode
+</pre></div>
+</div>
+<p>And, if it succeeds, the following one instead (which, hopefully, shall
+fail):</p>
+<div class="highlight-python"><div class="highlight"><pre>[  4/353] test_contains
+[  5/353] test_compileall
+[  6/353] test_unicode
+</pre></div>
+</div>
+<p>Then, recursively, narrow down the search until you get a single pair of
+tests which triggers the failure.  It is very rare that such an interference
+involves more than <strong>two</strong> tests.  If this is the case, we can only wish you
+good luck!</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">You cannot use the <code class="docutils literal"><span class="pre">-j</span></code> option (for parallel testing) when diagnosing
+ordering-dependent failures.  Using <code class="docutils literal"><span class="pre">-j</span></code> isolates each test in a
+pristine subprocess and, therefore, prevents you from reproducing any
+interference between tests.</p>
+</div>
+</div>
+<div class="section" id="transient-failures">
+<h2>18.5. Transient failures<a class="headerlink" href="#transient-failures" title="Permalink to this headline">¶</a></h2>
+<p>While we try to make the test suite as reliable as possible, some tests do
+not reach a perfect level of reproducibility.  Some of them will sometimes
+display spurious failures, depending on various conditions.  Here are common
+offenders:</p>
+<ul class="simple">
+<li>Network-related tests, such as <code class="docutils literal"><span class="pre">test_poplib</span></code>, <code class="docutils literal"><span class="pre">test_urllibnet</span></code>, etc.
+Their failures can stem from adverse network conditions, or imperfect
+thread synchronization in the test code, which often has to run a
+server in a separate thread.</li>
+<li>Tests dealing with delicate issues such as inter-thread or inter-process
+synchronization, or Unix signals: <code class="docutils literal"><span class="pre">test_multiprocessing</span></code>,
+<code class="docutils literal"><span class="pre">test_threading</span></code>, <code class="docutils literal"><span class="pre">test_subprocess</span></code>, <code class="docutils literal"><span class="pre">test_threadsignals</span></code>.</li>
+</ul>
+<p>When you think a failure might be transient, it is recommended you confirm by
+waiting for the next build.  Still, even if the failure does turn out sporadic
+and unpredictable, the issue should be reported on the bug tracker; even
+better if it can be diagnosed and suppressed by fixing the test&#8217;s implementation,
+or by making its parameters - such as a timeout - more robust.</p>
+</div>
+<div class="section" id="custom-builders">
+<h2>18.6. Custom builders<a class="headerlink" href="#custom-builders" title="Permalink to this headline">¶</a></h2>
+<p>When working on a long-lived feature branch, or on a bugfix branch which
+enables issue-specific debugging, you will probably want to test your
+work on one or several buildbots.  Since your work is hosted in a distinct
+repository, you can&#8217;t trigger builds on the regular builders.  Instead,
+you have to use one of the <a class="reference external" href="http://buildbot.python.org/all/waterfall?category=custom.stable&amp;category=custom.unstable">custom builders</a>.</p>
+<p>When creating (&#8220;forcing&#8221;) a build on a custom builder, you have to provide
+at least two parameters:</p>
+<ul class="simple">
+<li>The repository path, relative to <a class="reference external" href="https://hg.python.org">https://hg.python.org</a>. For example,
+<code class="docutils literal"><span class="pre">sandbox/myfixes</span></code> if <code class="docutils literal"><span class="pre">https://hg.python.org/sandbox/myfixes</span></code> is the
+full path to the repository.</li>
+<li>The Mercurial id of the changeset you want to build.  To make things less
+tedious, we suggest you do your changes in a separate named branch: you can
+then supply the branch name instead of a specific changeset id.</li>
+</ul>
+<p>If you are interested in the results of a specific test file only, we
+recommend you change (temporarily, of course) the contents of the
+<code class="docutils literal"><span class="pre">buildbottest</span></code> clause in <code class="docutils literal"><span class="pre">Makefile.pre.in</span></code>; or, for Windows builders,
+the <code class="docutils literal"><span class="pre">Tools/buildbot/test.bat</span></code> and <code class="docutils literal"><span class="pre">Tools/buildbot/test-amd64.bat</span></code>
+scripts.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">For security reasons, it is impossible to build repositories from outside
+the <a class="reference external" href="http://hg.python.org">http://hg.python.org</a> realm.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">18. Continuous Integration</a><ul>
+<li><a class="reference internal" href="#checking-results-of-automatic-builds">18.1. Checking results of automatic builds</a></li>
+<li><a class="reference internal" href="#stability">18.2. Stability</a></li>
+<li><a class="reference internal" href="#flags-dependent-failures">18.3. Flags-dependent failures</a></li>
+<li><a class="reference internal" href="#ordering-dependent-failures">18.4. Ordering-dependent failures</a></li>
+<li><a class="reference internal" href="#transient-failures">18.5. Transient failures</a></li>
+<li><a class="reference internal" href="#custom-builders">18.6. Custom builders</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="devcycle.html" title="previous chapter">17. Development Cycle</a></li>
+      <li>Next: <a href="stdlibchanges.html" title="next chapter">19. Adding to the Stdlib</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/buildbots.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Carol Willing.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.6</a>
+      
+      |
+      <a href="_sources/buildbots.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

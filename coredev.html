@@ -1,0 +1,234 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>13. How to Become a Core Developer &mdash; Devguide 2015.08.08 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '2015.08.08',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Devguide 2015.08.08 documentation" href="index.html" />
+    <link rel="next" title="14. Developer Log" href="developers.html" />
+    <link rel="prev" title="12. Following Python’s Development" href="communication.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="how-to-become-a-core-developer">
+<span id="coredev"></span><h1>13. How to Become a Core Developer<a class="headerlink" href="#how-to-become-a-core-developer" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="what-it-takes">
+<h2>13.1. What it Takes<a class="headerlink" href="#what-it-takes" title="Permalink to this headline">¶</a></h2>
+<p>When you have consistently contributed patches which meet quality standards
+without requiring extensive rewrites prior to being committed,
+you may qualify for
+commit privileges and become a core developer of Python. You must also work
+well with other core developers (and people in general) as you become an
+ambassador for the Python project.</p>
+<p>Typically a core developer will offer you the chance to gain commit privilege.
+The person making the offer will become your mentor and watch your commits for
+a while to make sure you understand the development process. If other core
+developers agree that you should gain commit privileges you are then extended
+an official offer.</p>
+<p>You may request commit privileges yourself, but do not be surprised if your
+request is turned down. Do not take this personally! It simply means that other
+core developers think you need more time contributing patches before you are
+able to commit them without supervision.</p>
+<p>A complete list of core developer usernames can be found at
+<a class="reference external" href="https://hg.python.org/committers.txt">https://hg.python.org/committers.txt</a>. <a class="reference internal" href="developers.html#developers"><span>Developer Log</span></a> lists when and why
+someone received commit privileges.</p>
+</div>
+<div class="section" id="gaining-commit-privileges">
+<h2>13.2. Gaining Commit Privileges<a class="headerlink" href="#gaining-commit-privileges" title="Permalink to this headline">¶</a></h2>
+<p>When you have been extended an official offer to become a Python core
+developer, there are several things you must do.</p>
+<div class="section" id="mailing-lists">
+<h3>13.2.1. Mailing Lists<a class="headerlink" href="#mailing-lists" title="Permalink to this headline">¶</a></h3>
+<p>You are expected to subscribe to python-committers, python-dev,
+python-checkins, and one of new-bugs-announce or python-bugs-list. See
+<a class="reference internal" href="communication.html#communication"><span>Following Python&#8217;s Development</span></a> for links to these mailing lists.</p>
+</div>
+<div class="section" id="issue-tracker">
+<h3>13.2.2. Issue Tracker<a class="headerlink" href="#issue-tracker" title="Permalink to this headline">¶</a></h3>
+<p>If you did not gain the Developer role in the <a class="reference internal" href="#issue-tracker">issue tracker</a> before gaining
+commit privileges, please say so. This will allow issues to be assigned to you.
+A tracker admin should also flip your &#8220;is committer&#8221; bit in the tracker&#8217;s
+account screen.</p>
+<p>It is expected that on the issue tracker you have a username in the form of
+&#8220;first_name.last_name&#8221;. If your initial issue tracker username is not of this
+form, please change it. This is so that it is easier to assign issues to the
+right person.</p>
+</div>
+<div class="section" id="ssh">
+<h3>13.2.3. SSH<a class="headerlink" href="#ssh" title="Permalink to this headline">¶</a></h3>
+<p>You need to provide an SSH-2 key to be able to commit code. You may have
+multiple keys if you wish (e.g., for work and home). Using Ed25519 keys is
+encouraged. Send your key as an attachment in an email to
+<a class="reference external" href="mailto:hgaccounts&#37;&#52;&#48;python&#46;org">hgaccounts<span>&#64;</span>python<span>&#46;</span>org</a>. Help in generating an SSH key can be found in the
+<a class="reference internal" href="faq.html#faq"><span>Python Developer FAQ</span></a>.</p>
+<p>Your SSH key will be set to a username in the form of &#8220;first_name.last_name&#8221;.
+This should match your username on the issue tracker.</p>
+<p>You can verify your commit access by looking at
+<a class="reference external" href="https://hg.python.org/committers.txt">https://hg.python.org/committers.txt</a> which lists all core developers by
+username.  If you want to practice, there is a <a class="reference external" href="https://hg.python.org/test/">test repository</a> where you can freely commit and push any
+changes you like:</p>
+<div class="highlight-python"><div class="highlight"><pre>hg clone ssh://hg@hg.python.org/test/ hgtest
+</pre></div>
+</div>
+<p>An entry in the <a class="reference internal" href="developers.html#developers"><span>Developer Log</span></a> should also be entered for you.
+Typically the person who sponsored your application to become a core developer
+makes sure an entry is created for you.</p>
+</div>
+<div class="section" id="sign-a-contributor-agreement">
+<span id="contributor-agreement"></span><h3>13.2.4. Sign a Contributor Agreement<a class="headerlink" href="#sign-a-contributor-agreement" title="Permalink to this headline">¶</a></h3>
+<p>Submitting a <a class="reference external" href="http://www.python.org/psf/contrib/">contributor form for Python</a> licenses any code you contribute to
+the Python Software Foundation. While you retain the copyright, giving the PSF
+the ability to license your code means it can be put under the PSF license so
+it can be legally distributed with Python.</p>
+<p>This is a very important step! Hopefully you have already submitted a
+contributor agreement if you have been submitting patches. But if you have not
+done this yet, it is best to do this ASAP, probably before you even do your
+first commit so as to not forget.</p>
+</div>
+<div class="section" id="read-write-checkout">
+<h3>13.2.5. Read/Write Checkout<a class="headerlink" href="#read-write-checkout" title="Permalink to this headline">¶</a></h3>
+<p>With your commit privileges working and your contributor form submitted, you
+can now get a read/write checkout of the code. URLs for read/write checkouts
+are different than those for read-only checkouts as SSH is used instead of
+HTTP.</p>
+<p>You can clone the repository (which contains all active branches) with:</p>
+<div class="highlight-python"><div class="highlight"><pre>hg clone ssh://hg@hg.python.org/cpython
+</pre></div>
+</div>
+<p>The default branch in that repository is the current development branch.
+You can of course switch your working copy to one of the maintenance branches,
+for example:</p>
+<div class="highlight-python"><div class="highlight"><pre>hg update 2.7
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="responsibilities">
+<h2>13.3. Responsibilities<a class="headerlink" href="#responsibilities" title="Permalink to this headline">¶</a></h2>
+<p>As a core developer, there are certain things that are expected of you.</p>
+<p>First and foremost, be a good person. This might sound melodramatic, but you
+are now a member of the Python project and thus represent the project and your
+fellow core developers whenever you discuss Python with anyone. We have a
+reputation for being a very nice group of people and we would like to keep it
+that way.</p>
+<p>Second, please be prompt in responding to questions. We are all volunteers so
+what little free time one can dedicate to Python should be spent being
+productive. If you have been asked to respond to an issue or answer a question
+and you put it off it ends up stalling other people&#8217;s work. It is completely
+acceptable to say you are too busy, but you need to say that instead of
+stringing people along. This obviously applies to anything you do on the issue
+tracker as well.</p>
+<p>Third, please list what areas you want to be considered an expert in the
+<a class="reference internal" href="experts.html#experts"><span>Experts Index</span></a>. This allows triagers to direct issues to you which involve
+an area you are an expert in. But,
+as stated in the second point above, if you do not have the time to answer
+questions promptly then please remove yourself as needed from the file so that
+you will not be bothered in the future. Once again, we all understand how life
+gets in the way, so no one will be insulted if you remove yourself from the
+list.</p>
+<p>And finally, enjoy yourself! Contributing to open source software should be fun
+(overall). If you find yourself no longer enjoying the work then either take a
+break or figure out what you need to do to make it enjoyable again.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">13. How to Become a Core Developer</a><ul>
+<li><a class="reference internal" href="#what-it-takes">13.1. What it Takes</a></li>
+<li><a class="reference internal" href="#gaining-commit-privileges">13.2. Gaining Commit Privileges</a><ul>
+<li><a class="reference internal" href="#mailing-lists">13.2.1. Mailing Lists</a></li>
+<li><a class="reference internal" href="#issue-tracker">13.2.2. Issue Tracker</a></li>
+<li><a class="reference internal" href="#ssh">13.2.3. SSH</a></li>
+<li><a class="reference internal" href="#sign-a-contributor-agreement">13.2.4. Sign a Contributor Agreement</a></li>
+<li><a class="reference internal" href="#read-write-checkout">13.2.5. Read/Write Checkout</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#responsibilities">13.3. Responsibilities</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="communication.html" title="previous chapter">12. Following Python&#8217;s Development</a></li>
+      <li>Next: <a href="developers.html" title="next chapter">14. Developer Log</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/coredev.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Carol Willing.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.6</a>
+      
+      |
+      <a href="_sources/coredev.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

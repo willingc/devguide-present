@@ -1,0 +1,1003 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>28. Python Developer FAQ &mdash; Devguide 2015.08.08 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '2015.08.08',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Devguide 2015.08.08 documentation" href="index.html" />
+    <link rel="prev" title="27. Mercurial for git developers" href="gitdevs.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="python-developer-faq">
+<span id="faq"></span><h1>28. Python Developer FAQ<a class="headerlink" href="#python-developer-faq" title="Permalink to this headline">¶</a></h1>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><a class="reference internal" href="#communications" id="id5">Communications</a><ul>
+<li><a class="reference internal" href="#where-should-i-ask-general-python-questions" id="id6">Where should I ask general Python questions?</a></li>
+<li><a class="reference internal" href="#where-should-i-suggest-new-features-and-language-changes" id="id7">Where should I suggest new features and language changes?</a></li>
+<li><a class="reference internal" href="#where-should-i-ask-general-questions-about-contributing-to-cpython" id="id8">Where should I ask general questions about contributing to CPython?</a></li>
+<li><a class="reference internal" href="#where-should-i-report-specific-problems" id="id9">Where should I report specific problems?</a></li>
+<li><a class="reference internal" href="#what-if-i-m-not-sure-it-is-a-bug" id="id10">What if I&#8217;m not sure it is a bug?</a></li>
+<li><a class="reference internal" href="#what-if-i-disagree-with-an-issue-resolution-on-the-tracker" id="id11">What if I disagree with an issue resolution on the tracker?</a></li>
+<li><a class="reference internal" href="#how-do-i-tell-who-is-and-isn-t-a-core-developer" id="id12">How do I tell who is and isn&#8217;t a core developer?</a></li>
+<li><a class="reference internal" href="#what-standards-of-behaviour-are-expected-in-these-communication-channels" id="id13">What standards of behaviour are expected in these communication channels?</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#version-control" id="id14">Version Control</a><ul>
+<li><a class="reference internal" href="#for-everyone" id="id15">For everyone</a><ul>
+<li><a class="reference internal" href="#where-can-i-learn-about-the-version-control-system-used-mercurial-hg" id="id16">Where can I learn about the version control system used, Mercurial (hg)?</a></li>
+<li><a class="reference internal" href="#i-already-know-how-to-use-git-can-i-use-that-instead" id="id17">I already know how to use Git, can I use that instead?</a></li>
+<li><a class="reference internal" href="#what-do-i-need-to-use-mercurial" id="id18">What do I need to use Mercurial?</a><ul>
+<li><a class="reference internal" href="#unix" id="id19">UNIX</a></li>
+<li><a class="reference internal" href="#windows" id="id20">Windows</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#what-s-a-working-copy-what-s-a-repository" id="id21">What&#8217;s a working copy? What&#8217;s a repository?</a></li>
+<li><a class="reference internal" href="#which-branches-are-in-my-local-repository" id="id22">Which branches are in my local repository?</a></li>
+<li><a class="reference internal" href="#why-are-some-branches-marked-inactive" id="id23">Why are some branches marked &#8220;inactive&#8221;?</a></li>
+<li><a class="reference internal" href="#which-branch-is-currently-checked-out-in-my-working-copy" id="id24">Which branch is currently checked out in my working copy?</a></li>
+<li><a class="reference internal" href="#how-do-i-switch-between-branches-inside-my-working-copy" id="id25">How do I switch between branches inside my working copy?</a></li>
+<li><a class="reference internal" href="#i-want-to-keep-a-separate-working-copy-per-development-branch-is-it-possible" id="id26">I want to keep a separate working copy per development branch, is it possible?</a></li>
+<li><a class="reference internal" href="#how-do-i-link-my-local-repository-to-a-particular-remote-repository" id="id27">How do I link my local repository to a particular remote repository?</a></li>
+<li><a class="reference internal" href="#how-do-i-create-a-shorthand-alias-for-a-remote-repository" id="id28">How do I create a shorthand alias for a remote repository?</a></li>
+<li><a class="reference internal" href="#how-do-i-compare-my-local-repository-to-a-remote-repository" id="id29">How do I compare my local repository to a remote repository?</a></li>
+<li><a class="reference internal" href="#how-do-i-update-my-local-repository-to-be-in-sync-with-a-remote-repository" id="id30">How do I update my local repository to be in sync with a remote repository?</a></li>
+<li><a class="reference internal" href="#how-do-i-update-my-working-copy-with-the-latest-changes" id="id31">How do I update my working copy with the latest changes?</a></li>
+<li><a class="reference internal" href="#how-do-i-apply-a-patch" id="id32">How do I apply a patch?</a></li>
+<li><a class="reference internal" href="#how-do-i-solve-conflicts-when-applying-a-patch-fails" id="id33">How do I solve conflicts when applying a patch fails?</a></li>
+<li><a class="reference internal" href="#how-do-i-add-a-file-or-directory-to-the-repository" id="id34">How do I add a file or directory to the repository?</a></li>
+<li><a class="reference internal" href="#what-s-the-best-way-to-split-a-file-into-several-files" id="id35">What&#8217;s the best way to split a file into several files?</a></li>
+<li><a class="reference internal" href="#how-do-i-delete-a-file-or-directory-in-the-repository" id="id36">How do I delete a file or directory in the repository?</a></li>
+<li><a class="reference internal" href="#what-files-are-modified-in-my-working-copy" id="id37">What files are modified in my working copy?</a></li>
+<li><a class="reference internal" href="#how-do-i-revert-a-file-i-have-modified-back-to-the-version-in-the-repository" id="id38">How do I revert a file I have modified back to the version in the repository?</a></li>
+<li><a class="reference internal" href="#how-do-i-find-out-who-edited-or-what-revision-changed-a-line-last" id="id39">How do I find out who edited or what revision changed a line last?</a></li>
+<li><a class="reference internal" href="#how-can-i-see-a-list-of-log-messages-for-a-file-or-specific-revision" id="id40">How can I see a list of log messages for a file or specific revision?</a></li>
+<li><a class="reference internal" href="#how-can-i-see-the-changeset-graph-in-my-repository" id="id41">How can I see the changeset graph in my repository?</a></li>
+<li><a class="reference internal" href="#how-do-i-update-to-a-specific-release-tag" id="id42">How do I update to a specific release tag?</a></li>
+<li><a class="reference internal" href="#how-do-i-find-which-changeset-introduced-a-bug-or-regression" id="id43">How do I find which changeset introduced a bug or regression?</a></li>
+<li><a class="reference internal" href="#how-come-feature-xyz-isn-t-available-in-mercurial" id="id44">How come feature XYZ isn&#8217;t available in Mercurial?</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#for-core-developers" id="id45">For core developers</a><ul>
+<li><a class="reference internal" href="#how-do-i-commit-a-change-to-a-file" id="id46">How do I commit a change to a file?</a></li>
+<li><a class="reference internal" href="#how-do-i-solve-merge-conflicts" id="id47">How do I solve merge conflicts?</a></li>
+<li><a class="reference internal" href="#how-do-i-make-a-null-merge" id="id48">How do I make a null merge?</a></li>
+<li><a class="reference internal" href="#i-got-abort-push-creates-new-remote-heads-while-pushing-what-do-i-do" id="id49">I got &#8220;abort: push creates new remote heads!&#8221; while pushing, what do I do?</a></li>
+<li><a class="reference internal" href="#how-do-i-undo-the-changes-made-in-a-recent-commit" id="id50">How do I undo the changes made in a recent commit?</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#ssh" id="id51">SSH</a><ul>
+<li><a class="reference internal" href="#how-do-i-generate-an-ssh-2-public-key" id="id52">How do I generate an SSH-2 public key?</a><ul>
+<li><a class="reference internal" href="#id1" id="id53">UNIX</a></li>
+<li><a class="reference internal" href="#id2" id="id54">Windows</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#is-there-a-way-to-avoid-having-to-constantly-enter-my-password-for-my-ssh-2-public-key" id="id55">Is there a way to avoid having to constantly enter my password for my SSH 2 public key?</a><ul>
+<li><a class="reference internal" href="#id3" id="id56">UNIX</a></li>
+<li><a class="reference internal" href="#pageant" id="id57">Windows</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#can-i-make-commits-from-machines-other-than-the-one-i-generated-the-keys-on" id="id58">Can I make commits from machines other than the one I generated the keys on?</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#general" id="id59">General</a><ul>
+<li><a class="reference internal" href="#how-do-i-regenerate-configure" id="id60">How do I regenerate configure?</a></li>
+<li><a class="reference internal" href="#how-do-i-update-my-auto-load-safe-path-to-allow-test-gdb-to-run" id="id61">How do I update my auto-load-safe-path to allow test_gdb to run?</a></li>
+<li><a class="reference internal" href="#how-do-i-port-python-to-a-new-platform" id="id62">How do I port Python to a new platform?</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="communications">
+<h2><a class="toc-backref" href="#id5">28.1. Communications</a><a class="headerlink" href="#communications" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="where-should-i-ask-general-python-questions">
+<span id="general-questions"></span><h3><a class="toc-backref" href="#id6">28.1.1. Where should I ask general Python questions?</a><a class="headerlink" href="#where-should-i-ask-general-python-questions" title="Permalink to this headline">¶</a></h3>
+<p>General Python questions should still go to <a class="reference external" href="http://mail.python.org/mailman/listinfo/python-list">python-list</a> or <a class="reference external" href="http://mail.python.org/mailman/listinfo/tutor">tutor</a>
+or similar resources, such as <a class="reference external" href="http://stackoverflow.com/">StackOverflow</a> or the <code class="docutils literal"><span class="pre">#python</span></code> IRC channel
+on <a class="reference external" href="http://freenode.net/">Freenode</a>.</p>
+</div>
+<div class="section" id="where-should-i-suggest-new-features-and-language-changes">
+<span id="suggesting-changes"></span><span id="index-0"></span><h3><a class="toc-backref" href="#id7">28.1.2. Where should I suggest new features and language changes?</a><a class="headerlink" href="#where-should-i-suggest-new-features-and-language-changes" title="Permalink to this headline">¶</a></h3>
+<p>The <a class="reference external" href="http://mail.python.org/mailman/listinfo/python-ideas">python-ideas</a> mailing list is specifically intended for discussion of
+new features and language changes. Please don&#8217;t be disappointed if your
+idea isn&#8217;t met with universal approval: as the long list of Rejected and
+Withdrawn PEPs in the <a class="reference external" href="http://www.python.org/dev/peps/">PEP Index</a> attests, and as befits a reasonably mature
+programming language, getting significant changes into Python isn&#8217;t a simple
+task.</p>
+<p>If the idea is reasonable, someone will suggest posting it as a feature
+request on the <a class="reference external" href="http://bugs.python.org">issue tracker</a>, or, for larger changes, writing it up as
+a <a class="reference external" href="http://www.python.org/dev/peps/pep-0001/">draft PEP</a>.</p>
+<p>Sometimes core developers will differ in opinion, or merely be collectively
+unconvinced. When there isn&#8217;t an obvious victor then the
+<a class="reference external" href="http://www.curiousefficiency.org/posts/2011/02/status-quo-wins-stalemate.html">Status Quo Wins a Stalemate</a> as outlined in the linked post.</p>
+<p>For some examples on language changes that were accepted please read
+<a class="reference external" href="http://www.curiousefficiency.org/posts/2011/02/justifying-python-language-changes.html">Justifying Python Language Changes</a>.</p>
+<p>See also the <a class="reference internal" href="langchanges.html#langchanges"><span>Changing the Python Language</span></a> section of this guide.</p>
+</div>
+<div class="section" id="where-should-i-ask-general-questions-about-contributing-to-cpython">
+<h3><a class="toc-backref" href="#id8">28.1.3. Where should I ask general questions about contributing to CPython?</a><a class="headerlink" href="#where-should-i-ask-general-questions-about-contributing-to-cpython" title="Permalink to this headline">¶</a></h3>
+<p>The <a class="reference external" href="http://pythonmentors.com">Python Mentors</a> program is specifically about encouraging
+developers and others that would like to contribute to Python development in
+general, rather than necessarily being focused on one particular issue.
+Some core developers are also available on the <code class="docutils literal"><span class="pre">#python-dev</span></code> IRC channel on
+<a class="reference external" href="http://freenode.net/">Freenode</a>.</p>
+</div>
+<div class="section" id="where-should-i-report-specific-problems">
+<h3><a class="toc-backref" href="#id9">28.1.4. Where should I report specific problems?</a><a class="headerlink" href="#where-should-i-report-specific-problems" title="Permalink to this headline">¶</a></h3>
+<p>Specific problems should be posted to the <a class="reference external" href="http://bugs.python.org">issue tracker</a>.</p>
+</div>
+<div class="section" id="what-if-i-m-not-sure-it-is-a-bug">
+<h3><a class="toc-backref" href="#id10">28.1.5. What if I&#8217;m not sure it is a bug?</a><a class="headerlink" href="#what-if-i-m-not-sure-it-is-a-bug" title="Permalink to this headline">¶</a></h3>
+<p>The general Python help locations listed above are the best place to start
+with that kind of question. If they agree it looks like a bug, then the
+next step is to either post it to the <a class="reference external" href="http://bugs.python.org">issue tracker</a> or else to ask further
+on the core development mailing list, <a class="reference external" href="http://mail.python.org/mailman/listinfo/python-dev">python-dev</a>.</p>
+</div>
+<div class="section" id="what-if-i-disagree-with-an-issue-resolution-on-the-tracker">
+<span id="faq-issue-resolution"></span><h3><a class="toc-backref" href="#id11">28.1.6. What if I disagree with an issue resolution on the tracker?</a><a class="headerlink" href="#what-if-i-disagree-with-an-issue-resolution-on-the-tracker" title="Permalink to this headline">¶</a></h3>
+<p>First, take some time to consider any comments made in association with the
+resolution of the tracker issue. On reflection, they may seem more reasonable
+than they first appeared.</p>
+<p>If you still feel the resolution is incorrect, then raise the question on
+<a class="reference external" href="http://mail.python.org/mailman/listinfo/python-dev">python-dev</a>. If the consensus there supports the disputed resolution, please
+take any further objections to <a class="reference external" href="http://mail.python.org/mailman/listinfo/python-ideas">python-ideas</a> (or some other forum). Further
+argument on <a class="reference external" href="http://mail.python.org/mailman/listinfo/python-dev">python-dev</a> after a consensus has been reached amongst the core
+developers is unlikely to win any converts.</p>
+</div>
+<div class="section" id="how-do-i-tell-who-is-and-isn-t-a-core-developer">
+<h3><a class="toc-backref" href="#id12">28.1.7. How do I tell who is and isn&#8217;t a core developer?</a><a class="headerlink" href="#how-do-i-tell-who-is-and-isn-t-a-core-developer" title="Permalink to this headline">¶</a></h3>
+<p>You can check their name against the <a class="reference external" href="https://hg.python.org/committers.txt">full list of developers</a> with commit
+rights to the main source control repository.</p>
+<p>On the <a class="reference external" href="http://bugs.python.org">issue tracker</a>, most core developers will have the Python logo
+appear next to their name.</p>
+</div>
+<div class="section" id="what-standards-of-behaviour-are-expected-in-these-communication-channels">
+<span id="standards-behaviour"></span><h3><a class="toc-backref" href="#id13">28.1.8. What standards of behaviour are expected in these communication channels?</a><a class="headerlink" href="#what-standards-of-behaviour-are-expected-in-these-communication-channels" title="Permalink to this headline">¶</a></h3>
+<p>We try to foster environments of mutual respect, tolerance and encouragement,
+as described in the PSF&#8217;s <a class="reference external" href="http://www.python.org/psf/diversity/">Diversity Statement</a>. Abiding by the guidelines
+in this document and asking questions or posting suggestions in the
+appropriate channels are an excellent way to get started on the mutual respect
+part, greatly increasing the chances of receiving tolerance and encouragement
+in return.</p>
+</div>
+</div>
+<div class="section" id="version-control">
+<h2><a class="toc-backref" href="#id14">28.2. Version Control</a><a class="headerlink" href="#version-control" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="for-everyone">
+<h3><a class="toc-backref" href="#id15">28.2.1. For everyone</a><a class="headerlink" href="#for-everyone" title="Permalink to this headline">¶</a></h3>
+<p>The following FAQs are intended for both core developers and contributors.</p>
+<div class="section" id="where-can-i-learn-about-the-version-control-system-used-mercurial-hg">
+<h4><a class="toc-backref" href="#id16">28.2.1.1. Where can I learn about the version control system used, Mercurial (hg)?</a><a class="headerlink" href="#where-can-i-learn-about-the-version-control-system-used-mercurial-hg" title="Permalink to this headline">¶</a></h4>
+<p><a class="reference external" href="http://mercurial.selenic.com/">Mercurial</a>&#8216;s (also known as <code class="docutils literal"><span class="pre">hg</span></code>) official web site is at
+<a class="reference external" href="http://mercurial.selenic.com/">http://mercurial.selenic.com/</a>.  A book on Mercurial published by
+<a class="reference external" href="http://www.oreilly.com/">O&#8217;Reilly Media</a>, <a class="reference external" href="http://hgbook.red-bean.com/">Mercurial: The Definitive Guide</a>, is available
+for free online.  Another resource is <a class="reference external" href="http://hginit.com/">Hg Init: a Mercurial tutorial</a>
+by Joel Spolsky.</p>
+<p>With Mercurial installed, you can run the help tool that comes with
+Mercurial to get help:</p>
+<div class="highlight-python"><div class="highlight"><pre>hg help
+</pre></div>
+</div>
+<p>The <a class="reference external" href="http://www.selenic.com/mercurial/hg.1.html">man page</a> for <code class="docutils literal"><span class="pre">hg</span></code> provides a quick refresher on the details of
+various commands, but doesn&#8217;t provide any guidance on overall
+workflow.</p>
+</div>
+<div class="section" id="i-already-know-how-to-use-git-can-i-use-that-instead">
+<h4><a class="toc-backref" href="#id17">28.2.1.2. I already know how to use Git, can I use that instead?</a><a class="headerlink" href="#i-already-know-how-to-use-git-can-i-use-that-instead" title="Permalink to this headline">¶</a></h4>
+<p>While the main workflow for core developers requires Mercurial, if
+you just want to generate patches with <code class="docutils literal"><span class="pre">git</span> <span class="pre">diff</span></code> and post them to the
+<a class="reference external" href="http://bugs.python.org">issue tracker</a>, there is a semi-offical read-only <a class="reference external" href="https://github.com/python/cpython">git mirror</a> of the main
+<a class="reference external" href="https://hg.python.org/cpython">CPython repository</a>. To create a local clone based on this mirror rather
+than the main repository:</p>
+<div class="highlight-python"><div class="highlight"><pre>git clone git://github.com/python/cpython
+</pre></div>
+</div>
+<p>The mirror&#8217;s master branch tracks the main repository&#8217;s default branch,
+while the maintenance branch names (<code class="docutils literal"><span class="pre">2.7</span></code>, <code class="docutils literal"><span class="pre">3.4</span></code>, etc) are mapped
+directly.</p>
+<p>Please only use this approach if you&#8217;re already an experienced Git user and
+don&#8217;t require assistance with the specifics of version control commands. All
+other parts of this developer&#8217;s guide assume the use of Mercurial for local
+version control.</p>
+</div>
+<div class="section" id="what-do-i-need-to-use-mercurial">
+<h4><a class="toc-backref" href="#id18">28.2.1.3. What do I need to use Mercurial?</a><a class="headerlink" href="#what-do-i-need-to-use-mercurial" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="unix">
+<h5><a class="toc-backref" href="#id19">28.2.1.3.1. UNIX</a><a class="headerlink" href="#unix" title="Permalink to this headline">¶</a></h5>
+<p>First, you need to <a class="reference external" href="http://mercurial.selenic.com/downloads">download Mercurial</a>.  Most UNIX-based operating systems
+have binary packages available.  Most package management systems also
+have native Mercurial packages available.</p>
+<p>If you have push rights, you need <a class="reference external" href="http://www.openssh.org/">OpenSSH</a>.  This is needed to verify
+your identity when performing commits. As with Mercurial, binary packages
+are typically available either online or through the platform&#8217;s package
+management system.</p>
+<p>Mercurial does not use its own compression via SSH
+because it is better to enable compression at the SSH level.  Enabling
+SSH compression can make cloning a remote repository much faster.
+You can configure it in your <code class="docutils literal"><span class="pre">~/.ssh/config</span></code> file; for example:</p>
+<div class="highlight-python"><div class="highlight"><pre>Host hg.python.org
+  Compression yes
+</pre></div>
+</div>
+</div>
+<div class="section" id="windows">
+<h5><a class="toc-backref" href="#id20">28.2.1.3.2. Windows</a><a class="headerlink" href="#windows" title="Permalink to this headline">¶</a></h5>
+<p>The recommended option on Windows is to <a class="reference external" href="http://tortoisehg.bitbucket.org/download/index.html">download TortoiseHg</a> which
+integrates with Windows Explorer and also bundles the command line client
+(meaning you can type <code class="docutils literal"><span class="pre">hg</span></code> in a DOS box).  Note that most
+entries in this FAQ only cover the command line client in detail - refer
+to the TortoiseHg documentation for assistance with its graphical interface.</p>
+<p>If you have push rights, you need to configure Mercurial to work with
+your SSH keys.  For that, open your Mercurial configuration file
+(you can do so by opening the TortoiseHg Global Settings dialog and then
+clicking <em>&#8220;Edit File&#8221;</em>).  If there is no <code class="docutils literal"><span class="pre">[ui]</span></code> section, create it by
+typing just that on a line by itself. Then add the following line:</p>
+<div class="highlight-python"><div class="highlight"><pre>ssh = TortoisePlink.exe -ssh -2 -C -i C:\path\to\yourkey.ppk
+</pre></div>
+</div>
+<p>where <code class="docutils literal"><span class="pre">C:\path\to\yourkey.ppk</span></code> should be replaced with the actual path
+to your SSH private key.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If your private key is in OpenSSH format, you must first convert it to
+PuTTY format by loading it into <a class="reference external" href="http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html">PuTTYgen</a>.</p>
+</div>
+</div>
+</div>
+<div class="section" id="what-s-a-working-copy-what-s-a-repository">
+<h4><a class="toc-backref" href="#id21">28.2.1.4. What&#8217;s a working copy? What&#8217;s a repository?</a><a class="headerlink" href="#what-s-a-working-copy-what-s-a-repository" title="Permalink to this headline">¶</a></h4>
+<p>Mercurial is a &#8220;distributed&#8221; version control system.  This means that each
+participant, even casual contributors, download a complete copy (called a
+<em>clone</em>, since it is obtained by calling <code class="docutils literal"><span class="pre">hg</span> <span class="pre">clone</span></code>) of the central
+repository which can be treated as a stand-alone repository for all purposes.
+That copy is called in the FAQ the <em>local repository</em>, to differentiate
+with any <em>remote repository</em> you might also interact with.</p>
+<p>But you don&#8217;t modify files directly in the local repository; Mercurial doesn&#8217;t
+allow for it.  You modify files in what&#8217;s called the <em>working copy</em> associated
+with your local repository: you also run compilations and tests there.
+Once you are satisfied with your changes, you can <a class="reference internal" href="#hg-commit"><span>commit them</span></a>;
+committing records the changes as a new <em>revision</em> in the <em>local repository</em>.</p>
+<p>Changes in your <em>local repository</em> don&#8217;t get automatically shared with the
+rest of the world.  Mercurial ensures that you have to do so explicitly
+(this allows you to experiment quite freely with multiple branches of
+development, all on your private computer).  The main commands for doing
+so are <code class="docutils literal"><span class="pre">hg</span> <span class="pre">pull</span></code> and <code class="docutils literal"><span class="pre">hg</span> <span class="pre">push</span></code>.</p>
+</div>
+<div class="section" id="which-branches-are-in-my-local-repository">
+<h4><a class="toc-backref" href="#id22">28.2.1.5. Which branches are in my local repository?</a><a class="headerlink" href="#which-branches-are-in-my-local-repository" title="Permalink to this headline">¶</a></h4>
+<p>Typing <code class="docutils literal"><span class="pre">hg</span> <span class="pre">branches</span></code> displays the open branches in your local repository:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ hg branches
+default                    93085:030fda7b1de8
+2.7                        93060:7ba47bbfe38d
+3.4                        93082:5fd481150b35 (inactive)
+3.3                        93079:cda907a02a80 (inactive)
+3.2                        92975:eac54f7a8018 (inactive)
+</pre></div>
+</div>
+</div>
+<div class="section" id="why-are-some-branches-marked-inactive">
+<h4><a class="toc-backref" href="#id23">28.2.1.6. Why are some branches marked &#8220;inactive&#8221;?</a><a class="headerlink" href="#why-are-some-branches-marked-inactive" title="Permalink to this headline">¶</a></h4>
+<p>Assuming you get the following output:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ hg branches
+default                    93085:030fda7b1de8
+3.4                        93082:5fd481150b35 (inactive)
+</pre></div>
+</div>
+<p>This means all changesets in the &#8220;3.4&#8221; branch have been merged into the
+&#8220;default&#8221; branch (or any other branch, if such exists).</p>
+</div>
+<div class="section" id="which-branch-is-currently-checked-out-in-my-working-copy">
+<span id="hg-current-branch"></span><h4><a class="toc-backref" href="#id24">28.2.1.7. Which branch is currently checked out in my working copy?</a><a class="headerlink" href="#which-branch-is-currently-checked-out-in-my-working-copy" title="Permalink to this headline">¶</a></h4>
+<p>Use:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ hg branch
+default
+</pre></div>
+</div>
+<p>Or to get more information:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ hg summary
+parent: 68026:f12ef116dd10 tip
+ In FTP.close() method, make sure to also close the socket object, not only the file.
+branch: default
+commit: (clean)
+update: (current)
+</pre></div>
+</div>
+</div>
+<div class="section" id="how-do-i-switch-between-branches-inside-my-working-copy">
+<span id="hg-switch-branches"></span><h4><a class="toc-backref" href="#id25">28.2.1.8. How do I switch between branches inside my working copy?</a><a class="headerlink" href="#how-do-i-switch-between-branches-inside-my-working-copy" title="Permalink to this headline">¶</a></h4>
+<p>Simply use <code class="docutils literal"><span class="pre">hg</span> <span class="pre">update</span></code> to checkout another branch in the current directory:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ hg branch
+default
+$ hg update 3.4
+86 files updated, 0 files merged, 11 files removed, 0 files unresolved
+$ hg branch
+3.4
+</pre></div>
+</div>
+<p>Adding the <code class="docutils literal"><span class="pre">-v</span></code> option to <code class="docutils literal"><span class="pre">hg</span> <span class="pre">update</span></code> will list all updated files.</p>
+<p>Note that, due to some previously built executables being used as a part of
+the build process, you may sometimes run into issues when attempting to
+switch between Python 2.x and Python 3.x branches. In these cases, it is
+best to run a <code class="docutils literal"><span class="pre">make</span> <span class="pre">distclean</span></code> to ensure that all previously built files
+are removed.</p>
+</div>
+<div class="section" id="i-want-to-keep-a-separate-working-copy-per-development-branch-is-it-possible">
+<h4><a class="toc-backref" href="#id26">28.2.1.9. I want to keep a separate working copy per development branch, is it possible?</a><a class="headerlink" href="#i-want-to-keep-a-separate-working-copy-per-development-branch-is-it-possible" title="Permalink to this headline">¶</a></h4>
+<p>There are two ways:</p>
+<ol class="arabic simple">
+<li>Use the &#8220;<a class="reference external" href="http://mercurial.selenic.com/wiki/ShareExtension">share extension</a>&#8221; as described in the <a class="reference internal" href="committing.html#multiple-clones"><span>Multiple Clones Approach</span></a>
+section;</li>
+<li>Create several clones of your local repository;</li>
+</ol>
+<p>If you want to use the second way, you can do:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ hg clone cpython py34
+updating to branch default
+3434 files updated, 0 files merged, 0 files removed, 0 files unresolved
+$ cd py34
+$ hg update 3.4
+86 files updated, 0 files merged, 11 files removed, 0 files unresolved
+</pre></div>
+</div>
+<p>The current branch in a working copy is &#8220;sticky&#8221;: if you pull in some new
+changes, <code class="docutils literal"><span class="pre">hg</span> <span class="pre">update</span></code> will update to the head of the <em>current branch</em>.</p>
+</div>
+<div class="section" id="how-do-i-link-my-local-repository-to-a-particular-remote-repository">
+<span id="hg-paths"></span><h4><a class="toc-backref" href="#id27">28.2.1.10. How do I link my local repository to a particular remote repository?</a><a class="headerlink" href="#how-do-i-link-my-local-repository-to-a-particular-remote-repository" title="Permalink to this headline">¶</a></h4>
+<p>Your local repository is linked by default to the remote repository it
+was <em>cloned</em> from.  If you created it from scratch, however, it is not linked
+to any remote repository.  In <code class="docutils literal"><span class="pre">.hg/hgrc</span></code> file for the local repository, add
+or modify the following section:</p>
+<div class="highlight-python"><div class="highlight"><pre>[paths]
+default = ssh://hg@hg.python.org/devguide
+</pre></div>
+</div>
+<p>This example is for a local repository that mirrors the <code class="docutils literal"><span class="pre">devguide</span></code> repository
+on <code class="docutils literal"><span class="pre">hg.python.org</span></code>. The same approach works for other remote repositories.</p>
+<p>Anywhere that <code class="docutils literal"><span class="pre">&lt;remote</span> <span class="pre">repository&gt;</span></code> is used in the commands in this
+FAQ, <code class="docutils literal"><span class="pre">hg</span></code> will use the default remote repository if you omit the parameter.</p>
+</div>
+<div class="section" id="how-do-i-create-a-shorthand-alias-for-a-remote-repository">
+<h4><a class="toc-backref" href="#id28">28.2.1.11. How do I create a shorthand alias for a remote repository?</a><a class="headerlink" href="#how-do-i-create-a-shorthand-alias-for-a-remote-repository" title="Permalink to this headline">¶</a></h4>
+<p>In your global <code class="docutils literal"><span class="pre">.hgrc</span></code> file add a section similar to the following:</p>
+<div class="highlight-python"><div class="highlight"><pre>[paths]
+dg = ssh://hg@hg.python.org/devguide
+</pre></div>
+</div>
+<p>This example creates a <code class="docutils literal"><span class="pre">dg</span></code> alias for the <code class="docutils literal"><span class="pre">devguide</span></code> repository
+on <code class="docutils literal"><span class="pre">hg.python.org</span></code>. This allows &#8220;dg&#8221; to be entered instead of the
+full URL for commands taking a repository argument (e.g. <code class="docutils literal"><span class="pre">hg</span> <span class="pre">pull</span> <span class="pre">dg</span></code> or
+<code class="docutils literal"><span class="pre">hg</span> <span class="pre">outgoing</span> <span class="pre">dg</span></code>).</p>
+<p>Anywhere that <code class="docutils literal"><span class="pre">&lt;remote</span> <span class="pre">repository&gt;</span></code> is used in the commands in this
+FAQ, <code class="docutils literal"><span class="pre">hg</span></code> should accept an alias in place of a complete remote URL.</p>
+</div>
+<div class="section" id="how-do-i-compare-my-local-repository-to-a-remote-repository">
+<h4><a class="toc-backref" href="#id29">28.2.1.12. How do I compare my local repository to a remote repository?</a><a class="headerlink" href="#how-do-i-compare-my-local-repository-to-a-remote-repository" title="Permalink to this headline">¶</a></h4>
+<p>To display the list of changes that are in your local repository, but not
+in the remote, use:</p>
+<div class="highlight-python"><div class="highlight"><pre>hg outgoing &lt;remote repository&gt;
+</pre></div>
+</div>
+<p>This is the list of changes that will be sent if you call
+<code class="docutils literal"><span class="pre">hg</span> <span class="pre">push</span> <span class="pre">&lt;remote</span> <span class="pre">repository&gt;</span></code>.  It does <strong>not</strong> include any <a class="reference internal" href="#hg-status"><span>uncommitted
+changes</span></a> in your working copy!</p>
+<p>Conversely, for the list of changes that are in the remote repository but
+not in the local, use:</p>
+<div class="highlight-python"><div class="highlight"><pre>hg incoming &lt;remote repository&gt;
+</pre></div>
+</div>
+<p>This is the list of changes that will be retrieved if you call
+<code class="docutils literal"><span class="pre">hg</span> <span class="pre">pull</span> <span class="pre">&lt;remote</span> <span class="pre">repository&gt;</span></code>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>In most daily use, you will work against the default remote repository,
+and therefore simply type <code class="docutils literal"><span class="pre">hg</span> <span class="pre">outgoing</span></code> and <code class="docutils literal"><span class="pre">hg</span> <span class="pre">incoming</span></code>.</p>
+<p class="last">In this case, you can also get a synthetic summary using
+<code class="docutils literal"><span class="pre">hg</span> <span class="pre">summary</span> <span class="pre">--remote</span></code>.</p>
+</div>
+</div>
+<div class="section" id="how-do-i-update-my-local-repository-to-be-in-sync-with-a-remote-repository">
+<h4><a class="toc-backref" href="#id30">28.2.1.13. How do I update my local repository to be in sync with a remote repository?</a><a class="headerlink" href="#how-do-i-update-my-local-repository-to-be-in-sync-with-a-remote-repository" title="Permalink to this headline">¶</a></h4>
+<p>Run:</p>
+<div class="highlight-python"><div class="highlight"><pre>hg pull &lt;remote repository&gt;
+</pre></div>
+</div>
+<p>from the repository you wish to pull the latest changes into.  Most of the
+time, that repository is a clone of the repository you want to pull from,
+so you can simply type:</p>
+<div class="highlight-python"><div class="highlight"><pre>hg pull
+</pre></div>
+</div>
+<p>This doesn&#8217;t update your working copy, though.  See below:</p>
+</div>
+<div class="section" id="how-do-i-update-my-working-copy-with-the-latest-changes">
+<h4><a class="toc-backref" href="#id31">28.2.1.14. How do I update my working copy with the latest changes?</a><a class="headerlink" href="#how-do-i-update-my-working-copy-with-the-latest-changes" title="Permalink to this headline">¶</a></h4>
+<p>Do:</p>
+<div class="highlight-python"><div class="highlight"><pre>hg update
+</pre></div>
+</div>
+<p>This will update your working copy with the latest changes on the
+<a class="reference internal" href="#hg-current-branch"><span>current branch</span></a>.  If you had <a class="reference internal" href="#hg-status"><span>uncommitted
+changes</span></a> in your working copy, they will be merged in.</p>
+<p>If you find yourself typing often <code class="docutils literal"><span class="pre">hg</span> <span class="pre">pull</span></code> followed by <code class="docutils literal"><span class="pre">hg</span> <span class="pre">update</span></code>,
+be aware that you can combine them in a single command:</p>
+<div class="highlight-python"><div class="highlight"><pre>hg pull -u
+</pre></div>
+</div>
+</div>
+<div class="section" id="how-do-i-apply-a-patch">
+<span id="hg-local-workflow"></span><h4><a class="toc-backref" href="#id32">28.2.1.15. How do I apply a patch?</a><a class="headerlink" href="#how-do-i-apply-a-patch" title="Permalink to this headline">¶</a></h4>
+<p>If you want to try out or review a patch generated using Mercurial, do:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">patch</span> <span class="o">-</span><span class="n">p1</span> <span class="o">&lt;</span> <span class="n">somework</span><span class="o">.</span><span class="n">patch</span>
+</pre></div>
+</div>
+<p>This will apply the changes in your working copy without committing them.
+If the patch was not created by Mercurial (for example, a patch created by
+Subversion and thus lacking any <code class="docutils literal"><span class="pre">a</span></code>/<code class="docutils literal"><span class="pre">b</span></code> directory prefixes in the patch),
+replace <code class="docutils literal"><span class="pre">-p1</span></code> with <code class="docutils literal"><span class="pre">-p0</span></code>.</p>
+<p>If the patch contains renames, deletions or copies, and you intend committing
+it after your review, you might prefer using:</p>
+<div class="highlight-python"><div class="highlight"><pre>hg import --no-commit somework.patch
+</pre></div>
+</div>
+<p>If you want to work on the patch using <a class="reference external" href="http://mercurial.selenic.com/wiki/MqExtension">mq</a> (Mercurial Queues), type instead:</p>
+<div class="highlight-python"><div class="highlight"><pre>hg qimport somework.patch
+</pre></div>
+</div>
+<p>This will create a patch in your queue with a name that matches the filename.
+You can use the <code class="docutils literal"><span class="pre">-n</span></code> argument to specify a different name.  To have the
+patch applied to the working copy, type:</p>
+<div class="highlight-python"><div class="highlight"><pre>hg qpush
+</pre></div>
+</div>
+<p>Finally, to delete the patch, first un-apply it if necessary using <code class="docutils literal"><span class="pre">hg</span> <span class="pre">qpop</span></code>,
+then do:</p>
+<div class="highlight-python"><div class="highlight"><pre>hg qdelete somework.patch
+</pre></div>
+</div>
+</div>
+<div class="section" id="how-do-i-solve-conflicts-when-applying-a-patch-fails">
+<span id="merge-patch"></span><h4><a class="toc-backref" href="#id33">28.2.1.16. How do I solve conflicts when applying a patch fails?</a><a class="headerlink" href="#how-do-i-solve-conflicts-when-applying-a-patch-fails" title="Permalink to this headline">¶</a></h4>
+<p>The standard <code class="docutils literal"><span class="pre">patch</span></code> command, as well as <code class="docutils literal"><span class="pre">hg</span> <span class="pre">import</span></code>, will produce
+unhelpful <code class="docutils literal"><span class="pre">*.rej</span></code> files when it fails applying parts of a patch.
+We suggest you try the <a class="reference external" href="http://oss.oracle.com/~mason/mpatch/">mpatch</a> utility, which can help resolve a number of
+common causes of patch rejects.</p>
+<p>To make use of <code class="docutils literal"><span class="pre">mpatch</span></code> transparent, you can define a shell alias in one
+of your startup files.  For example, if you want it to open the <code class="docutils literal"><span class="pre">kdiff3</span></code>
+merge program to fix failing patch hunks:</p>
+<div class="highlight-python"><div class="highlight"><pre>alias patch=&#39;mpatch --merge=kdiff3&#39;
+</pre></div>
+</div>
+<p>or if you want it to automatically solve conflicts by using heuristics:</p>
+<div class="highlight-python"><div class="highlight"><pre>alias patch=&#39;mpatch --auto --no-merge&#39;
+</pre></div>
+</div>
+</div>
+<div class="section" id="how-do-i-add-a-file-or-directory-to-the-repository">
+<h4><a class="toc-backref" href="#id34">28.2.1.17. How do I add a file or directory to the repository?</a><a class="headerlink" href="#how-do-i-add-a-file-or-directory-to-the-repository" title="Permalink to this headline">¶</a></h4>
+<p>Simply specify the path to the file or directory to add and run:</p>
+<div class="highlight-python"><div class="highlight"><pre>hg add PATH
+</pre></div>
+</div>
+<p>If <code class="docutils literal"><span class="pre">PATH</span></code> is a directory, Mercurial will recursively add any files in that
+directory and its descendants.</p>
+<p>If you want Mercurial to figure out by itself which files should be added
+and/or removed, just run:</p>
+<div class="highlight-python"><div class="highlight"><pre>hg addremove
+</pre></div>
+</div>
+<p><strong>Be careful</strong> though, as it might add some files that are not desired in
+the repository (such as build products, cache files, or other data).</p>
+<p>You will then need to run <code class="docutils literal"><span class="pre">hg</span> <span class="pre">commit</span></code> (as discussed below) to commit
+the file(s) to your local repository.</p>
+</div>
+<div class="section" id="what-s-the-best-way-to-split-a-file-into-several-files">
+<h4><a class="toc-backref" href="#id35">28.2.1.18. What&#8217;s the best way to split a file into several files?</a><a class="headerlink" href="#what-s-the-best-way-to-split-a-file-into-several-files" title="Permalink to this headline">¶</a></h4>
+<p>To split a file into several files (e.g. a module converted to a package or a
+long doc file divided in two separate documents) use <code class="docutils literal"><span class="pre">hg</span> <span class="pre">copy</span></code>:</p>
+<div class="highlight-python"><div class="highlight"><pre>hg copy module.rst module2.rst
+</pre></div>
+</div>
+<p>and then remove the parts that are not necessary from <code class="docutils literal"><span class="pre">module.rst</span></code> and
+<code class="docutils literal"><span class="pre">module2.rst</span></code>.  This allows Mercurial to know that the content of
+<code class="docutils literal"><span class="pre">module2.rst</span></code> used to be in <code class="docutils literal"><span class="pre">module.rst</span></code>, and will make subsequent merges
+easier.  If necessary, you can also use <code class="docutils literal"><span class="pre">hg</span> <span class="pre">copy</span></code> several times.</p>
+<p>If you simply create <code class="docutils literal"><span class="pre">module2.rst</span></code>, add it with <code class="docutils literal"><span class="pre">hg</span> <span class="pre">add</span></code>, and copy part of
+the content from <code class="docutils literal"><span class="pre">module.rst</span></code>, Mercurial won&#8217;t know that the two file are
+related.</p>
+</div>
+<div class="section" id="how-do-i-delete-a-file-or-directory-in-the-repository">
+<h4><a class="toc-backref" href="#id36">28.2.1.19. How do I delete a file or directory in the repository?</a><a class="headerlink" href="#how-do-i-delete-a-file-or-directory-in-the-repository" title="Permalink to this headline">¶</a></h4>
+<p>Specify the path to be removed with:</p>
+<div class="highlight-python"><div class="highlight"><pre>hg remove PATH
+</pre></div>
+</div>
+<p>This will remove the file or the directory from your working copy; you will
+have to <a class="reference internal" href="#hg-commit"><span>commit your changes</span></a> for the removal to be recorded
+in your local repository.</p>
+</div>
+<div class="section" id="what-files-are-modified-in-my-working-copy">
+<span id="hg-status"></span><h4><a class="toc-backref" href="#id37">28.2.1.20. What files are modified in my working copy?</a><a class="headerlink" href="#what-files-are-modified-in-my-working-copy" title="Permalink to this headline">¶</a></h4>
+<p>Running:</p>
+<div class="highlight-python"><div class="highlight"><pre>hg status
+</pre></div>
+</div>
+<p>will list any pending changes in the working copy.  These changes will get
+committed to the local repository if you issue an <code class="docutils literal"><span class="pre">hg</span> <span class="pre">commit</span></code> without
+specifying any path.</p>
+<p>Some
+key indicators that can appear in the first column of output are:</p>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="4%" />
+<col width="96%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>A</td>
+<td>Scheduled to be added</td>
+</tr>
+<tr class="row-even"><td>R</td>
+<td>Scheduled to be removed</td>
+</tr>
+<tr class="row-odd"><td>M</td>
+<td>Modified locally</td>
+</tr>
+<tr class="row-even"><td>?</td>
+<td>Not under version control</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p>If you want a line-by-line listing of the differences, use:</p>
+<div class="highlight-python"><div class="highlight"><pre>hg diff
+</pre></div>
+</div>
+</div>
+<div class="section" id="how-do-i-revert-a-file-i-have-modified-back-to-the-version-in-the-repository">
+<h4><a class="toc-backref" href="#id38">28.2.1.21. How do I revert a file I have modified back to the version in the repository?</a><a class="headerlink" href="#how-do-i-revert-a-file-i-have-modified-back-to-the-version-in-the-repository" title="Permalink to this headline">¶</a></h4>
+<p>Running:</p>
+<div class="highlight-python"><div class="highlight"><pre>hg revert PATH
+</pre></div>
+</div>
+<p>will revert <code class="docutils literal"><span class="pre">PATH</span></code> to its version in the repository, throwing away any
+changes you made locally.  If you run:</p>
+<div class="highlight-python"><div class="highlight"><pre>hg revert -a
+</pre></div>
+</div>
+<p>from the root of your working copy it will recursively restore everything
+to match up with the repository.</p>
+</div>
+<div class="section" id="how-do-i-find-out-who-edited-or-what-revision-changed-a-line-last">
+<h4><a class="toc-backref" href="#id39">28.2.1.22. How do I find out who edited or what revision changed a line last?</a><a class="headerlink" href="#how-do-i-find-out-who-edited-or-what-revision-changed-a-line-last" title="Permalink to this headline">¶</a></h4>
+<p>You want:</p>
+<div class="highlight-python"><div class="highlight"><pre>hg annotate PATH
+</pre></div>
+</div>
+<p>This will output to stdout every line of the file along with which revision
+last modified that line.  When you have the revision number, it is then
+easy to <a class="reference internal" href="#hg-log-rev"><span>display it in detail</span></a>.</p>
+</div>
+<div class="section" id="how-can-i-see-a-list-of-log-messages-for-a-file-or-specific-revision">
+<span id="hg-log"></span><h4><a class="toc-backref" href="#id40">28.2.1.23. How can I see a list of log messages for a file or specific revision?</a><a class="headerlink" href="#how-can-i-see-a-list-of-log-messages-for-a-file-or-specific-revision" title="Permalink to this headline">¶</a></h4>
+<p>To see the history of changes for a specific file, run:</p>
+<div class="highlight-python"><div class="highlight"><pre>hg log -v [PATH]
+</pre></div>
+</div>
+<p>That will list all messages of revisions which modified the file specified
+in <code class="docutils literal"><span class="pre">PATH</span></code>.  If <code class="docutils literal"><span class="pre">PATH</span></code> is omitted, all revisions are listed.</p>
+<p>If you want to display line-by-line differences for each revision as well,
+add the <code class="docutils literal"><span class="pre">-p</span></code> option:</p>
+<div class="highlight-python"><div class="highlight"><pre>hg log -vp [PATH]
+</pre></div>
+</div>
+<p id="hg-log-rev">If you want to view the differences for a specific revision, run:</p>
+<div class="highlight-python"><div class="highlight"><pre>hg log -vp -r &lt;revision number&gt;
+</pre></div>
+</div>
+</div>
+<div class="section" id="how-can-i-see-the-changeset-graph-in-my-repository">
+<h4><a class="toc-backref" href="#id41">28.2.1.24. How can I see the changeset graph in my repository?</a><a class="headerlink" href="#how-can-i-see-the-changeset-graph-in-my-repository" title="Permalink to this headline">¶</a></h4>
+<p>In Mercurial repositories, changesets don&#8217;t form a simple list, but rather
+a graph: every changeset has one or two parents (it&#8217;s called a merge changeset
+in the latter case), and can have any number of children.</p>
+<p>The <a class="reference external" href="http://mercurial.selenic.com/wiki/GraphlogExtension">graphlog</a> extension is very useful for examining the structure of the
+changeset graph.  It is bundled with Mercurial.</p>
+<p>Graphical tools, such as TortoiseHG, will display the changeset graph
+by default.</p>
+</div>
+<div class="section" id="how-do-i-update-to-a-specific-release-tag">
+<h4><a class="toc-backref" href="#id42">28.2.1.25. How do I update to a specific release tag?</a><a class="headerlink" href="#how-do-i-update-to-a-specific-release-tag" title="Permalink to this headline">¶</a></h4>
+<p>Run:</p>
+<div class="highlight-python"><div class="highlight"><pre>hg tags
+</pre></div>
+</div>
+<p>to get a list of tags.  To update your working copy to a specific tag, use:</p>
+<div class="highlight-python"><div class="highlight"><pre>hg update &lt;tag&gt;
+</pre></div>
+</div>
+</div>
+<div class="section" id="how-do-i-find-which-changeset-introduced-a-bug-or-regression">
+<h4><a class="toc-backref" href="#id43">28.2.1.26. How do I find which changeset introduced a bug or regression?</a><a class="headerlink" href="#how-do-i-find-which-changeset-introduced-a-bug-or-regression" title="Permalink to this headline">¶</a></h4>
+<p><code class="docutils literal"><span class="pre">hg</span> <span class="pre">bisect</span></code>, as the name indicates, helps you do a bisection of a range of
+changesets.</p>
+<p>You need two changesets to start the search: one that is &#8220;good&#8221;
+(doesn&#8217;t have the bug), and one that is &#8220;bad&#8221; (has the bug).  Usually, you
+have just noticed the bug in your working copy, so you can start with:</p>
+<div class="highlight-python"><div class="highlight"><pre>hg bisect --bad
+</pre></div>
+</div>
+<p>Then you must <code class="docutils literal"><span class="pre">update</span></code> to a previous changeset that doesn&#8217;t have the bug.
+You can conveniently choose a faraway changeset (for example a former release),
+and check that it is indeed &#8220;good&#8221;.  Then type:</p>
+<div class="highlight-python"><div class="highlight"><pre>hg bisect --good
+</pre></div>
+</div>
+<p>Mercurial will automatically bisect so as to narrow the range of possible
+culprits, until a single changeset is isolated.  Each time Mercurial presents
+you with a new changeset, re-compile Python and run the offending test, for
+example:</p>
+<div class="highlight-python"><div class="highlight"><pre>make -j2
+./python -m test -uall test_sometest
+</pre></div>
+</div>
+<p>Then, type either <code class="docutils literal"><span class="pre">hg</span> <span class="pre">bisect</span> <span class="pre">--good</span></code> or <code class="docutils literal"><span class="pre">hg</span> <span class="pre">bisect</span> <span class="pre">--bad</span></code> depending on
+whether the test succeeded or failed.</p>
+</div>
+<div class="section" id="how-come-feature-xyz-isn-t-available-in-mercurial">
+<h4><a class="toc-backref" href="#id44">28.2.1.27. How come feature XYZ isn&#8217;t available in Mercurial?</a><a class="headerlink" href="#how-come-feature-xyz-isn-t-available-in-mercurial" title="Permalink to this headline">¶</a></h4>
+<p>Mercurial comes with many bundled extensions which can be explicitly enabled.
+You can get a list of them by typing <code class="docutils literal"><span class="pre">hg</span> <span class="pre">help</span> <span class="pre">extensions</span></code>.  Some of these
+extensions, such as <code class="docutils literal"><span class="pre">color</span></code>, can prettify output; others, such as <code class="docutils literal"><span class="pre">fetch</span></code>
+or <code class="docutils literal"><span class="pre">graphlog</span></code>, add new Mercurial commands.</p>
+<p>There are also many <a class="reference external" href="http://www.selenic.com/mercurial/hgrc.5.html">configuration options</a> to tweak various aspects of the
+command line and other Mercurial behaviour; typing <a class="reference external" href="http://www.selenic.com/mercurial/hgrc.5.html">man hgrc</a> displays
+their documentation inside your terminal.</p>
+<p>In the end, please refer to the Mercurial <a class="reference external" href="http://mercurial.selenic.com/wiki/">wiki</a>, especially the pages about
+<a class="reference external" href="http://mercurial.selenic.com/wiki/UsingExtensions">extensions</a> (including third-party ones) and the <a class="reference external" href="http://mercurial.selenic.com/wiki/TipsAndTricks">tips and tricks</a>.</p>
+</div>
+</div>
+<div class="section" id="for-core-developers">
+<span id="core-devs-faqs"></span><h3><a class="toc-backref" href="#id45">28.2.2. For core developers</a><a class="headerlink" href="#for-core-developers" title="Permalink to this headline">¶</a></h3>
+<p>These FAQs are intended mainly for core developers.</p>
+<div class="section" id="how-do-i-commit-a-change-to-a-file">
+<span id="hg-commit"></span><h4><a class="toc-backref" href="#id46">28.2.2.1. How do I commit a change to a file?</a><a class="headerlink" href="#how-do-i-commit-a-change-to-a-file" title="Permalink to this headline">¶</a></h4>
+<p>To commit any changes to a file (which includes adding a new file or deleting
+an existing one), you use the command:</p>
+<div class="highlight-python"><div class="highlight"><pre>hg commit [PATH]
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">PATH</span></code> is optional: if it is omitted, all changes in your working copy
+will be committed to the local repository.  When you commit, be sure that all
+changes are desired by <a class="reference internal" href="#hg-status"><span>reviewing them first</span></a>;
+also, when making commits that you intend to push to public repositories,
+you should <strong>not</strong> commit together unrelated changes.</p>
+<p>To abort a commit that you are in the middle of, leave the message
+empty (i.e., close the text editor without adding any text for the
+message).  Mercurial will then abort the commit operation so that you can
+try again later.</p>
+<p>Once a change is committed to your local repository, it is still only visible
+by you.  This means you are free to experiment with as many local commits
+you feel like.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If you do not like the default text editor Mercurial uses for
+entering commit messages, you may specify a different editor,
+either by changing the <code class="docutils literal"><span class="pre">EDITOR</span></code> environment variable or by setting
+a Mercurial-specific editor in your global <code class="docutils literal"><span class="pre">.hgrc</span></code> with the <code class="docutils literal"><span class="pre">editor</span></code>
+option in the <code class="docutils literal"><span class="pre">[ui]</span></code> section.</p>
+</div>
+</div>
+<div class="section" id="how-do-i-solve-merge-conflicts">
+<span id="hg-merge-conflicts"></span><h4><a class="toc-backref" href="#id47">28.2.2.2. How do I solve merge conflicts?</a><a class="headerlink" href="#how-do-i-solve-merge-conflicts" title="Permalink to this headline">¶</a></h4>
+<p>The easiest way is to install KDiff3 &#8212; Mercurial will open it automatically
+in case of conflicts, and you can then use it to solve the conflicts and
+save the resulting file(s).  KDiff3 will also take care of marking the
+conflicts as resolved.</p>
+<p>If you don&#8217;t use a merge tool, you can use <code class="docutils literal"><span class="pre">hg</span> <span class="pre">resolve</span> <span class="pre">--list</span></code> to list the
+conflicting files, resolve the conflicts manually, and the use
+<code class="docutils literal"><span class="pre">hg</span> <span class="pre">resolve</span> <span class="pre">--mark</span> <span class="pre">&lt;file</span> <span class="pre">path&gt;</span></code> to mark these conflicts as resolved.
+You can also use <code class="docutils literal"><span class="pre">hg</span> <span class="pre">resolve</span> <span class="pre">-am</span></code> to mark all the conflicts as resolved.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Mercurial will use KDiff3 automatically if it&#8217;s installed and it can find
+it &#8212; you don&#8217;t need to change any settings.  KDiff3 is also already
+included in the installer of TortoiseHg.  For more information, see
+<a class="reference external" href="http://mercurial.selenic.com/wiki/KDiff3">http://mercurial.selenic.com/wiki/KDiff3</a>.</p>
+</div>
+</div>
+<div class="section" id="how-do-i-make-a-null-merge">
+<span id="hg-null-merge"></span><h4><a class="toc-backref" href="#id48">28.2.2.3. How do I make a null merge?</a><a class="headerlink" href="#how-do-i-make-a-null-merge" title="Permalink to this headline">¶</a></h4>
+<p>If you committed something (e.g. on 3.4) that shouldn&#8217;t be ported on newer
+branches (e.g. on default), you have to do a <em>null merge</em>:</p>
+<div class="highlight-python"><div class="highlight"><pre>cd 3.x
+hg merge 3.4
+hg revert -ar default
+hg resolve -am  # needed only if the merge created conflicts
+hg ci -m &#39;#12345: null merge with 3.4.&#39;
+</pre></div>
+</div>
+<p>Before committing, <code class="docutils literal"><span class="pre">hg</span> <span class="pre">status</span></code> should list all the merged files as <code class="docutils literal"><span class="pre">M</span></code>,
+but <code class="docutils literal"><span class="pre">hg</span> <span class="pre">diff</span></code> should produce no output.  This will record the merge without
+actually changing the content of the files.</p>
+</div>
+<div class="section" id="i-got-abort-push-creates-new-remote-heads-while-pushing-what-do-i-do">
+<span id="hg-heads-merge"></span><h4><a class="toc-backref" href="#id49">28.2.2.4. I got &#8220;abort: push creates new remote heads!&#8221; while pushing, what do I do?</a><a class="headerlink" href="#i-got-abort-push-creates-new-remote-heads-while-pushing-what-do-i-do" title="Permalink to this headline">¶</a></h4>
+<p>If you see this message while pushing, it means that you committed something
+on a clone that was not up to date, thus creating a new head.
+This usually happens for two reasons:</p>
+<ol class="arabic simple">
+<li>You forgot to run <code class="docutils literal"><span class="pre">hg</span> <span class="pre">pull</span></code> and/or <code class="docutils literal"><span class="pre">hg</span> <span class="pre">up</span></code> before committing;</li>
+<li>Someone else pushed on the main repo just before you, causing a push race;</li>
+</ol>
+<p>First of all you should pull the new changesets using <code class="docutils literal"><span class="pre">hg</span> <span class="pre">pull</span></code>.  Then you can
+use <code class="docutils literal"><span class="pre">hg</span> <span class="pre">heads</span></code> to see which branches have multiple heads.</p>
+<p>If only one branch has multiple heads, you can do:</p>
+<div class="highlight-python"><div class="highlight"><pre>cd default
+hg heads .
+hg up csid-of-the-other-head
+hg merge
+hg ci -m &#39;Merge heads.&#39;
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">hg</span> <span class="pre">heads</span> <span class="pre">.</span></code>  will show you the two heads of the current branch: the one you
+pulled and the one you created with your commit (you can also specify a branch
+with <code class="docutils literal"><span class="pre">hg</span> <span class="pre">heads</span> <span class="pre">&lt;branch&gt;</span></code>).  While not strictly necessary, it is highly
+recommended to switch to the other head before merging.  This way you will be
+merging only your changeset with the rest, and in case of conflicts it will be
+a lot easier.</p>
+<p>If more than one branch has multiple heads, you have to repeat these steps for
+each branch.  Since this creates new changesets, you will also have to
+<a class="reference internal" href="committing.html#branch-merge"><span>merge them between branches</span></a>.  For example, if both <code class="docutils literal"><span class="pre">3.4</span></code>
+and <code class="docutils literal"><span class="pre">default</span></code> have multiple heads, you should first merge heads in <code class="docutils literal"><span class="pre">3.4</span></code>,
+then merge heads in <code class="docutils literal"><span class="pre">default</span></code>, and finally merge <code class="docutils literal"><span class="pre">3.4</span></code> with <code class="docutils literal"><span class="pre">default</span></code>
+using <code class="docutils literal"><span class="pre">hg</span> <span class="pre">merge</span> <span class="pre">3.4</span></code> as usual.</p>
+<p>In order to avoid this, you should <em>always remember to pull and update before
+committing</em>.</p>
+</div>
+<div class="section" id="how-do-i-undo-the-changes-made-in-a-recent-commit">
+<h4><a class="toc-backref" href="#id50">28.2.2.5. How do I undo the changes made in a recent commit?</a><a class="headerlink" href="#how-do-i-undo-the-changes-made-in-a-recent-commit" title="Permalink to this headline">¶</a></h4>
+<p>First, this should not happen if you take the habit of <a class="reference internal" href="#hg-status"><span>reviewing changes</span></a> before committing them.</p>
+<p>In any case, run:</p>
+<div class="highlight-python"><div class="highlight"><pre>hg backout &lt;revision number&gt;
+</pre></div>
+</div>
+<p>This will modify your working copy so that all changes in <code class="docutils literal"><span class="pre">&lt;revision</span> <span class="pre">number&gt;</span></code>
+(including added or deleted files) are undone.  You then need to <a class="reference internal" href="#hg-commit"><span>commit</span></a> these changes so that the backout gets permanently recorded.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">These instructions are for Mercurial 1.7 and higher.  <code class="docutils literal"><span class="pre">hg</span> <span class="pre">backout</span></code> has
+a slightly different behaviour in versions before 1.7.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="ssh">
+<h2><a class="toc-backref" href="#id51">28.3. SSH</a><a class="headerlink" href="#ssh" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="how-do-i-generate-an-ssh-2-public-key">
+<h3><a class="toc-backref" href="#id52">28.3.1. How do I generate an SSH-2 public key?</a><a class="headerlink" href="#how-do-i-generate-an-ssh-2-public-key" title="Permalink to this headline">¶</a></h3>
+<p>All generated SSH keys should be sent to <a class="reference external" href="mailto:hgaccounts&#37;&#52;&#48;python&#46;org">hgaccounts<span>&#64;</span>python<span>&#46;</span>org</a> for
+adding to the list of keys.</p>
+<div class="section" id="id1">
+<h4><a class="toc-backref" href="#id53">28.3.1.1. UNIX</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h4>
+<p>Run:</p>
+<div class="highlight-python"><div class="highlight"><pre>ssh-keygen -t ed25519
+</pre></div>
+</div>
+<p>This will generate two files; your public key and your private key.  The public
+key is in file ending in <code class="docutils literal"><span class="pre">.pub</span></code>.</p>
+</div>
+<div class="section" id="id2">
+<h4><a class="toc-backref" href="#id54">28.3.1.2. Windows</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h4>
+<p>Use <a class="reference external" href="http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html">PuTTYgen</a> to generate your public key.  Choose the &#8220;SSH2 DSA&#8221; radio button,
+have it create an OpenSSH formatted key, choose a password, and save the private
+key to a file.  Copy the section with the public key (using Alt-P) to a file;
+that file now has your public key.</p>
+</div>
+</div>
+<div class="section" id="is-there-a-way-to-avoid-having-to-constantly-enter-my-password-for-my-ssh-2-public-key">
+<h3><a class="toc-backref" href="#id55">28.3.2. Is there a way to avoid having to constantly enter my password for my SSH 2 public key?</a><a class="headerlink" href="#is-there-a-way-to-avoid-having-to-constantly-enter-my-password-for-my-ssh-2-public-key" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id3">
+<h4><a class="toc-backref" href="#id56">28.3.2.1. UNIX</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h4>
+<p>Use <code class="docutils literal"><span class="pre">ssh-agent</span></code> and <code class="docutils literal"><span class="pre">ssh-add</span></code> to register your private key with SSH for
+your current session.  The simplest solution, though, is to use <a class="reference external" href="http://www.gentoo.org/proj/en/keychain/">KeyChain</a>,
+which is a shell script that will handle <code class="docutils literal"><span class="pre">ssh-agent</span></code> and <code class="docutils literal"><span class="pre">ssh-add</span></code> for you
+once per login instead of per session.</p>
+</div>
+<div class="section" id="pageant">
+<span id="id4"></span><h4><a class="toc-backref" href="#id57">28.3.2.2. Windows</a><a class="headerlink" href="#pageant" title="Permalink to this headline">¶</a></h4>
+<p>The Pageant program is bundled with TortoiseHg.  You can find it in its
+installation directory (usually <code class="docutils literal"><span class="pre">C:\Program</span> <span class="pre">Files</span> <span class="pre">(x86)\TortoiseHg\</span></code>);
+you can also <a class="reference external" href="http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html">download it separately</a>.</p>
+<p>Running Pageant will prevent you from having to type your password constantly.
+If you add a shortcut to Pageant to your Autostart group and edit the shortcut
+so that the command line includes an argument to your private key then Pageant
+will load the key every time you log in.</p>
+</div>
+</div>
+<div class="section" id="can-i-make-commits-from-machines-other-than-the-one-i-generated-the-keys-on">
+<h3><a class="toc-backref" href="#id58">28.3.3. Can I make commits from machines other than the one I generated the keys on?</a><a class="headerlink" href="#can-i-make-commits-from-machines-other-than-the-one-i-generated-the-keys-on" title="Permalink to this headline">¶</a></h3>
+<p>You can <a class="reference internal" href="#hg-commit"><span>make commits</span></a> from any machine, since they will be
+recorded in your <em>local repository</em>.</p>
+<p>However, to push these changes to the remote server, you will need proper
+credentials.  All you need is to make sure that the machine you want to
+push changes from has both the public and private keys in the standard
+place that ssh will look for them (i.e. ~/.ssh on Unix machines).
+Please note that although the key file ending in .pub contains your
+user name and machine name in it, that information is not used by the
+verification process, therefore these key files can be moved to a
+different computer and used for verification.  Please guard your keys
+and never share your private key with anyone.  If you lose the media
+on which your keys are stored or the machine on which your keys are
+stored, be sure to report this to <a class="reference external" href="mailto:pydotorg&#37;&#52;&#48;python&#46;org">pydotorg<span>&#64;</span>python<span>&#46;</span>org</a> at the same time
+that you change your keys.</p>
+</div>
+</div>
+<div class="section" id="general">
+<h2><a class="toc-backref" href="#id59">28.4. General</a><a class="headerlink" href="#general" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="how-do-i-regenerate-configure">
+<h3><a class="toc-backref" href="#id60">28.4.1. How do I regenerate configure?</a><a class="headerlink" href="#how-do-i-regenerate-configure" title="Permalink to this headline">¶</a></h3>
+<p>If a change is made to Python which relies on some POSIX system-specific
+functionality (such as using a new system call), it is necessary to update the
+<code class="docutils literal"><span class="pre">configure</span></code> script to test for availability of the functionality.</p>
+<p>Python&#8217;s <code class="docutils literal"><span class="pre">configure</span></code> script is generated from <code class="docutils literal"><span class="pre">configure.ac</span></code> using Autoconf.
+Instead of editing <code class="docutils literal"><span class="pre">configure</span></code>, edit <code class="docutils literal"><span class="pre">configure.ac</span></code> and then run
+<code class="docutils literal"><span class="pre">autoreconf</span></code> to regenerate <code class="docutils literal"><span class="pre">configure</span></code> and a number of other files (such as
+<code class="docutils literal"><span class="pre">pyconfig.h</span></code>.</p>
+<p>When submitting a patch with changes made to <code class="docutils literal"><span class="pre">configure.ac</span></code>, it is preferred
+to leave out the generated files as differences between Autoconf versions
+frequently results in many spurious changes cluttering the patch. Instead,
+remind any potential reviewers on the tracker to run <code class="docutils literal"><span class="pre">autoreconf</span></code>.</p>
+<p>Note that running <code class="docutils literal"><span class="pre">autoreconf</span></code> is not the same as running <code class="docutils literal"><span class="pre">autoconf</span></code>. For
+example, <code class="docutils literal"><span class="pre">autoconf</span></code> by itself will not regenerate <code class="docutils literal"><span class="pre">pyconfig.h.in</span></code>.
+<code class="docutils literal"><span class="pre">autoreconf</span></code> runs <code class="docutils literal"><span class="pre">autoconf</span></code> and a number of other tools repeatedly as is
+appropriate.</p>
+<p>Python&#8217;s <code class="docutils literal"><span class="pre">configure.ac</span></code> script typically requires a specific version of
+Autoconf.  At the moment, this reads: <code class="docutils literal"><span class="pre">version_required(2.65)</span></code></p>
+<p>If the system copy of Autoconf does not match this version, you will need to
+install your own copy of Autoconf.</p>
+</div>
+<div class="section" id="how-do-i-update-my-auto-load-safe-path-to-allow-test-gdb-to-run">
+<h3><a class="toc-backref" href="#id61">28.4.2. How do I update my auto-load-safe-path to allow test_gdb to run?</a><a class="headerlink" href="#how-do-i-update-my-auto-load-safe-path-to-allow-test-gdb-to-run" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">test_gdb</span></code> attempts to automatically load additional Python specific
+hooks into gdb in order to test them. Unfortunately, the command line
+options it uses to do this aren&#8217;t always supported correctly.</p>
+<p>If <code class="docutils literal"><span class="pre">test_gdb</span></code> is being skipped with an &#8220;auto-loading has been declined&#8221;
+message, then it is necessary to identify any Python build directories as
+auto-load safe. One way to achieve this is to add a line like the following
+to <code class="docutils literal"><span class="pre">~/.gdbinit</span></code> (edit the specific list of paths as appropriate):</p>
+<div class="highlight-python"><div class="highlight"><pre>add-auto-load-safe-path ~/devel/py3k:~/devel/py32:~/devel/py27
+</pre></div>
+</div>
+</div>
+<div class="section" id="how-do-i-port-python-to-a-new-platform">
+<h3><a class="toc-backref" href="#id62">28.4.3. How do I port Python to a new platform?</a><a class="headerlink" href="#how-do-i-port-python-to-a-new-platform" title="Permalink to this headline">¶</a></h3>
+<p>The first step is to familiarize yourself with the development toolchain on
+the platform in question, notably the C compiler. Make sure you can compile and
+run a hello-world program using the target compiler.</p>
+<p>Next, learn how to compile and run the Python interpreter on a platform to
+which it has already been ported; preferably Unix, but Windows will
+do, too. The build process for Python, in particular the <code class="docutils literal"><span class="pre">Makefile</span></code> in the
+source distribution, will give you a hint on which files to compile
+for Python.  Not all source files are relevant: some are platform
+specific, others are only used in emergencies (e.g. <code class="docutils literal"><span class="pre">getopt.c</span></code>).</p>
+<p>It is not recommended to start porting Python without at least medium-level
+understanding of your target platform; i.e. how it is generally used, how to
+write platform specific apps, etc. Also, some Python knowledge is required, or
+you will be unable to verify that your port is working correctly.</p>
+<p>You will need a <code class="docutils literal"><span class="pre">pyconfig.h</span></code> file tailored for your platform.  You can
+start with <code class="docutils literal"><span class="pre">pyconfig.h.in</span></code>, read the comments, and turn on definitions that
+apply to your platform.  Also, you will need a <code class="docutils literal"><span class="pre">config.c</span></code> file, which lists
+the built-in modules you support.  Again, starting with
+<code class="docutils literal"><span class="pre">Modules/config.c.in</span></code> is recommended.</p>
+<p>Finally, you will run into some things that are not supported on your
+target platform.  Forget about the <code class="docutils literal"><span class="pre">posix</span></code> module in the beginning. You can
+simply comment it out of the <code class="docutils literal"><span class="pre">config.c</span></code> file.</p>
+<p>Keep working on it until you get a <code class="docutils literal"><span class="pre">&gt;&gt;&gt;</span></code> prompt.  You may have to disable the
+importing of <code class="docutils literal"><span class="pre">site.py</span></code> by passing the <code class="docutils literal"><span class="pre">-S</span></code> option. When you have a prompt,
+bang on it until it executes very simple Python statements.</p>
+<p>At some point you will want to use the <code class="docutils literal"><span class="pre">os</span></code> module; this is the time to start
+thinking about what to do with the <code class="docutils literal"><span class="pre">posix</span></code> module.  It is okay to simply
+comment out functions in the <code class="docutils literal"><span class="pre">posix</span></code> module that cause problems; the
+remaining ones will be quite useful.</p>
+<p>Before you are done, it is highly recommended to run the Python regression test
+suite, as described in <a class="reference internal" href="runtests.html#runtests"><span>Running &amp; Writing Tests</span></a>.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">28. Python Developer FAQ</a><ul>
+<li><a class="reference internal" href="#communications">28.1. Communications</a></li>
+<li><a class="reference internal" href="#version-control">28.2. Version Control</a></li>
+<li><a class="reference internal" href="#ssh">28.3. SSH</a></li>
+<li><a class="reference internal" href="#general">28.4. General</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="gitdevs.html" title="previous chapter">27. Mercurial for git developers</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/faq.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Carol Willing.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.6</a>
+      
+      |
+      <a href="_sources/faq.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,162 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>12. Following Python’s Development &mdash; Devguide 2015.08.08 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '2015.08.08',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Devguide 2015.08.08 documentation" href="index.html" />
+    <link rel="next" title="13. How to Become a Core Developer" href="coredev.html" />
+    <link rel="prev" title="11. Triaging an Issue" href="triaging.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="following-python-s-development">
+<span id="communication"></span><h1>12. Following Python&#8217;s Development<a class="headerlink" href="#following-python-s-development" title="Permalink to this headline">¶</a></h1>
+<p>Python&#8217;s development is communicated through a myriad of ways, mostly through
+mailing lists, but also other forms.</p>
+<div class="section" id="mailing-lists">
+<span id="mailinglists"></span><h2>12.1. Mailing Lists<a class="headerlink" href="#mailing-lists" title="Permalink to this headline">¶</a></h2>
+<p>The primary mailing list where discussions about Python&#8217;s development occur is
+<a class="reference external" href="http://mail.python.org/mailman/listinfo/python-dev">python-dev</a>. The list is open to the public and is subscribed to by all core
+developers plus many people simply interested in following Python&#8217;s
+development. Discussion is focused on issues related to Python&#8217;s development,
+such as how to handle a specific issue, a PEP, etc. Ideas about new
+functionality should <strong>not</strong> start here and instead should be sent to
+<a class="reference external" href="http://mail.python.org/mailman/listinfo/python-ideas">python-ideas</a>. Technical support questions should also not be asked here and
+instead should go to <a class="reference external" href="http://mail.python.org/mailman/listinfo/python-list">python-list</a> or <a class="reference external" href="http://mail.python.org/mailman/listinfo/python-help">python-help</a>.</p>
+<p>The <a class="reference external" href="http://mail.python.org/mailman/listinfo/python-committers">python-committers</a> mailing list is a private mailing list for core
+developers (the archives are publicly available).
+If something only affects core developers (e.g., the
+tree is frozen for commits, etc.), it is discussed here instead of python-dev
+to keep traffic down on the latter.</p>
+<p><a class="reference external" href="http://mail.python.org/mailman/listinfo/python-ideas">Python-ideas</a> is a mailing list open to the public to discuss ideas on changing
+Python. If a new idea does not start here (or <a class="reference external" href="http://mail.python.org/mailman/listinfo/python-list">python-list</a>, discussed below),
+it will get redirected here.</p>
+<p><a class="reference external" href="http://mail.python.org/mailman/listinfo/python-checkins">Python-checkins</a> sends out an email for every commit to Python&#8217;s various
+repositories from <a class="reference external" href="https://hg.python.org">https://hg.python.org</a>. All core developers
+subscribe to this list and are known to reply to these emails to make comments
+about various issues they catch in the commit. Replies get redirected to
+python-dev.</p>
+<p>There are two mailing lists related to issues on the <a class="reference external" href="http://bugs.python.org">issue tracker</a>. If you
+only want an email for when a new issue is open, subscribe to
+<a class="reference external" href="http://mail.python.org/mailman/listinfo/new-bugs-announce">new-bugs-announce</a>. If you would rather receive an email for all changes made
+to any issue, subscribe to <a class="reference external" href="http://mail.python.org/mailman/listinfo/python-bugs-list">python-bugs-list</a>.</p>
+<p>Sometimes people post new ideas to <a class="reference external" href="http://mail.python.org/mailman/listinfo/python-list">python-list</a> to gather community opinion before
+heading to <a class="reference external" href="http://mail.python.org/mailman/listinfo/python-ideas">python-ideas</a>. The list is also sometimes known as comp.lang.python,
+the name of the newsgroup is mirrors (it is also known by the abbreviation
+c.l.py).</p>
+<p>A complete list of Python mailing lists can be found at <a class="reference external" href="http://mail.python.org">http://mail.python.org</a>.
+Most lists are also mirrored at <a class="reference external" href="http://news.gmane.org/">http://news.gmane.org/</a> and can be read and
+posted to in various ways, including via web browsers, NNTP newsreaders, and
+RSS feed readers.</p>
+</div>
+<div class="section" id="irc">
+<h2>12.2. IRC<a class="headerlink" href="#irc" title="Permalink to this headline">¶</a></h2>
+<p>Some core developers enjoy spending time on IRC discussing various issues
+regarding Python&#8217;s development in the <code class="docutils literal"><span class="pre">#python-dev</span></code> channel on
+<code class="docutils literal"><span class="pre">irc.freenode.net</span></code>. This is not a place to ask for help with Python, but to
+discuss issues related to Python&#8217;s own development.  You can use freenode&#8217;s
+<a class="reference external" href="http://webchat.freenode.net/">Web interface</a> if you don&#8217;t have an IRC
+client.</p>
+</div>
+<div class="section" id="blogs">
+<h2>12.3. Blogs<a class="headerlink" href="#blogs" title="Permalink to this headline">¶</a></h2>
+<p>Several core developers are active bloggers and discuss Python&#8217;s development
+that way. You can find their blogs (and various other developers who use Python)
+at <a class="reference external" href="http://planet.python.org/">http://planet.python.org/</a>.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">12. Following Python&#8217;s Development</a><ul>
+<li><a class="reference internal" href="#mailing-lists">12.1. Mailing Lists</a></li>
+<li><a class="reference internal" href="#irc">12.2. IRC</a></li>
+<li><a class="reference internal" href="#blogs">12.3. Blogs</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="triaging.html" title="previous chapter">11. Triaging an Issue</a></li>
+      <li>Next: <a href="coredev.html" title="next chapter">13. How to Become a Core Developer</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/communication.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Carol Willing.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.6</a>
+      
+      |
+      <a href="_sources/communication.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

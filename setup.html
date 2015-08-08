@@ -1,0 +1,426 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>1. Getting Started &mdash; Devguide 2015.08.08 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '2015.08.08',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Devguide 2015.08.08 documentation" href="index.html" />
+    <link rel="next" title="2. Where to Get Help" href="help.html" />
+    <link rel="prev" title="Python Developer’s Guide" href="index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="getting-started">
+<h1>1. Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h1>
+<p>These instructions cover how to get a working copy of the source code and a
+compiled version of the CPython interpreter (CPython is the version of Python
+available from <a class="reference external" href="http://www.python.org/">http://www.python.org/</a>). It also gives an overview of the
+directory structure of the CPython source code.</p>
+<p>OpenHatch also has a great <a class="reference external" href="https://openhatch.org/wiki/Contributing_to_Python">setup guide</a> for Python for people who are
+completely new to contributing to open source.</p>
+<div class="section" id="getting-set-up">
+<span id="setup"></span><h2>1.1. Getting Set Up<a class="headerlink" href="#getting-set-up" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="version-control-setup">
+<span id="vcsetup"></span><h3>1.1.1. Version Control Setup<a class="headerlink" href="#version-control-setup" title="Permalink to this headline">¶</a></h3>
+<p>CPython is developed using <a class="reference external" href="http://hg-scm.org/">Mercurial</a>. The Mercurial
+command line program is named <code class="docutils literal"><span class="pre">hg</span></code>; this is also used to refer to Mercurial
+itself. Mercurial is easily available for common Unix systems by way of the
+standard package manager; under Windows, you might want to use the
+<a class="reference external" href="http://tortoisehg.org/">TortoiseHg</a> graphical client, but the build system
+still prefers <code class="file docutils literal"><span class="pre">hg.exe</span></code> to be on your PATH.</p>
+</div>
+<div class="section" id="getting-the-source-code">
+<span id="checkout"></span><h3>1.1.2. Getting the Source Code<a class="headerlink" href="#getting-the-source-code" title="Permalink to this headline">¶</a></h3>
+<p>One should always work from a working copy of the CPython source code.
+While it may
+be tempting to work from the copy of Python you already have installed on your
+machine, it is very likely that you will be working from out-of-date code as
+the Python core developers are constantly updating and fixing things in their
+<abbr title="version control system">VCS</abbr>. It also means you will have better tool
+support through the VCS as it will provide a diff tool, etc.</p>
+<p>To get a working copy of the <a class="reference internal" href="devcycle.html#indevbranch"><span>in-development</span></a> branch of
+CPython (core developers use a different URL as outlined in <a class="reference internal" href="coredev.html#coredev"><span>How to Become a Core Developer</span></a>),
+run:</p>
+<div class="highlight-python"><div class="highlight"><pre>hg clone https://hg.python.org/cpython
+</pre></div>
+</div>
+<p>If you want a working copy of an already-released version of Python,
+i.e., a version in <a class="reference internal" href="devcycle.html#maintbranch"><span>maintenance mode</span></a>, you can update your
+working copy. For instance, to update your working copy to Python 3.4, do:</p>
+<div class="highlight-python"><div class="highlight"><pre>hg update 3.4
+</pre></div>
+</div>
+<p>You will need to re-compile CPython when you do such an update.</p>
+<p>Do note that CPython will notice that it is being run from a working copy.
+This means that if you edit CPython&#8217;s source code in your working copy,
+changes to Python code will be picked up by the interpreter for immediate
+use and testing.  (If you change C code, you will need to recompile the
+affected files as described below.)</p>
+<p>Patches for the documentation can be made from the same repository; see
+<a class="reference internal" href="documenting.html#documenting"><span>Documenting Python</span></a>.</p>
+</div>
+<div class="section" id="compiling-for-debugging">
+<span id="compiling"></span><h3>1.1.3. Compiling (for debugging)<a class="headerlink" href="#compiling-for-debugging" title="Permalink to this headline">¶</a></h3>
+<p>CPython provides several compilation flags which help with debugging various
+things. While all of the known flags can be found in the
+<code class="docutils literal"><span class="pre">Misc/SpecialBuilds.txt</span></code>
+file, the most critical one is the <code class="docutils literal"><span class="pre">Py_DEBUG</span></code> flag which creates what is
+known as a &#8220;pydebug&#8221; build. This flag turns on
+various extra sanity checks which help catch common issues. The use of the flag
+is so common that turning on the flag is a basic compile option.</p>
+<p>You should always
+develop under a pydebug build of CPython (the only instance of when you
+shouldn&#8217;t is if you are taking performance measurements). Even when working
+only on pure Python code the pydebug build provides several useful checks that
+one should not skip.</p>
+<div class="section" id="build-dependencies">
+<span id="id1"></span><h4>1.1.3.1. Build dependencies<a class="headerlink" href="#build-dependencies" title="Permalink to this headline">¶</a></h4>
+<p>The core CPython interpreter only needs a C compiler to be built; if
+you get compile errors with a C89 or C99-compliant compiler, please <a class="reference external" href="http://bugs.python.org">open a
+bug report</a>.
+However, some of the extension modules will need development headers
+for additional libraries (such as the <code class="docutils literal"><span class="pre">zlib</span></code> library for compression).
+Depending on what you intend to work on, you might need to install these
+additional requirements so that the compiled interpreter supports the
+desired features.</p>
+<p>For UNIX based systems, we try to use system libraries whenever available.
+This means optional components will only build if the relevant system headers
+are available. The best way to obtain the appropriate headers will vary by
+distribution, but the appropriate commands for some popular distributions
+are below.</p>
+<p>Fedora, Red Hat Enterprise Linux and other <code class="docutils literal"><span class="pre">yum</span></code> based systems:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ sudo yum install yum-utils
+$ sudo yum-builddep python3
+</pre></div>
+</div>
+<p>Debian, Ubuntu and other <code class="docutils literal"><span class="pre">apt</span></code> based systems, try to get the dependencies for
+the Python version that you&#8217;re working on e.g.:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ sudo apt-get build-dep python3.4
+</pre></div>
+</div>
+<p>If that package is not available for your system, try reducing the minor
+version until you find a package that is available.</p>
+<p>For Mac OS X systems, it is generally easiest to use the C compiler and other
+development utilities provided by Apple&#8217;s Xcode Developer Tools.  There are
+specific versions supported by Apple for each major release of OS X.  For
+current releases, Xcode is available as a no-cost download from Apple&#8217;s App
+Store.  Xcode versions for older releases are available through
+<a class="reference external" href="https://developer.apple.com/">the Apple Developer web site</a>.
+Note that while the Xcode IDE application itself is not needed to build Python,
+the development components packaged inside it may be.  You should also install
+the Xcode Command Line Tools component to ensure build tools and system header
+files are installed in their conventional locations (<code class="docutils literal"><span class="pre">/usr/bin</span></code> and
+<code class="docutils literal"><span class="pre">/usr/include</span></code>).  How the command line tools are installed varies by OS X
+and Xcode release.  In earlier releases, there may be a separate installer
+download.  For OS X 10.7 and 10.8, there is an option in the Xcode app
+Preferences menu.  For OS X 10.9 (Mavericks), run the following:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ xcode-select --install
+</pre></div>
+</div>
+<p>Also note that OS X does not include several libraries used by the Python
+standard library, including <code class="docutils literal"><span class="pre">libzma</span></code>, so expect to see some extension module
+build failures unless you install local copies of them.</p>
+<p>There will sometimes be optional modules added for a new release which
+won&#8217;t yet be identified in the OS level build dependencies. In those cases,
+just ask for assistance on the core-mentorship list. If working on bug
+fixes for Python 2.7, use <code class="docutils literal"><span class="pre">python</span></code> in place of <code class="docutils literal"><span class="pre">python3</span></code> in the above
+commands.</p>
+<p>Explaining how to build optional dependencies on a UNIX based system without
+root access is beyond the scope of this guide.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">While you need a C compiler to build CPython, you don&#8217;t need any
+knowledge of the C language to contribute!  Vast areas of CPython are
+written completely in Python: as of this writing, CPython contains slightly
+more Python code than C.</p>
+</div>
+</div>
+<div class="section" id="unix">
+<span id="unix-compiling"></span><h4>1.1.3.2. UNIX<a class="headerlink" href="#unix" title="Permalink to this headline">¶</a></h4>
+<p>The basic steps for building Python for development is to configure it and
+then compile it.</p>
+<p>Configuration is typically:</p>
+<div class="highlight-python"><div class="highlight"><pre>./configure --with-pydebug
+</pre></div>
+</div>
+<p>More flags are available to <code class="docutils literal"><span class="pre">configure</span></code>, but this is the minimum you should
+do to get a pydebug build of CPython.</p>
+<p>Once <code class="docutils literal"><span class="pre">configure</span></code> is done, you can then compile CPython with:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">make</span> <span class="o">-</span><span class="n">s</span> <span class="o">-</span><span class="n">j2</span>
+</pre></div>
+</div>
+<p>This will build CPython with only warnings and errors being printed to
+stderr and utilize up to 2 CPU cores. If you are using a multi-core machine
+with more than 2 cores (or a single-core machine), you can adjust the number
+passed into the <code class="docutils literal"><span class="pre">-j</span></code> flag to match the number of cores you have.</p>
+<p>Do take note of what modules were <strong>not</strong> built as stated at the end of your
+build. More than likely you are missing a dependency for the module(s) that
+were not built, and so you can install the dependencies and re-run both
+<code class="docutils literal"><span class="pre">configure</span></code> and <code class="docutils literal"><span class="pre">make</span></code> (if available for your OS).
+Otherwise the build failed and thus should be fixed (at least with a bug being
+filed on the <a class="reference external" href="http://bugs.python.org">issue tracker</a>).</p>
+<p id="mac-python-exe">Once CPython is done building you will then have a working build
+that can be run in-place; <code class="docutils literal"><span class="pre">./python</span></code> on most machines (and what is used in
+all examples), <code class="docutils literal"><span class="pre">./python.exe</span></code> wherever a case-insensitive filesystem is used
+(e.g. on OS X by default), in order to avoid conflicts with the <code class="docutils literal"><span class="pre">Python</span></code>
+directory. There is normally no need to install your built copy
+of Python! The interpreter will realize where it is being run from
+and thus use the files found in the working copy.  If you are worried
+you might accidentally install your working copy build, you can add
+<code class="docutils literal"><span class="pre">--prefix=/tmp/python</span></code> to the configuration step.  When running from your
+working directory, it is best to avoid using the <code class="docutils literal"><span class="pre">--enable-shared</span></code> flag
+to <code class="docutils literal"><span class="pre">configure</span></code>; unless you are very careful, you may accidentally run
+with code from an older, installed shared Python library rather than from
+the interpreter you just built.</p>
+<div class="section" id="id2">
+<h5>1.1.3.2.1. Clang<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h5>
+<p>If you are using <a class="reference external" href="http://clang.llvm.org/">clang</a> to build CPython, some flags you might want to set to
+quiet some standard warnings which are specifically superfluous to CPython are
+<code class="docutils literal"><span class="pre">-Wno-unused-value</span> <span class="pre">-Wno-empty-body</span> <span class="pre">-Qunused-arguments</span></code>. You can set your
+<code class="docutils literal"><span class="pre">CFLAGS</span></code> environment variable to these flags when running <code class="docutils literal"><span class="pre">configure</span></code>.</p>
+<p>If you are using LLVM 2.8, also use the <code class="docutils literal"><span class="pre">-no-integrated-as</span></code> flag in order to
+build the <a class="reference external" href="https://docs.python.org/library/ctypes.html#module-ctypes" title="(in Python v2.7)"><code class="xref py py-mod docutils literal"><span class="pre">ctypes</span></code></a> module (without the flag the rest of CPython will
+still build properly).</p>
+</div>
+</div>
+<div class="section" id="windows">
+<span id="windows-compiling"></span><h4>1.1.3.3. Windows<a class="headerlink" href="#windows" title="Permalink to this headline">¶</a></h4>
+<p>The <a class="reference external" href="https://hg.python.org/cpython/file/default/PCbuild/readme.txt">readme</a>
+included in the solution has more details, especially on what additional
+software is required to build which parts of Python.</p>
+<p><strong>Python 3.5</strong> and later use Microsoft Visual Studio 2015.  You can download
+and use any of the free or paid versions of <a class="reference external" href="https://www.visualstudio.com/">Visual Studio 2015</a>.</p>
+<p>Python 3.3 and 3.4 use Microsoft Visual Studio 2010.  You can download
+Microsoft Visual Studio 2010 Express with an <a class="reference external" href="https://msdn.microsoft.com/subscriptions/downloads">MSDN subscription</a>.
+You&#8217;ll also need to install the Visual Studio <a class="reference external" href="http://www.microsoft.com/en-us/download/details.aspx?id=23691">Service Pack 1 (SP1)</a>. If you
+don&#8217;t install this service pack, you may receive errors like the following
+during linking: <code class="docutils literal"><span class="pre">LINK</span> <span class="pre">:</span> <span class="pre">fatal</span> <span class="pre">error</span> <span class="pre">LNK1123:</span> <span class="pre">failure</span> <span class="pre">during</span> <span class="pre">conversion</span> <span class="pre">to</span>
+<span class="pre">COFF:</span> <span class="pre">file</span> <span class="pre">invalid</span> <span class="pre">or</span> <span class="pre">corrupt</span></code>.</p>
+<p>Most Python versions prior to 3.3 use Microsoft Visual Studio 2008.  You can
+download Microsoft Visual C++ 2008 Express Edition with SP1
+from a new location yet to be determined.</p>
+<p>Regardless of Visual Studio version, the <code class="docutils literal"><span class="pre">PCbuild</span></code> directory of a source
+checkout contains the build files for the Python version you are building.</p>
+<p>To build from the command line, execute <code class="file docutils literal"><span class="pre">PCBuild\build.bat</span></code>.  If you
+have not previously done so, you can pass the <code class="docutils literal"><span class="pre">-e</span></code> option to download
+external dependencies or invoke <code class="file docutils literal"><span class="pre">PCBuild\get_externals.bat</span></code> directly. By
+default, <code class="file docutils literal"><span class="pre">PCBuild\build.bat</span></code> will produce a 32-bit release build. Pass
+the <code class="docutils literal"><span class="pre">-p</span> <span class="pre">x64</span></code> option to produce a 64-bit build, and/or the <code class="docutils literal"><span class="pre">-d</span></code> option to
+produce a debug build.</p>
+<p>To build from the Visual Studio GUI, open the <code class="docutils literal"><span class="pre">pcbuild.sln</span></code> solution file
+with Visual Studio.  Choose the <span class="menuselection">Build Solution</span> option
+under the <span class="menuselection">Build</span> menu.  Be sure that &#8220;Debug&#8221; was chosen
+as the active solution configuration (e.g. under
+<span class="menuselection">Build ‣ Configuration Manager...</span>).</p>
+<p>When building you may see a number of build errors related to missing
+files or directories.  These do not necessarily mean that Python failed
+to build.  If you prefer, you can exclude the offending projects from
+the build process by unchecking them inside the
+<span class="menuselection">Build ‣ Configuration Manager...</span> settings. You can
+also use the script <code class="file docutils literal"><span class="pre">PCbuild\get_externals.bat</span></code> to download missing
+dependencies.</p>
+<p>Once built you might want to set Python as a startup project. Pressing F5 in
+Visual Studio, or choosing <span class="menuselection">Start Debugging</span> from the
+<span class="menuselection">Debug</span> menu, will launch the interpreter.</p>
+<p id="win-python-exe">If you want to launch the compiled interpreter from the command-line, the
+path varies according to the build.  For a 32-bit build in debug mode, you
+have to invoke <code class="docutils literal"><span class="pre">PCBuild\win32\python_d.exe</span></code>, for a 64-bit build in debug
+mode, <code class="docutils literal"><span class="pre">PCBuild\amd64\python_d.exe</span></code>.  If you are compiling in release mode
+(which you shouldn&#8217;t, in general), replace <code class="docutils literal"><span class="pre">python_d.exe</span></code> with
+<code class="docutils literal"><span class="pre">python.exe</span></code>.  You can also invoke the most recently built interpreter using
+<code class="docutils literal"><span class="pre">python.bat</span></code> in the root of the source tree.</p>
+</div>
+</div>
+<div class="section" id="troubleshooting-the-build">
+<span id="build-troubleshooting"></span><h3>1.1.4. Troubleshooting the build<a class="headerlink" href="#troubleshooting-the-build" title="Permalink to this headline">¶</a></h3>
+<p>This section lists some of the common problems that may arise during the
+compilation of Python, with proposed solutions.</p>
+<div class="section" id="avoiding-re-creating-auto-generated-files">
+<h4>1.1.4.1. Avoiding re-creating auto-generated files<a class="headerlink" href="#avoiding-re-creating-auto-generated-files" title="Permalink to this headline">¶</a></h4>
+<p>Under some circumstances you may encounter Python errors in scripts like
+<code class="docutils literal"><span class="pre">Parser/asdl_c.py</span></code> or <code class="docutils literal"><span class="pre">Python/makeopcodetargets.py</span></code> while running <code class="docutils literal"><span class="pre">make</span></code>.
+Python auto-generates some of its own code, and a full build from scratch needs
+to run the auto-generation scripts. However, this makes the Python build require
+an already installed Python interpreter; this can also cause version mismatches
+when trying to build an old (2.x) Python with a new (3.x) Python installed, or
+vice versa.</p>
+<p>To overcome this problem, auto-generated files are also checked into the
+Mercurial repository. So if you don&#8217;t touch the auto-generation scripts, there&#8217;s
+no real need to auto-generate anything. However, as Mercurial doesn&#8217;t preserve
+timestamps well, a special build target <code class="docutils literal"><span class="pre">touch</span></code> was added (the <code class="docutils literal"><span class="pre">touch</span></code>
+build target is not designed for git clones and does not support them). Run:</p>
+<div class="highlight-python"><div class="highlight"><pre>make touch
+</pre></div>
+</div>
+<p>Before running the compilation <code class="docutils literal"><span class="pre">make</span></code>. This will tweak the timestamps of the
+auto-generated files in a way that makes it unnecessary to create them anew and
+henceforth the compilation should not require an installed Python interpreter.</p>
+</div>
+</div>
+</div>
+<div class="section" id="editors-and-tools">
+<h2>1.2. Editors and Tools<a class="headerlink" href="#editors-and-tools" title="Permalink to this headline">¶</a></h2>
+<p>Python is used widely enough that practically all code editors have some form
+of support for writing Python code. Various coding tools also include Python
+support.</p>
+<p>For editors and tools which the core developers have felt some special comment
+is needed for coding <em>in</em> Python, see <a class="reference internal" href="index.html#resources"><span>Additional Resources</span></a>.</p>
+</div>
+<div class="section" id="directory-structure">
+<h2>1.3. Directory Structure<a class="headerlink" href="#directory-structure" title="Permalink to this headline">¶</a></h2>
+<p>There are several top-level directories in the CPython source tree. Knowing what
+each one is meant to hold will help you find where a certain piece of
+functionality is implemented. Do realize, though, there are always exceptions to
+every rule.</p>
+<dl class="docutils">
+<dt><code class="docutils literal"><span class="pre">Doc</span></code></dt>
+<dd>The official documentation. This is what <a class="reference external" href="http://docs.python.org/">http://docs.python.org/</a> uses.
+See also <a class="reference internal" href="documenting.html#building-doc"><span>Building the documentation</span></a>.</dd>
+<dt><code class="docutils literal"><span class="pre">Grammar</span></code></dt>
+<dd>Contains the <abbr title="Extended Backus-Naur Form">EBNF</abbr> grammar file for
+Python.</dd>
+<dt><code class="docutils literal"><span class="pre">Include</span></code></dt>
+<dd>Contains all interpreter-wide header files.</dd>
+<dt><code class="docutils literal"><span class="pre">Lib</span></code></dt>
+<dd>The part of the standard library implemented in pure Python.</dd>
+<dt><code class="docutils literal"><span class="pre">Mac</span></code></dt>
+<dd>Mac-specific code (e.g., using IDLE as an OS X application).</dd>
+<dt><code class="docutils literal"><span class="pre">Misc</span></code></dt>
+<dd>Things that do not belong elsewhere. Typically this is varying kinds of
+developer-specific documentation.</dd>
+<dt><code class="docutils literal"><span class="pre">Modules</span></code></dt>
+<dd>The part of the standard library (plus some other code) that is implemented
+in C.</dd>
+<dt><code class="docutils literal"><span class="pre">Objects</span></code></dt>
+<dd>Code for all built-in types.</dd>
+<dt><code class="docutils literal"><span class="pre">PC</span></code></dt>
+<dd>Windows-specific code.</dd>
+<dt><code class="docutils literal"><span class="pre">PCbuild</span></code></dt>
+<dd>Build files for the version of MSVC currently used for the Windows
+installers provided on python.org.</dd>
+<dt><code class="docutils literal"><span class="pre">Parser</span></code></dt>
+<dd>Code related to the parser. The definition of the AST nodes is also kept
+here.</dd>
+<dt><code class="docutils literal"><span class="pre">Programs</span></code></dt>
+<dd>Source code for C executables, including the main function for the
+CPython interpreter (in versions prior to Python 3.5, these files are
+in the Modules directory).</dd>
+<dt><code class="docutils literal"><span class="pre">Python</span></code></dt>
+<dd>The code that makes up the core CPython runtime. This includes the
+compiler, eval loop and various built-in modules.</dd>
+<dt><code class="docutils literal"><span class="pre">Tools</span></code></dt>
+<dd>Various tools that are (or have been) used to maintain Python.</dd>
+</dl>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">1. Getting Started</a><ul>
+<li><a class="reference internal" href="#getting-set-up">1.1. Getting Set Up</a><ul>
+<li><a class="reference internal" href="#version-control-setup">1.1.1. Version Control Setup</a></li>
+<li><a class="reference internal" href="#getting-the-source-code">1.1.2. Getting the Source Code</a></li>
+<li><a class="reference internal" href="#compiling-for-debugging">1.1.3. Compiling (for debugging)</a><ul>
+<li><a class="reference internal" href="#build-dependencies">1.1.3.1. Build dependencies</a></li>
+<li><a class="reference internal" href="#unix">1.1.3.2. UNIX</a><ul>
+<li><a class="reference internal" href="#id2">1.1.3.2.1. Clang</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#windows">1.1.3.3. Windows</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#troubleshooting-the-build">1.1.4. Troubleshooting the build</a><ul>
+<li><a class="reference internal" href="#avoiding-re-creating-auto-generated-files">1.1.4.1. Avoiding re-creating auto-generated files</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#editors-and-tools">1.2. Editors and Tools</a></li>
+<li><a class="reference internal" href="#directory-structure">1.3. Directory Structure</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">Python Developer&#8217;s Guide</a></li>
+      <li>Next: <a href="help.html" title="next chapter">2. Where to Get Help</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/setup.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Carol Willing.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.6</a>
+      
+      |
+      <a href="_sources/setup.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

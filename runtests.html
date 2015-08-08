@@ -1,0 +1,226 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>4. Running &amp; Writing Tests &mdash; Devguide 2015.08.08 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '2015.08.08',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Devguide 2015.08.08 documentation" href="index.html" />
+    <link rel="next" title="5. Increase Test Coverage" href="coverage.html" />
+    <link rel="prev" title="3. Lifecycle of a Patch" href="patch.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="running-writing-tests">
+<span id="runtests"></span><h1>4. Running &amp; Writing Tests<a class="headerlink" href="#running-writing-tests" title="Permalink to this headline">¶</a></h1>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This document assumes you are working from an
+<a class="reference internal" href="devcycle.html#indevbranch"><span>in-development</span></a> checkout of Python. If you
+are not then some things presented here may not work as they may depend
+on new features not available in earlier versions of Python.</p>
+</div>
+<div class="section" id="running">
+<h2>4.1. Running<a class="headerlink" href="#running" title="Permalink to this headline">¶</a></h2>
+<p>The shortest, simplest way of running the test suite is the following command
+from the root directory of your checkout (after you have
+<a class="reference internal" href="setup.html#compiling"><span>built Python</span></a>):</p>
+<div class="highlight-python"><div class="highlight"><pre>./python -m test
+</pre></div>
+</div>
+<p>You may need to change this command as follows throughout this section.
+On <a class="reference internal" href="setup.html#mac-python-exe"><span>most</span></a> Mac OS X systems, replace <code class="file docutils literal"><span class="pre">./python</span></code>
+with <code class="file docutils literal"><span class="pre">./python.exe</span></code>.  On Windows, use <code class="file docutils literal"><span class="pre">PCbuild\python_d.exe</span></code> or
+check the detailed <a class="reference internal" href="setup.html#win-python-exe"><span>Windows instructions</span></a>.  If using
+Python 2.7, replace <code class="docutils literal"><span class="pre">test</span></code> with <code class="docutils literal"><span class="pre">test.regrtest</span></code>.</p>
+<p>If you don&#8217;t have easy access to a command line, you can run the test suite from
+a Python or IDLE shell:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">test</span> <span class="kn">import</span> <span class="n">autotest</span>
+</pre></div>
+</div>
+<p>This will run the majority of tests, but exclude a small portion of them; these
+excluded tests use special kinds of resources: for example, accessing the
+Internet, or trying to play a sound or to display a graphical interface on
+your desktop.  They are disabled by default so that running the test suite
+is not too intrusive.  To enable some of these additional tests (and for
+other flags which can help debug various issues such as reference leaks), read
+the help text:</p>
+<div class="highlight-python"><div class="highlight"><pre>./python -m test -h
+</pre></div>
+</div>
+<p>If you want to run a single test file, simply specify the test file name
+(without the extension) as an argument.  You also probably want to enable
+verbose mode (using <code class="docutils literal"><span class="pre">-v</span></code>), so that individual failures are detailed:</p>
+<div class="highlight-python"><div class="highlight"><pre>./python -m test -v test_abc
+</pre></div>
+</div>
+<p>To run a single test case, use the <code class="docutils literal"><span class="pre">unittest</span></code> module, providing the import
+path to the test case:</p>
+<div class="highlight-python"><div class="highlight"><pre>./python -m unittest -v test.test_abc.TestABC
+</pre></div>
+</div>
+<p>If you have a multi-core or multi-CPU machine, you can enable parallel testing
+using several Python processes so as to speed up things:</p>
+<div class="highlight-python"><div class="highlight"><pre>./python -m test -j0
+</pre></div>
+</div>
+<p>If you are running a version of Python prior to 3.3 you must specify the number
+of processes to run simultaneously (e.g. <code class="docutils literal"><span class="pre">-j2</span></code>).</p>
+<p id="strenuous-testing">Finally, if you want to run tests under a more strenuous set of settings, you
+can run <code class="docutils literal"><span class="pre">test</span></code> as:</p>
+<div class="highlight-python"><div class="highlight"><pre>./python -bb -E -Wd -m test -r -w -uall
+</pre></div>
+</div>
+<p>The various extra flags passed to Python cause it to be much stricter about
+various things (the <code class="docutils literal"><span class="pre">-Wd</span></code> flag should be <code class="docutils literal"><span class="pre">-W</span> <span class="pre">error</span></code> at some point, but the
+test suite has not reached a point where all warnings have been dealt with and
+so we cannot guarantee that a bug-free Python will properly complete a test run
+with <code class="docutils literal"><span class="pre">-W</span> <span class="pre">error</span></code>). The <code class="docutils literal"><span class="pre">-r</span></code> flag to the test runner causes it to run tests in
+a more random order which helps to check that the various tests do not interfere
+with each other.  The <code class="docutils literal"><span class="pre">-w</span></code> flag causes failing tests to be run again to see
+if the failures are transient or consistent.
+The <code class="docutils literal"><span class="pre">-uall</span></code> flag allows the use of all available
+resources so as to not skip tests requiring, e.g., Internet access.</p>
+<p>To check for reference leaks (only needed if you modified C code), use the
+<code class="docutils literal"><span class="pre">-R</span></code> flag.  For example, <code class="docutils literal"><span class="pre">-R</span> <span class="pre">3:2</span></code> will first run the test 3 times to settle
+down the reference count, and then run it 2 more times to verify if there are
+any leaks.</p>
+<p>You can also execute the <code class="docutils literal"><span class="pre">Tools/scripts/run_tests.py</span></code> script as  found in a
+CPython checkout. The script tries to balance speed with thoroughness. But if
+you want the most thorough tests you should use the strenuous approach shown
+above.</p>
+<div class="section" id="unexpected-skips">
+<h3>4.1.1. Unexpected Skips<a class="headerlink" href="#unexpected-skips" title="Permalink to this headline">¶</a></h3>
+<p>Sometimes when running the test suite, you will see &#8220;unexpected skips&#8221;
+reported. These represent cases where an entire test module has been
+skipped, but the test suite normally expects the tests in that module to
+be executed on that platform.</p>
+<p>Often, the cause is that an optional module hasn&#8217;t been built due to missing
+build dependencies. In these cases, the missing module reported when the test
+is skipped should match one of the modules reported as failing to build when
+<a class="reference internal" href="setup.html#compiling"><span>Compiling (for debugging)</span></a>.</p>
+<p>In other cases, the skip message should provide enough detail to help figure
+out and resolve the cause of the problem (for example, the default security
+settings on some platforms will disallow some tests)</p>
+</div>
+</div>
+<div class="section" id="writing">
+<h2>4.2. Writing<a class="headerlink" href="#writing" title="Permalink to this headline">¶</a></h2>
+<p>Writing tests for Python is much like writing tests for your own code. Tests
+need to be thorough, fast, isolated, consistently repeatable, and as simple as
+possible. We try to have tests both for normal behaviour and for error
+conditions.  Tests live in the <code class="docutils literal"><span class="pre">Lib/test</span></code> directory, where every file that
+includes tests has a <code class="docutils literal"><span class="pre">test_</span></code> prefix.</p>
+<p>One difference with ordinary testing is that you are encouraged to rely on the
+<code class="xref py py-mod docutils literal"><span class="pre">test.support</span></code> module. It contains various helpers that are tailored to
+Python&#8217;s test suite and help smooth out common problems such as platform
+differences, resource consumption and cleanup, or warnings management.
+That module is not suitable for use outside of the standard library.</p>
+<p>When you are adding tests to an existing test file, it is also recommended
+that you study the other tests in that file; it will teach you which precautions
+you have to take to make your tests robust and portable.</p>
+</div>
+<div class="section" id="benchmarks">
+<h2>4.3. Benchmarks<a class="headerlink" href="#benchmarks" title="Permalink to this headline">¶</a></h2>
+<p>Benchmarking is useful to test that a change does not degrade performance.</p>
+<p><a class="reference external" href="https://hg.python.org/benchmarks/">The Grand Unified Python Benchmark Suite</a>
+has a collection of benchmarks for all Python implementations. Documentation
+about running the benchmarks is in the <a class="reference external" href="https://hg.python.org/benchmarks/file/tip/README.txt">README.txt</a> of the benchmarks repo.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">4. Running &amp; Writing Tests</a><ul>
+<li><a class="reference internal" href="#running">4.1. Running</a><ul>
+<li><a class="reference internal" href="#unexpected-skips">4.1.1. Unexpected Skips</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#writing">4.2. Writing</a></li>
+<li><a class="reference internal" href="#benchmarks">4.3. Benchmarks</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="patch.html" title="previous chapter">3. Lifecycle of a Patch</a></li>
+      <li>Next: <a href="coverage.html" title="next chapter">5. Increase Test Coverage</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/runtests.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Carol Willing.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.6</a>
+      
+      |
+      <a href="_sources/runtests.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

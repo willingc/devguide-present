@@ -1,0 +1,109 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>8. Silence Warnings From the Test Suite &mdash; Devguide 2015.08.08 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '2015.08.08',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Devguide 2015.08.08 documentation" href="index.html" />
+    <link rel="next" title="9. Fixing “easy” Issues (and Beyond)" href="fixingissues.html" />
+    <link rel="prev" title="7. Documenting Python" href="documenting.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="silence-warnings-from-the-test-suite">
+<span id="silencewarnings"></span><h1>8. Silence Warnings From the Test Suite<a class="headerlink" href="#silence-warnings-from-the-test-suite" title="Permalink to this headline">¶</a></h1>
+<p>When running Python&#8217;s test suite, no warnings should result when you run it
+under <a class="reference internal" href="runtests.html#strenuous-testing"><span>strenuous testing conditions</span></a> (you can ignore
+the extra flags passed to <code class="docutils literal"><span class="pre">test</span></code> that cause randomness and parallel execution
+if you want). Unfortunately new warnings are added to Python on occasion which
+take some time to eliminate (e.g., <code class="docutils literal"><span class="pre">ResourceWarning</span></code>). Typically the easy
+warnings are dealt with quickly, but the more difficult ones that require some
+thought and work do not get fixed immediately.</p>
+<p>If you decide to tackle a warning you have found, open an issue on the <a class="reference external" href="http://bugs.python.org">issue
+tracker</a> (if one has not already been opened) and say you are going to try and
+tackle the issue, and then proceed to fix the issue.</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="documenting.html" title="previous chapter">7. Documenting Python</a></li>
+      <li>Next: <a href="fixingissues.html" title="next chapter">9. Fixing &#8220;easy&#8221; Issues (and Beyond)</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/silencewarnings.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Carol Willing.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.6</a>
+      
+      |
+      <a href="_sources/silencewarnings.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,633 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>15. Committing and Pushing Changes &mdash; Devguide 2015.08.08 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '2015.08.08',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Devguide 2015.08.08 documentation" href="index.html" />
+    <link rel="next" title="17. Development Cycle" href="devcycle.html" />
+    <link rel="prev" title="14. Developer Log" href="developers.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="committing-and-pushing-changes">
+<span id="committing"></span><h1>15. Committing and Pushing Changes<a class="headerlink" href="#committing-and-pushing-changes" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="is-the-change-ready-for-committing">
+<h2>15.1. Is the change ready for committing?<a class="headerlink" href="#is-the-change-ready-for-committing" title="Permalink to this headline">¶</a></h2>
+<p>Before a change is committed, you must make sure it is ready to enter the
+public source tree.  Draft commits are prohibited.  Therefore, you must
+ensure your changes fulfill several mandatory criteria.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If you want to share your work-in-progress code on a feature or bugfix,
+either publish patches or create a public fork of the repository.</p>
+</div>
+<div class="section" id="does-the-test-suite-still-pass">
+<h3>15.1.1. Does the test suite still pass?<a class="headerlink" href="#does-the-test-suite-still-pass" title="Permalink to this headline">¶</a></h3>
+<p>You must <a class="reference internal" href="runtests.html#runtests"><span>run the whole test suite</span></a> to ensure that it
+passes before pushing any code changes.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>You really need to run the <strong>entire</strong> test suite.  Running a single test
+is not enough as your changes may have unforeseen effects on other tests
+or library modules.</p>
+<p class="last">Running the entire test suite doesn&#8217;t guarantee that your changes
+will pass the <a class="reference internal" href="buildbots.html#buildbots"><span>continuous integration</span></a> tests, as those
+will exercise more possibilities still (such as different platforms or
+build options).  But it will at least catch non-build specific,
+non-platform specific errors, therefore minimizing the chance for
+breakage.</p>
+</div>
+</div>
+<div class="section" id="patch-checklist">
+<h3>15.1.2. Patch checklist<a class="headerlink" href="#patch-checklist" title="Permalink to this headline">¶</a></h3>
+<p>Apart from running the tests, there&#8217;s a simple patch checklist that
+<code class="docutils literal"><span class="pre">make</span> <span class="pre">patchcheck</span></code> (or <code class="docutils literal"><span class="pre">./python.exe</span> <span class="pre">Tools/scripts/patchcheck.py</span></code> on
+Windows) will run through:</p>
+<ul class="simple">
+<li>Are there any whitespace problems in Python files?
+(using <code class="docutils literal"><span class="pre">Tools/scripts/reindent.py</span></code>)</li>
+<li>Are there any whitespace problems in C files?</li>
+<li>Are there any whitespace problems in the documentation?
+(using <code class="docutils literal"><span class="pre">Tools/scripts/reindent-rst.py</span></code>)</li>
+<li>Has the documentation been updated?</li>
+<li>Has the test suite been updated?</li>
+<li>Has <code class="docutils literal"><span class="pre">Misc/NEWS</span></code> been updated?</li>
+<li>Has <code class="docutils literal"><span class="pre">Misc/ACKS</span></code> been updated?</li>
+<li>Has <code class="docutils literal"><span class="pre">configure</span></code> been regenerated, if necessary?</li>
+<li>Has <code class="docutils literal"><span class="pre">pyconfig.h.in</span></code> been regenerated, if necessary?</li>
+</ul>
+<p>Note that the automated patch check can&#8217;t actually <em>answer</em> all of these
+questions, and even if it could, it still wouldn&#8217;t know whether or not
+those answers were appropriate. Aside from the whitespace checks, it is just
+a memory aid to help with remembering the various elements that can go into
+making a complete patch.</p>
+</div>
+</div>
+<div class="section" id="commit-style">
+<h2>15.2. Commit Style<a class="headerlink" href="#commit-style" title="Permalink to this headline">¶</a></h2>
+<p>Once a change patch is ready and tested, it can be committed to the repository.
+We usually prefer to put a whole feature or bugfix into a single commit, but no
+more.  In particular:</p>
+<ul class="simple">
+<li>Do <strong>not</strong> fix more than one issue in the same commit (except, of course, if
+one code change fixes all of them).</li>
+<li>Do <strong>not</strong> do cosmetic changes to unrelated code in the same commit as some
+feature/bugfix.</li>
+</ul>
+<p>It is of course okay to pile up several commits to one branch and merge them
+into another in one merge commit.</p>
+</div>
+<div class="section" id="handling-others-code">
+<h2>15.3. Handling Others&#8217; Code<a class="headerlink" href="#handling-others-code" title="Permalink to this headline">¶</a></h2>
+<p>As a core developer you will occasionally want to commit a patch created by
+someone else. When doing so you will want to make sure of some things.</p>
+<p>First, make sure the patch is in a good state. Both <a class="reference internal" href="patch.html#patch"><span>Lifecycle of a Patch</span></a> and
+<a class="reference internal" href="tracker.html#helptriage"><span>Helping Triage Issues</span></a>
+explain what is to be expected of a patch. Typically patches that get cleared by
+triagers are good to go except maybe lacking <code class="docutils literal"><span class="pre">Misc/ACKS</span></code> and <code class="docutils literal"><span class="pre">Misc/NEWS</span></code>
+entries.</p>
+<p>Second, make sure the patch does not break backwards-compatibility without a
+good reason. This means <a class="reference internal" href="runtests.html#runtests"><span>running the entire test suite</span></a> to
+make sure everything still passes. It also means that if semantics do change
+there must be a good reason for the breakage of code the change will cause
+(and it <strong>will</strong> break someone&#8217;s code). If you are unsure if the breakage
+is worth it, ask on python-dev.</p>
+<p>Third, ensure the patch is attributed correctly by adding the contributor&#8217;s
+name to <code class="docutils literal"><span class="pre">Misc/ACKS</span></code> if they aren&#8217;t already there (and didn&#8217;t add themselves
+in their patch) and by mentioning &#8220;Patch by &lt;x&gt;&#8221; in the <code class="docutils literal"><span class="pre">Misc/NEWS</span></code> entry
+and the checkin message. If the patch has been heavily modified then &#8220;Initial
+patch by &lt;x&gt;&#8221; is an appropriate alternate wording.</p>
+<p>If you omit correct attribution in the initial checkin, then update <code class="docutils literal"><span class="pre">ACKS</span></code>
+and <code class="docutils literal"><span class="pre">NEWS</span></code> in a subsequent checkin (don&#8217;t worry about trying to fix the
+original checkin message in that case).</p>
+<p>Finally, especially for larger patches, check if the submitter of the
+patch has a CLA in place (indicated by an asterisk following their username
+in the issue tracker). If the asterisk is missing and the patch is
+non-trivial, direct them to the electronic <a class="reference external" href="http://www.python.org/psf/contrib/contrib-form/">Contributor Licensing Agreement</a>
+to ensure the PSF has the appropriate authorizations in place to relicense
+and redistribute their code.</p>
+</div>
+<div class="section" id="contributor-licensing-agreements">
+<h2>15.4. Contributor Licensing Agreements<a class="headerlink" href="#contributor-licensing-agreements" title="Permalink to this headline">¶</a></h2>
+<p>It&#8217;s unlikely bug fixes will require a <a class="reference external" href="http://www.python.org/psf/contrib/contrib-form/">Contributor Licensing Agreement</a>
+unless they touch a <em>lot</em> of code. For new features, it is preferable to
+ask that the contributor submit a signed CLA to the PSF as the associated
+comments, docstrings and documentation are far more likely to reach a
+copyrightable standard.</p>
+<p>These days, the CLA can be signed electronically through the form linked
+above, and this process is strongly preferred to the old mechanism that
+involved sending a scanned copy of the signed paper form.</p>
+<p>As discussed on the PSF <a class="reference external" href="http://www.python.org/psf/contrib/">Contribution</a> page, it is the CLA itself that gives
+the PSF the necessary relicensing rights to redistribute contributions under
+the Python license stack. This is an additional permission granted above and
+beyond the normal permissions provided by the chosen open source license.</p>
+<p>Some developers may object to the relicensing permissions granted to the PSF
+by the CLA. They&#8217;re entirely within their rights to refuse to sign the CLA
+on that basis, but that refusal <em>does</em> mean we can&#8217;t accept their patches
+for inclusion.</p>
+</div>
+<div class="section" id="what-s-new-and-news-entries">
+<h2>15.5. What&#8217;s New and NEWS Entries<a class="headerlink" href="#what-s-new-and-news-entries" title="Permalink to this headline">¶</a></h2>
+<p>Almost all changes made to the code base deserve an entry in <code class="docutils literal"><span class="pre">Misc/NEWS</span></code>.
+If the change is particularly interesting for end users (e.g. new features,
+significant improvements, or backwards-incompatible changes), an entry in
+the <code class="docutils literal"><span class="pre">What's</span> <span class="pre">New</span> <span class="pre">in</span> <span class="pre">Python</span></code> document (in <code class="docutils literal"><span class="pre">Doc/whatsnew/</span></code>) should be added
+as well.</p>
+<p>There are two notable exceptions to this general principle, and they
+both relate to changes that <em>already</em> have a NEWS entry, and have not yet
+been included in any formal release (including alpha and beta releases).
+These exceptions are:</p>
+<ul class="simple">
+<li>If a change is reverted prior to release, then the corresponding entry
+is simply removed. Otherwise, a new entry must be added noting that the
+change has been reverted (e.g. when a feature is released in an alpha and
+then cut prior to the first beta).</li>
+<li>If a change is a fix (or other adjustment) to an earlier unreleased change
+and the original NEWS entry remains valid, then no additional entry is
+needed.</li>
+</ul>
+<p>Needing a What&#8217;s New entry almost always means that a change is <em>not</em>
+suitable for inclusion in a maintenance release. A small number of
+exceptions have been made for Python 2.7 due to the long support period -
+when implemented, these changes <em>must</em> be noted in the &#8220;New Additions in
+Python 2.7 Maintenance Releases&#8221; section of the Python 2.7 What&#8217;s New
+document.</p>
+<p>New NEWS entries are customarily added at or near the top of their
+respective sections, so that entries within a section appear in approximate
+order from newest to oldest.  However, this is customary and not a
+requirement.</p>
+<p>The NEWS file is now read by Sphinx to produce the &#8220;Changelog&#8221; page; accordingly
+it should be valid reStructuredText.  The &#8220;default role&#8221; (single backticks) can
+be used to refer to objects in the documentation.  Example NEWS entry:</p>
+<div class="highlight-python"><div class="highlight"><pre>- Issue #15304: Fix warning message when `os.chdir()` fails inside
+  `test.support.temp_cwd()`.  Patch by Chris Jerdonek.
+</pre></div>
+</div>
+<p>(In all other <code class="docutils literal"><span class="pre">.rst</span></code> files, the single backticks should not be used.  They are
+allowed here because NEWS is meant to be as readable as possible unprocessed.)</p>
+<p>A nice trick to make Mercurial’s automatic file merge work more smoothly is to
+put a new entry after the first or first two entries rather than at the very
+top.  This way if you commit, pull new changesets and merge, the merge will
+succeed automatically.</p>
+</div>
+<div class="section" id="commit-messages">
+<h2>15.6. Commit Messages<a class="headerlink" href="#commit-messages" title="Permalink to this headline">¶</a></h2>
+<p>Every commit has a commit message to document why a change was made and to
+communicate that reason to other core developers. Python core developers have
+developed a standard way of formatting commit messages that everyone is
+expected to follow.</p>
+<p>Our usual convention mimics that used in the <code class="docutils literal"><span class="pre">Misc/NEWS</span></code> file.  Actually,
+it is common to simply paste the NEWS entry into the commit message.  Here
+is an example:</p>
+<div class="highlight-python"><div class="highlight"><pre>Issue #42: the spam module is now more spammy.
+The spam module sporadically came up short on spam. This change
+raises the amount of spam in the module by making it more spammy.
+Thanks to Monty Python for the patch.
+</pre></div>
+</div>
+<p>The first line or sentence is meant to be a dense, to-the-point explanation
+of what the purpose of the commit is.  If this is not enough detail for a commit,
+a new paragraph(s) can be added to explain in proper depth what has happened
+(detail should be good enough that a core developer reading the commit message
+understands the justification for the change).  Also, if a non-core developer
+contributed to the resolution, it is good practice to credit them.</p>
+<div class="section" id="mercurial-hooks">
+<h3>15.6.1. Mercurial hooks<a class="headerlink" href="#mercurial-hooks" title="Permalink to this headline">¶</a></h3>
+<p>Special hooks have been added to the Mercurial repository to enable notifying
+the issue tracker of a commit related to an issue.</p>
+<p>A commit message can mention one or several issues in one of the following
+ways:</p>
+<div class="highlight-python"><div class="highlight"><pre>#12345
+issue12345
+issue 12345
+bug12345
+bug 12345
+</pre></div>
+</div>
+<p>where 12345 is the number of the issue. The commit details (including its
+changeset, branch and commit message) will then be posted as a message to the
+issue&#8217;s page in the tracker, for each mentioned issue.</p>
+<p>If &#8220;closes&#8221; (or &#8220;closed&#8221;, or &#8220;closing&#8221;) is prepended, the issue is
+automatically closed as &#8220;fixed&#8221;.</p>
+</div>
+</div>
+</div>
+<div class="section" id="working-with-mercurial">
+<h1>16. Working with <a class="reference external" href="http://www.hg-scm.org/">Mercurial</a><a class="headerlink" href="#working-with-mercurial" title="Permalink to this headline">¶</a></h1>
+<p>As a core developer, the ability to push changes to the official Python
+repositories means you have to be more careful with your workflow:</p>
+<ul class="simple">
+<li>You should not push new named branches to the main repository.  You can
+still use them in clones that you use for development of patches; you can
+also push these branches to a <strong>separate</strong> public repository that will be
+dedicated to maintenance of the work before the work gets integrated in the
+main repository.</li>
+<li>You should collapse changesets of a single feature or bugfix before pushing
+the result to the main repository.  The reason is that we don&#8217;t want the
+history to be full of intermediate commits recording the private history
+of the person working on a patch.  If you are using the <a class="reference external" href="http://mercurial.selenic.com/wiki/RebaseExtension">rebase</a> extension,
+consider adding the <code class="docutils literal"><span class="pre">--collapse</span></code> option to <code class="docutils literal"><span class="pre">hg</span> <span class="pre">rebase</span></code>.  The <a class="reference external" href="http://mercurial.selenic.com/wiki/CollapseExtension">collapse</a>
+extension is another choice.</li>
+</ul>
+<p>Because of these constraints, it can be practical to use other approaches
+such as <a class="reference external" href="http://mercurial.selenic.com/wiki/MqExtension">mq</a> (Mercurial Queues), in order to maintain patches in a single
+local repository and to push them seamlessly when they are ready.</p>
+<p>It can also be useful to keep a pristine clone of the main repository around,
+as it allows simple reversion of all local changes (even &#8220;committed&#8221; ones) if
+your local clone gets into a state you aren&#8217;t happy with.</p>
+<div class="section" id="minimal-configuration">
+<h2>16.1. Minimal Configuration<a class="headerlink" href="#minimal-configuration" title="Permalink to this headline">¶</a></h2>
+<p>To use Mercurial as a committer (both of your and others&#8217; patches), you should
+set up some basic options in your <a class="reference external" href="http://www.selenic.com/mercurial/hgrc.5.html#files">configuration file</a>.  Under Windows,
+TortoiseHg has a graphical settings dialog for most options, meaning you
+don&#8217;t need to edit the file directly (it is still available in
+<code class="docutils literal"><span class="pre">%USERPROFILE%\Mercurial.ini</span></code>).  Under other platforms, you must edit
+<code class="docutils literal"><span class="pre">~/.hgrc</span></code>.</p>
+<p>Here are the minimal options you need to activate:</p>
+<ul>
+<li><p class="first">your <em>username</em>: this setting defines the name that will be used when you
+<a class="reference internal" href="faq.html#hg-commit"><span>commit</span></a> changes.  The usual convention is to also include
+an e-mail contact address in there:</p>
+<div class="highlight-python"><div class="highlight"><pre>[ui]
+username = Your Name &lt;email@example.org&gt;
+</pre></div>
+</div>
+</li>
+<li><p class="first"><em>extended diffing</em>: this setting enables an <a class="reference external" href="http://www.selenic.com/mercurial/hg.1.html#diffs">extended diff format</a>
+which is more useful than the standard unified diff format as it includes
+metadata about file copies, permission bits, and is able to represent
+binary files:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="n">diff</span><span class="p">]</span>
+<span class="n">git</span> <span class="o">=</span> <span class="n">on</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<p>Under Windows, you should also enable the <a class="reference external" href="http://mercurial.selenic.com/wiki/EolExtension">eol extension</a>, which will
+fix any Windows-specific line endings your text editor might insert when you
+create or modify versioned files.  The public repository has a hook which
+will reject all changesets having the wrong line endings, so enabling this
+extension on your local computer is in your best interest.</p>
+<p>As a core developer, it can be very helpful to set up the same commit checks
+locally that the main repo enforces for incoming patch sets. This can save a
+great deal of frustration with the server rejecting <code class="docutils literal"><span class="pre">hg</span> <span class="pre">push</span></code> for changes
+(which can be especially time consuming if you have already merged changes
+across branches).</p>
+<p>Configuring and using the whitespace checking hook found in the <a class="reference external" href="https://hg.python.org/hooks">hooks
+repository</a> will help check incoming patch sets. To configure a hook,
+add configuration settings to <code class="docutils literal"><span class="pre">~/.hgrc</span></code> for the relevant repo(s) (remember
+to adjust the path appropriately for the checked out location of the
+<a class="reference external" href="https://hg.python.org/hooks">hooks repository</a>). To configure a &#8220;pretxncommit&#8221; hook that will check
+whitespace before the changeset is committed and can thus abort the commit
+if whitespace is found, add:</p>
+<div class="highlight-python"><div class="highlight"><pre>[hooks]
+pretxncommit.whitespace = python:~/path/to/checkwhitespace.py:check_whitespace_single
+</pre></div>
+</div>
+<p>Another option is to configure it as a &#8220;commit&#8221; hook; if used, a warning
+will still be issued but the changeset will be applied anyway:</p>
+<div class="highlight-python"><div class="highlight"><pre>[hooks]
+commit = python:~/path/to/checkwhitespace.py:check_whitespace_single
+</pre></div>
+</div>
+</div>
+<div class="section" id="clones-setup">
+<h2>16.2. Clones Setup<a class="headerlink" href="#clones-setup" title="Permalink to this headline">¶</a></h2>
+<p>There are several possible ways to set up your Mercurial clone(s).  If you are
+a core developer, you often need to work on the different branches, so the best
+approach is to have a separate clone/directory for each active branch.  If you
+are a contributor, having a single clone might be enough.</p>
+<div class="section" id="single-clone-approach">
+<h3>16.2.1. Single Clone Approach<a class="headerlink" href="#single-clone-approach" title="Permalink to this headline">¶</a></h3>
+<p>This approach has the advantage of being simpler because it requires a single
+clone/directory, but, on the other hand, it requires you to recompile Python
+every time you need to switch branch.  For this reason, this approach is not
+suggested to core developers, but it&#8217;s usually suitable for contributors.</p>
+<p>See <a class="reference internal" href="setup.html#checkout"><span>Getting the Source Code</span></a> to find information about cloning and switching branches.</p>
+</div>
+<div class="section" id="multiple-clones-approach">
+<span id="multiple-clones"></span><h3>16.2.2. Multiple Clones Approach<a class="headerlink" href="#multiple-clones-approach" title="Permalink to this headline">¶</a></h3>
+<p>This approach requires you to keep a separate clone/directory for each active
+branch, but, on the other hand, it doesn&#8217;t require you to switch branches and
+recompile Python, so it saves times while merging and testing a patch on the
+different branches.  For this reason, this approach is suggested to core
+developers.</p>
+<p>The easiest way to do this is by using the <a class="reference external" href="http://mercurial.selenic.com/wiki/ShareExtension">share extension</a>, that can be
+enabled by adding the following lines to your <code class="docutils literal"><span class="pre">~/.hgrc</span></code>:</p>
+<div class="highlight-python"><div class="highlight"><pre>[extensions]
+share =
+</pre></div>
+</div>
+<p>Once you have <a class="reference internal" href="setup.html#checkout"><span>cloned the hg.python.org/cpython repository</span></a>
+you can create the other shared clones using:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ hg share cpython 2.7  # create a new shared clone
+$ cd 2.7                # enter the directory
+$ hg up 2.7             # switch to the 2.7 branch
+</pre></div>
+</div>
+<p>You can then repeat the same operation for the other active branches.
+This will create different clones/directories that share the same history.
+This means that once you commit or pull new changesets in one of the clones,
+they will be immediately available in all the other clones (note however that
+while you only need to use <code class="docutils literal"><span class="pre">hg</span> <span class="pre">pull</span></code> once, you still need to use <code class="docutils literal"><span class="pre">hg</span> <span class="pre">up</span></code>
+in each clone to update its working copy).</p>
+<p>If you don&#8217;t want to specify <a class="reference external" href="ssh://hg&#64;hg.python.org/cpython">ssh://hg&#64;hg.python.org/cpython</a> every time you pull
+or push, you should add to the <code class="docutils literal"><span class="pre">.hg/hgrc</span></code> files of the clones:</p>
+<div class="highlight-python"><div class="highlight"><pre>[paths]
+default = ssh://hg@hg.python.org/cpython
+</pre></div>
+</div>
+<p>In order to apply a patch, commit, and merge it on all the branches, you can do
+as follow:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ cd 2.7
+$ hg pull
+$ hg up
+$ hg import --no-c http://bugs.python.org/url/to/the/patch.diff
+$ # review, run tests, run `make patchcheck`
+$ hg ci -m &#39;#12345: fix some issue.&#39;
+$ # switch to 3.4 and port the changeset using `hg graft`
+$ cd ../3.4
+$ hg up
+$ hg graft 2.7
+$ # switch to 3.x, merge, commit, and push everything
+$ cd ../3.x
+$ hg up
+$ hg merge 3.4
+$ hg ci -m &#39;#12345: merge with 3.4.&#39;
+$ hg push
+</pre></div>
+</div>
+<p>Unless noted otherwise, the rest of the page will assume you are using the
+multiple clone approach, and explain in more detail these basic steps.</p>
+<p>For more advanced explanations about <a class="reference internal" href="faq.html#hg-null-merge"><span>null merges</span></a>,
+<a class="reference internal" href="faq.html#hg-heads-merge"><span>heads merges</span></a>, <a class="reference internal" href="faq.html#hg-merge-conflicts"><span>merge conflicts</span></a>, etc., see the <a class="reference internal" href="faq.html#core-devs-faqs"><span>FAQs for core developers</span></a>.</p>
+</div>
+</div>
+<div class="section" id="active-branches">
+<h2>16.3. Active branches<a class="headerlink" href="#active-branches" title="Permalink to this headline">¶</a></h2>
+<p>If you do <code class="docutils literal"><span class="pre">hg</span> <span class="pre">branches</span></code> you will see a <a class="reference internal" href="devcycle.html#listbranch"><span>list of branches</span></a>.
+<code class="docutils literal"><span class="pre">default</span></code> is the in-development branch, and is the only branch that receives
+new features.  The other branches only receive bug fixes or security fixes.
+Depending on what you are committing (feature, bug fix, or security fix), you
+should commit to the oldest branch applicable, and then forward-port until the
+in-development branch.</p>
+</div>
+<div class="section" id="merging-order">
+<h2>16.4. Merging order<a class="headerlink" href="#merging-order" title="Permalink to this headline">¶</a></h2>
+<p>There are two separate lines of development: one for Python 2 (the <code class="docutils literal"><span class="pre">2.x</span></code>
+branches) and one for Python 3 (the <code class="docutils literal"><span class="pre">3.x</span></code> branches and <code class="docutils literal"><span class="pre">default</span></code>).
+You should <em>never</em> merge between the two major versions (2.x and 3.x) &#8212;
+only between minor versions (e.g. 3.x-&gt;3.y).  The merge always happens from
+the oldest applicable branch to the newest branch within the same major
+Python version.</p>
+</div>
+<div class="section" id="merging-between-different-branches-within-the-same-major-version">
+<span id="branch-merge"></span><h2>16.5. Merging between different branches (within the same major version)<a class="headerlink" href="#merging-between-different-branches-within-the-same-major-version" title="Permalink to this headline">¶</a></h2>
+<p>Assume that Python 3.5 is the current in-development version of Python and that
+you have a patch that should also be applied to Python 3.4.  To properly port
+the patch to both versions of Python, you should first apply the patch to
+Python 3.4:</p>
+<div class="highlight-python"><div class="highlight"><pre>cd 3.4
+hg import --no-commit patch.diff
+# Compile; run the test suite
+hg ci -m &#39;#12345: fix some issue.&#39;
+</pre></div>
+</div>
+<p>Then you can switch to the <code class="docutils literal"><span class="pre">3.5</span></code> clone, merge, run the tests and commit:</p>
+<div class="highlight-python"><div class="highlight"><pre>cd ../3.5
+hg merge 3.4
+# Fix any conflicts (e.g. ``hg revert -r default Misc/NEWS``); compile; run the test suite
+hg ci -m &#39;#12345: merge with 3.4.&#39;
+</pre></div>
+</div>
+<p>If you are not using the share extension, you will need to use
+<code class="docutils literal"><span class="pre">hg</span> <span class="pre">pull</span> <span class="pre">../3.4</span></code> before being able to merge.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Even when porting an already committed patch, you should <em>still</em> check the
+test suite runs successfully before committing the patch to another branch.
+Subtle differences between two branches sometimes make a patch bogus if
+ported without any modifications.</p>
+</div>
+</div>
+<div class="section" id="porting-changesets-between-the-two-major-python-versions-2-x-and-3-x">
+<h2>16.6. Porting changesets between the two major Python versions (2.x and 3.x)<a class="headerlink" href="#porting-changesets-between-the-two-major-python-versions-2-x-and-3-x" title="Permalink to this headline">¶</a></h2>
+<p>Assume you just committed something on <code class="docutils literal"><span class="pre">2.7</span></code>, and want to port it to <code class="docutils literal"><span class="pre">3.4</span></code>.
+You can use <code class="docutils literal"><span class="pre">hg</span> <span class="pre">graft</span></code> as follow:</p>
+<div class="highlight-python"><div class="highlight"><pre>cd ../3.4
+hg graft 2.7
+</pre></div>
+</div>
+<p>This will port the latest changeset committed in the 2.7 clone to the 3.4 clone.
+<code class="docutils literal"><span class="pre">hg</span> <span class="pre">graft</span></code> always commits automatically, except in case of conflicts, when
+you have to resolve them and run <code class="docutils literal"><span class="pre">hg</span> <span class="pre">graft</span> <span class="pre">--continue</span></code> afterwards.
+Instead of the branch name you can also specify a changeset id, and you can
+also graft changesets from 3.x to 2.7.</p>
+<p>On older version of Mercurial where <code class="docutils literal"><span class="pre">hg</span> <span class="pre">graft</span></code> is not available, you can use:</p>
+<div class="highlight-python"><div class="highlight"><pre>cd ../3.4
+hg export 2.7 | hg import -
+</pre></div>
+</div>
+<p>The result will be the same, but in case of conflict this will create <code class="docutils literal"><span class="pre">.rej</span></code>
+files rather than using Mercurial merge capabilities.</p>
+<p>A third option is to apply manually the patch on <code class="docutils literal"><span class="pre">3.4</span></code>.  This is convenient
+when there are too many differences with <code class="docutils literal"><span class="pre">2.7</span></code> or when there is already a
+specific patch for <code class="docutils literal"><span class="pre">3.4</span></code>.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Never use <code class="docutils literal"><span class="pre">hg</span> <span class="pre">merge</span></code> to port changes between 2.x and 3.x (or vice versa).</p>
+</div>
+</div>
+<div class="section" id="long-term-development-of-features">
+<h2>16.7. Long-term development of features<a class="headerlink" href="#long-term-development-of-features" title="Permalink to this headline">¶</a></h2>
+<p>If you want to work on a feature long-term (perhaps you&#8217;re implementing a
+PEP), you will probably want to publish your work in a dedicated repository.
+The following instructions will help you do so on <a class="reference external" href="https://hg.python.org">hg.python.org</a>&#8216;s infrastructure without requiring a lot of upload
+bandwidth.</p>
+<p>Go to the main repository&#8217;s Web page (<a class="reference external" href="https://hg.python.org/cpython/">https://hg.python.org/cpython/</a>); there
+you find a button labelled &#8220;server-side clone&#8221;, which you can click on to
+display a Web form.  Enter the relative path of the repository you want to
+create on the server, for example <code class="docutils literal"><span class="pre">features/mywork</span></code>; and press the button.
+A new repository gets created on the server with all the changesets of the
+original repository (it will seem very fast; this is normal).</p>
+<p>You can now do a local clone of this repository on your disk:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ hg clone ssh://hg@hg.python.org/features/mywork
+$ cd mywork
+</pre></div>
+</div>
+<p>It is recommended that you create a new <a class="reference external" href="http://mercurial.selenic.com/wiki/NamedBranches">named branch</a> for your work, so as
+to easily track changes.  That named branch will exist in your feature
+repository, but not in the main repository:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ hg branch mywork
+$ hg commit -m &quot;Creating branch mywork&quot;
+$ hg push --new-branch
+</pre></div>
+</div>
+<p>You can now work on your feature, commit changes as you will, and push them
+when desired:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ hg push
+</pre></div>
+</div>
+<p>When you push them, they will land in the public repository at
+<code class="docutils literal"><span class="pre">ssh://hg&#64;hg.python.org/features/mywork</span></code> (or
+<code class="docutils literal"><span class="pre">https://hg.python.org/features/mywork</span></code> for the read-only URL).  Other
+people can clone the public repository and work on the code too.</p>
+<p>When you want to synchronize with CPython&#8217;s upstream changes, you can pull
+from the main repository, either from its remote URL:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ hg pull https://hg.python.org/cpython
+</pre></div>
+</div>
+<p>or from a local clone that you may have on your disk (which is of course
+faster):</p>
+<div class="highlight-python"><div class="highlight"><pre>$ hg pull ../cpython
+</pre></div>
+</div>
+<p>and merge all new changes from branch <code class="docutils literal"><span class="pre">default</span></code> to branch <code class="docutils literal"><span class="pre">mywork</span></code>:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ hg branch
+mywork
+$ hg merge default
+</pre></div>
+</div>
+<p>Rather than using a clone on <code class="docutils literal"><span class="pre">python.org</span></code> (which isn&#8217;t particularly useful
+for collaboration with folks that don&#8217;t already have CPython commit rights),
+<a class="reference external" href="http://www.bitbucket.org">Bitbucket</a> also maintain an <a class="reference external" href="https://bitbucket.org/mirror/cpython/overview">up to date clone</a> of the main <code class="docutils literal"><span class="pre">cpython</span></code>
+repository that can be used as the basis for a new clone or patch queue.</p>
+<div class="section" id="uploading-a-patch-for-review">
+<h3>16.7.1. Uploading a patch for review<a class="headerlink" href="#uploading-a-patch-for-review" title="Permalink to this headline">¶</a></h3>
+<p>In this scheme, your work will probably consist of many commits (some of
+them merges).  If you want to upload a patch for review somewhere, you need
+a single aggregate patch.  This is where having a dedicated named branch
+<code class="docutils literal"><span class="pre">mywork</span></code> gets handy.</p>
+<p>First ensure that you have pulled <em>and merged</em> all changes from the main
+repository, as explained above.  Then, assuming your <a class="reference internal" href="faq.html#hg-current-branch"><span>currently checked
+out branch</span></a> is still <code class="docutils literal"><span class="pre">mywork</span></code>, simply do:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ hg diff -r default &gt; mywork.patch
+</pre></div>
+</div>
+<p>This will write to <code class="docutils literal"><span class="pre">mywork.patch</span></code> all the changes between <code class="docutils literal"><span class="pre">default</span></code> and
+<code class="docutils literal"><span class="pre">mywork</span></code>.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">15. Committing and Pushing Changes</a><ul>
+<li><a class="reference internal" href="#is-the-change-ready-for-committing">15.1. Is the change ready for committing?</a><ul>
+<li><a class="reference internal" href="#does-the-test-suite-still-pass">15.1.1. Does the test suite still pass?</a></li>
+<li><a class="reference internal" href="#patch-checklist">15.1.2. Patch checklist</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#commit-style">15.2. Commit Style</a></li>
+<li><a class="reference internal" href="#handling-others-code">15.3. Handling Others&#8217; Code</a></li>
+<li><a class="reference internal" href="#contributor-licensing-agreements">15.4. Contributor Licensing Agreements</a></li>
+<li><a class="reference internal" href="#what-s-new-and-news-entries">15.5. What&#8217;s New and NEWS Entries</a></li>
+<li><a class="reference internal" href="#commit-messages">15.6. Commit Messages</a><ul>
+<li><a class="reference internal" href="#mercurial-hooks">15.6.1. Mercurial hooks</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#working-with-mercurial">16. Working with Mercurial</a><ul>
+<li><a class="reference internal" href="#minimal-configuration">16.1. Minimal Configuration</a></li>
+<li><a class="reference internal" href="#clones-setup">16.2. Clones Setup</a><ul>
+<li><a class="reference internal" href="#single-clone-approach">16.2.1. Single Clone Approach</a></li>
+<li><a class="reference internal" href="#multiple-clones-approach">16.2.2. Multiple Clones Approach</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#active-branches">16.3. Active branches</a></li>
+<li><a class="reference internal" href="#merging-order">16.4. Merging order</a></li>
+<li><a class="reference internal" href="#merging-between-different-branches-within-the-same-major-version">16.5. Merging between different branches (within the same major version)</a></li>
+<li><a class="reference internal" href="#porting-changesets-between-the-two-major-python-versions-2-x-and-3-x">16.6. Porting changesets between the two major Python versions (2.x and 3.x)</a></li>
+<li><a class="reference internal" href="#long-term-development-of-features">16.7. Long-term development of features</a><ul>
+<li><a class="reference internal" href="#uploading-a-patch-for-review">16.7.1. Uploading a patch for review</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="developers.html" title="previous chapter">14. Developer Log</a></li>
+      <li>Next: <a href="devcycle.html" title="next chapter">17. Development Cycle</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/committing.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Carol Willing.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.6</a>
+      
+      |
+      <a href="_sources/committing.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

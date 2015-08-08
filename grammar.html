@@ -1,0 +1,155 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>23. Changing CPython’s Grammar &mdash; Devguide 2015.08.08 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '2015.08.08',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Devguide 2015.08.08 documentation" href="index.html" />
+    <link rel="next" title="24. Design of CPython’s Compiler" href="compiler.html" />
+    <link rel="prev" title="22. gdb Support" href="gdb.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="changing-cpython-s-grammar">
+<span id="grammar"></span><h1>23. Changing CPython&#8217;s Grammar<a class="headerlink" href="#changing-cpython-s-grammar" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="abstract">
+<h2>23.1. Abstract<a class="headerlink" href="#abstract" title="Permalink to this headline">¶</a></h2>
+<p>There&#8217;s more to changing Python&#8217;s grammar than editing
+Grammar/Grammar and Python/compile.c.  This document aims to be a
+checklist of places that must also be fixed.</p>
+<p>It is probably incomplete.  If you see omissions,  submit a bug or patch.</p>
+<p>This document is not intended to be an instruction manual on Python
+grammar hacking, for several reasons.</p>
+</div>
+<div class="section" id="rationale">
+<h2>23.2. Rationale<a class="headerlink" href="#rationale" title="Permalink to this headline">¶</a></h2>
+<p>People are getting this wrong all the time; it took well over a
+year before someone <a class="reference external" href="http://bugs.python.org/issue676521">noticed</a>
+that adding the floor division
+operator (//) broke the parser module.</p>
+</div>
+<div class="section" id="checklist">
+<h2>23.3. Checklist<a class="headerlink" href="#checklist" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Grammar/Grammar: OK, you&#8217;d probably worked this one out :)</li>
+<li>Parser/Python.asdl may need changes to match the Grammar.  Run make to
+regenerate Include/Python-ast.h and Python/Python-ast.c.</li>
+<li>Python/ast.c will need changes to create the AST objects involved with the
+Grammar change.</li>
+<li>Parser/pgen needs to be rerun to regenerate Include/graminit.h and
+Python/graminit.c. (make should handle this for you.)</li>
+<li>Python/symtable.c: This handles the symbol collection pass
+that happens immediately before the compilation pass.</li>
+<li>Python/compile.c: You will need to create or modify the
+compiler_* functions to generate opcodes for your productions.</li>
+<li>You may need to regenerate Lib/symbol.py and/or Lib/token.py
+and/or Lib/keyword.py.</li>
+<li>The parser module.  Add some of your new syntax to test_parser,
+bang on Modules/parsermodule.c until it passes.</li>
+<li>Add some usage of your new syntax to test_grammar.py</li>
+<li>If you&#8217;ve gone so far as to change the token structure of
+Python, then the Lib/tokenizer.py library module will need to be changed.</li>
+<li>Certain changes may require tweaks to the library module pyclbr.</li>
+<li>Documentation must be written!</li>
+<li>After everything has been checked in, you&#8217;re likely to see a new
+change to Python/Python-ast.c.  This is because this
+(generated) file contains the hg version of the source from
+which it was generated.  There&#8217;s no way to avoid this; you just
+have to submit this file separately.</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">23. Changing CPython&#8217;s Grammar</a><ul>
+<li><a class="reference internal" href="#abstract">23.1. Abstract</a></li>
+<li><a class="reference internal" href="#rationale">23.2. Rationale</a></li>
+<li><a class="reference internal" href="#checklist">23.3. Checklist</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="gdb.html" title="previous chapter">22. gdb Support</a></li>
+      <li>Next: <a href="compiler.html" title="next chapter">24. Design of CPython&#8217;s Compiler</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/grammar.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Carol Willing.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.6</a>
+      
+      |
+      <a href="_sources/grammar.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
