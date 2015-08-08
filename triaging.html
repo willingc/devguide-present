@@ -1,0 +1,500 @@
+<!--
+Google IO 2012/2013 HTML5 Slide Template
+
+Authors: Eric Bidelman <ebidel@gmail.com>
+         Luke Mahé <lukem@google.com>
+
+URL: https://code.google.com/p/io-2012-slides
+--><!DOCTYPE html>
+
+
+<html>
+<head>
+  <title>11. Triaging an Issue &mdash; Devguide</title>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <!--<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">-->
+  <!--<meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+  <!--This one seems to work all the time, but really small on ipad-->
+  <!--<meta name="viewport" content="initial-scale=0.4">-->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+  <meta name="hieroglyph-title" data-config-title>
+  <meta name="hieroglyph-subtitle" data-config-subtitle>
+  <meta name="hieroglyph-presenter" data-config-presenter>
+
+  
+  <link rel="stylesheet" media="all"
+        href="_static/theme/css/default.css">
+  <link rel="stylesheet" media="all"
+        href="_static/theme/css/hieroglyph.css">
+  <link rel="stylesheet" media="only screen and (max-device-width: 480px)"
+        href="_static/theme/css/phone.css">
+
+    
+
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->
+  
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '2015.08.08',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+
+    <script data-main="_static/js/slides"
+            src="_static/js/require-1.0.8.min.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    
+    <link rel="top" title="Devguide" href="index.html" />
+    <link rel="next" title="12. Following Python&#39;s Development" href="communication.html" />
+    <link rel="prev" title="10. Issue Tracking" href="tracker.html" /> 
+</head>
+<body style="opacity: 0">
+
+<slides class="layout-widescreen">
+
+  
+
+  
+    <slide class="title-slide segue nobackground level-1" id="triaging-an-issue">
+    <hgroup>
+      <h1>Triaging an Issue</h1>
+    </hgroup>
+    <article class="">
+      <p>When you have the Developer role on the <a class="reference external" href="http://bugs.python.org">issue tracker</a> you are able to triage
+issues directly without any assistance.</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-2" id="fields">
+    <hgroup>
+      <h2>Fields</h2>
+    </hgroup>
+    <article class="">
+      
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="title">
+    <hgroup>
+      <h3>Title</h3>
+    </hgroup>
+    <article class="">
+      <p>Should be properly descriptive of what the issue is about. Occasionally
+people file an issue that either has too generic of a title or end up thinking
+they filed about X but in fact it turns out to be about Y and thus the
+title is now wrong.</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="type">
+    <hgroup>
+      <h3>Type</h3>
+    </hgroup>
+    <article class="">
+      <p>Describes the type of issue.  If something does not fit within any
+specific type then simply do not set it.</p>
+<dl class="docutils">
+<dt>behavior</dt>
+<dd>Wrong or unexpected behavior, result, or exception.  This includes most of
+the bugs.</dd>
+<dt>crash</dt>
+<dd>Hard crashes of the Python interpreter -- possibly with a core
+dump or a Windows error box.</dd>
+<dt>compile error</dt>
+<dd>Errors reported by the compiler while compiling Python.</dd>
+<dt>resource usage</dt>
+<dd>Situations where too many resources (e.g. memory) are used.</dd>
+<dt>security</dt>
+<dd>Issues that might have security implications.  If you think the issue
+should not be made public, please report it to <a class="reference external" href="mailto:security&#37;&#52;&#48;python&#46;org">security<span>&#64;</span>python<span>&#46;</span>org</a> instead.</dd>
+<dt>performance</dt>
+<dd>Situations where too much time is necessary to complete the task.</dd>
+<dt>enhancement</dt>
+<dd>Issues that propose the addition of new functionality, such as new
+functions, classes, modules, or even new arguments for existing functions.
+Also used for improvements in the documentation and test suite and for
+other refactorings.</dd>
+</dl>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="stage">
+    <hgroup>
+      <h3>Stage</h3>
+    </hgroup>
+    <article class="">
+      <p>What is needed next to advance the issue.  The <em>stage</em> needn't be set until
+it is clear that the issue warrants fixing.</p>
+<dl class="docutils">
+<dt>test needed</dt>
+<dd>The bug reporter should post a script or instructions to let a triager or
+developer reproduce the issue.</dd>
+<dt>needs patch</dt>
+<dd>The issue lacks a patch to solve the problem (i.e. fixing the bug, or
+adding the requested improvement).</dd>
+<dt>patch review</dt>
+<dd>There is a patch, but it needs reviewing or is in the process of being
+reviewed. This can be done by any triager as well as a core developer.</dd>
+<dt>commit review</dt>
+<dd>A triager performed a patch review and it looks good to them, but a core
+developer needs to commit the patch (and do a quick once-over to make sure
+nothing was overlooked).</dd>
+<dt>resolved</dt>
+<dd>The issue is considered closed and dealt with.</dd>
+</dl>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="components">
+    <hgroup>
+      <h3>Components</h3>
+    </hgroup>
+    <article class="">
+      <p>What part of Python is affected by the issue. This is a multi-select field.
+Be aware that what component is chosen may cause the issue to be auto-assigned,
+i.e. the issue tracker may automatically fill in the <a class="reference internal" href="#assigned-to">Assigned To</a> field
+after you press <code class="docutils literal"><span class="pre">Submit</span> <span class="pre">changes</span></code>.</p>
+<p>The following component(s) should be selected if the issue applies to:</p>
+<dl class="docutils">
+<dt>2to3 (2.x to 3.0 conversion tool)</dt>
+<dd>The 2to3 conversion tool in <a class="reference external" href="https://hg.python.org/cpython/file/default/Lib/lib2to3/">Lib/lib2to3</a>.</dd>
+<dt>Benchmarks</dt>
+<dd>The benchmarks in the <a class="reference external" href="https://hg.python.org/benchmarks/">benchmarks</a> repo.</dd>
+<dt>Build</dt>
+<dd>The build process.</dd>
+<dt>ctypes</dt>
+<dd>The ctypes package in <a class="reference external" href="https://hg.python.org/cpython/file/default/Lib/ctypes/">Lib/ctypes</a>.</dd>
+<dt>Demos and Tools</dt>
+<dd>The files in <a class="reference external" href="https://hg.python.org/cpython/file/default/Tools/">Tools</a> and <a class="reference external" href="https://hg.python.org/cpython/file/default/Tools/demo/">Tools/demo</a>.</dd>
+<dt>Devguide</dt>
+<dd>The <a class="reference external" href="https://hg.python.org/devguide/">Developer's guide</a>.</dd>
+<dt>Distutils</dt>
+<dd>The distutils package in <a class="reference external" href="https://hg.python.org/cpython/file/default/Lib/distutils/">Lib/distutils</a>.</dd>
+<dt>Documentation</dt>
+<dd>The documentation in <a class="reference external" href="https://hg.python.org/cpython/file/default/Doc/">Doc</a> (used to build the HTML doc at <a class="reference external" href="http://docs.python.org/">http://docs.python.org/</a>).</dd>
+<dt>email</dt>
+<dd>The email package and related modules.</dd>
+<dt>Extension Modules</dt>
+<dd>C modules in <a class="reference external" href="https://hg.python.org/cpython/file/default/Modules/">Modules</a>.</dd>
+<dt>IDLE</dt>
+<dd>The <a class="reference external" href="https://hg.python.org/cpython/file/default/Lib/idlelib/">Lib/idlelib</a> package.</dd>
+<dt>Installation</dt>
+<dd>The installation process.</dd>
+<dt>Interpreter Core</dt>
+<dd>The interpreter core, the built-in objects in <a class="reference external" href="https://hg.python.org/cpython/file/default/Objects/">Objects</a>, the <a class="reference external" href="https://hg.python.org/cpython/file/default/Python/">Python</a>,
+<a class="reference external" href="https://hg.python.org/cpython/file/default/Grammar/">Grammar</a> and <a class="reference external" href="https://hg.python.org/cpython/file/default/Parser/">Parser</a> dirs.</dd>
+<dt>IO</dt>
+<dd>The I/O system, <a class="reference external" href="https://hg.python.org/cpython/file/default/Lib/io.py">Lib/io.py</a> and <a class="reference external" href="https://hg.python.org/cpython/file/default/Modules/_io/">Modules/_io</a>.</dd>
+<dt>Library (Lib)</dt>
+<dd>Python modules in <a class="reference external" href="https://hg.python.org/cpython/file/default/Lib/">Lib</a>.</dd>
+<dt>Macintosh</dt>
+<dd>The Mac OS X operating system.</dd>
+<dt>Regular Expressions</dt>
+<dd>The <a class="reference external" href="https://hg.python.org/cpython/file/default/Lib/re.py">Lib/re.py</a> and <a class="reference external" href="https://hg.python.org/cpython/file/default/Modules/_sre.c">Modules/_sre.c</a> modules.</dd>
+<dt>Tests</dt>
+<dd><p class="first">The unittest and doctest frameworks in <a class="reference external" href="https://hg.python.org/cpython/file/default/Lib/unittest/">Lib/unittest</a> and
+<a class="reference external" href="https://hg.python.org/cpython/file/default/Lib/doctest.py">Lib/doctest.py</a>.</p>
+<p class="last">The CPython tests in <a class="reference external" href="https://hg.python.org/cpython/file/default/Lib/test/">Lib/test</a>, the test runner in <a class="reference external" href="https://hg.python.org/cpython/file/default/Lib/test/regrtest.py">Lib/test/regrtest.py</a>
+and the <a class="reference external" href="https://hg.python.org/cpython/file/default/Lib/test/support/">Lib/test/support</a> package.</p>
+</dd>
+<dt>Tkinter</dt>
+<dd>The <a class="reference external" href="https://hg.python.org/cpython/file/default/Lib/tkinter/">Lib/tkinter</a> package.</dd>
+<dt>Unicode</dt>
+<dd>Unicode, codecs, str vs bytes, <a class="reference external" href="https://hg.python.org/cpython/file/default/Objects/unicodeobject.c">Objects/unicodeobject.c</a>.</dd>
+<dt>Windows</dt>
+<dd>The Windows operating system.</dd>
+<dt>XML</dt>
+<dd>The <a class="reference external" href="https://hg.python.org/cpython/file/default/Lib/xml/">Lib/xml</a> package.</dd>
+</dl>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="versions">
+    <hgroup>
+      <h3>Versions</h3>
+    </hgroup>
+    <article class="">
+      <p>The known versions of Python that the issue affects and should be fixed for.
+Thus if an issue for a new feature is assigned for e.g., Python 3.3 but is not
+applied before Python 3.3.0 is released, this field should be updated to say
+Python 3.4 as the version and drop Python 3.3.</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="priority">
+    <hgroup>
+      <h3>Priority</h3>
+    </hgroup>
+    <article class="">
+      <p>How important is this issue?</p>
+<dl class="docutils">
+<dt>low</dt>
+<dd>This is for low-impact bugs, or feature requests of little utility.</dd>
+<dt>normal</dt>
+<dd>The default value for most issues, which deserve fixing but without
+any urgency to do so.</dd>
+<dt>high</dt>
+<dd>Make some effort to fix the issue before the next final release.</dd>
+<dt>critical</dt>
+<dd>This issue should definitely be fixed before the next final release.</dd>
+<dt>deferred blocker</dt>
+<dd>The issue will not hold up the next release, but will be promoted to a
+release blocker for the following release, e.g., won't block the next
+release of a1 but will block a2.</dd>
+<dt>release blocker</dt>
+<dd>The issue must be fixed before <em>any</em> release is made, e.g., will block the
+next release even if it is an alpha release.</dd>
+</dl>
+<p>As a guideline, <em>critical</em> and above are usually reserved for crashes,
+serious regressions or breakage of very important APIs.  Whether a bug
+is a <em>release blocker</em> is a decision better left to the release manager so,
+in any doubt, add him or her to the <em>nosy list</em>.</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="keywords">
+    <hgroup>
+      <h3>Keywords</h3>
+    </hgroup>
+    <article class="">
+      <p>Various flags about the issue. Multiple values are possible.</p>
+<dl class="docutils">
+<dt>buildbot</dt>
+<dd>A buildbot triggered the issue being reported.</dd>
+<dt>easy</dt>
+<dd>Fixing the issue should not take longer than a day for someone new to
+contributing to Python to solve.</dd>
+<dt>gsoc</dt>
+<dd>The issue would fit as, or is related to, a <a class="reference external" href="http://code.google.com/soc/">GSoC</a> project.</dd>
+<dt>needs review</dt>
+<dd>The patch attached to the issue is in need of a review.</dd>
+<dt>patch</dt>
+<dd>There is a patch attached to the issue.</dd>
+<dt>3.3regression</dt>
+<dd>The issue is a regression in 3.3.</dd>
+</dl>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="nosy-list">
+    <hgroup>
+      <h3>Nosy List</h3>
+    </hgroup>
+    <article class="">
+      <p>A list of people who may be interested in an issue. It is acceptable to add
+someone to the nosy list if you think the issue should be brought to their
+attention. Use the <a class="reference internal" href="experts.html#experts"><span>Experts Index</span></a> to know who wants to be added to the nosy
+list for issues targeting specific areas.</p>
+<p>If you are logged in and have JavaScript enabled, you can use the <code class="docutils literal"><span class="pre">[+]</span></code>
+button to add yourself to the nosy list (remember to click on
+&quot;Submit Changes&quot; afterwards).  Note that you are added to the nosy
+automatically when you submit a message.
+The nosy list also has an autocomplete that lets you search from the lists of
+developers and <a class="reference internal" href="experts.html#experts"><span>Experts Index</span></a>.  The search is case-insensitive and
+works for real names, modules, interest areas, etc., and only adds the
+username(s) to the nosy once an entry is selected.</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="assigned-to">
+    <hgroup>
+      <h3>Assigned To</h3>
+    </hgroup>
+    <article class="">
+      <p>Who is expected to take the next step in resolving the issue. It is acceptable
+to assign an issue to someone if the issue cannot move forward without their
+help, e.g., they need to make a technical decision to allow the issue to move
+forward. Also consult the <a class="reference internal" href="experts.html#experts"><span>Experts Index</span></a> as certain stdlib modules should
+always be assigned to a specific person.</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="dependencies">
+    <hgroup>
+      <h3>Dependencies</h3>
+    </hgroup>
+    <article class="">
+      <p>The issue requires the listed issue(s) to be resolved first before it can move
+forward.</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="superseder">
+    <hgroup>
+      <h3>Superseder</h3>
+    </hgroup>
+    <article class="">
+      <p>The issue is a duplicate of the listed issue(s).</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="status">
+    <hgroup>
+      <h3>Status</h3>
+    </hgroup>
+    <article class="">
+      <dl class="docutils">
+<dt>open</dt>
+<dd>Issue is not resolved.</dd>
+<dt>languishing</dt>
+<dd>The issue has no clear solution , e.g., no agreement on a technical
+solution or if it is even a problem worth fixing.</dd>
+<dt>pending</dt>
+<dd>The issue is blocked until someone (often the
+<abbr title="original poster">OP</abbr>) provides some critical information;
+the issue will be closed after a set amount of time if no reply comes in.
+Useful when someone opens an issue that lacks enough information to
+reproduce the bug reported.  Requesting additional information and setting
+status to <em>pending</em> indicates that the issue should be closed if the
+necessary information is never provided.</dd>
+<dt>closed</dt>
+<dd>The issue has been resolved (somehow).</dd>
+</dl>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="resolution">
+    <hgroup>
+      <h3>Resolution</h3>
+    </hgroup>
+    <article class="">
+      <p>Why the issue is in its current state (not usually used for &quot;open&quot;).</p>
+<dl class="docutils">
+<dt>duplicate</dt>
+<dd>Duplicate of another issue; should have the Superseder field filled out.</dd>
+<dt>fixed</dt>
+<dd>A fix for the issue was committed.</dd>
+<dt>later</dt>
+<dd>Issue is to be worked on at a later date.</dd>
+<dt>not a bug</dt>
+<dd>For some reason the issue is invalid (e.g. the perceived problem is not
+a bug in Python).</dd>
+<dt>out of date</dt>
+<dd>The issue has already been fixed, or the problem doesn't exist anymore
+for other reasons.</dd>
+<dt>postponed</dt>
+<dd>Issue will not be worked on at the moment.</dd>
+<dt>rejected</dt>
+<dd>Issue was rejected (especially for feature requests).</dd>
+<dt>remind</dt>
+<dd>The issue is acting as a reminder for someone.</dd>
+<dt>wont fix</dt>
+<dd>Issue will not be fixed, typically because it would cause a
+backwards-compatibility problem.</dd>
+<dt>works for me</dt>
+<dd>Bug cannot be reproduced.</dd>
+</dl>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="mercurial-repository">
+    <hgroup>
+      <h3>Mercurial Repository</h3>
+    </hgroup>
+    <article class="">
+      <p>HTTP link to a Mercurial repository that contains a patch for the issue.
+A <span class="guilabel">Create Patch</span> button will appear that computes a diff for the
+head revision of the remote branch and attaches it to the issue.  The button
+supports only <a class="reference external" href="https://hg.python.org/cpython/file/default/">CPython</a> patches.</p>
+<p>If you don't indicate a remote branch, <code class="docutils literal"><span class="pre">default</span></code> is used.  You can
+indicate a remote branch by adding <code class="docutils literal"><span class="pre">#BRANCH</span></code> to the end of the URL.</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-2" id="generating-special-links-in-a-comment">
+    <hgroup>
+      <h2>Generating Special Links in a Comment</h2>
+    </hgroup>
+    <article class="">
+      <p>Comments can automatically generate a link to various web pages if formatted
+properly.</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">#&lt;number&gt;</span></code>, <code class="docutils literal"><span class="pre">issue&lt;number&gt;</span></code>, or <code class="docutils literal"><span class="pre">issue</span> <span class="pre">&lt;number&gt;</span></code> links to the
+tracker issue <code class="docutils literal"><span class="pre">&lt;number&gt;</span></code>.</li>
+<li><code class="docutils literal"><span class="pre">msg&lt;number&gt;</span></code> links to the tracker message <code class="docutils literal"><span class="pre">&lt;number&gt;</span></code>.</li>
+<li>a 12-digit or 40-digit hex <code class="docutils literal"><span class="pre">&lt;number&gt;</span></code> is assumed to be a Mercurial
+changeset identifier and generates a link to changeset <code class="docutils literal"><span class="pre">&lt;number&gt;</span></code>
+in the official Python source code repositories.</li>
+<li><code class="docutils literal"><span class="pre">r&lt;number&gt;</span></code>, <code class="docutils literal"><span class="pre">rev&lt;number&gt;</span></code>, or <code class="docutils literal"><span class="pre">revision</span> <span class="pre">&lt;number&gt;</span></code> is assumed to be
+a legacy Subversion revision number, a reference to a changeset that was
+checked in prior to 2011-03-05 when the official Python source code
+repositories were migrated from the <abbr title="Subversion">svn</abbr>
+<abbr title="version control system">VCS</abbr> to Mercurial.
+The issue tracker automatically translates the legacy svn revision
+<code class="docutils literal"><span class="pre">&lt;number&gt;</span></code> to its corresponding Mercurial changeset identifier.</li>
+<li><code class="docutils literal"><span class="pre">Dir/file.ext</span></code> and <code class="docutils literal"><span class="pre">Dir/file.ext:NNN</span></code> generate links to files in the
+<a class="reference external" href="https://hg.python.org/cpython/file/">Python source code repositories</a>,
+possibly linking to the line number specified after the <code class="docutils literal"><span class="pre">:</span></code>.</li>
+<li><code class="docutils literal"><span class="pre">PEP</span> <span class="pre">&lt;number&gt;</span></code> and <code class="docutils literal"><span class="pre">PEP&lt;number&gt;</span></code> link to the
+<abbr title="Python Enhancement Proposal">PEP</abbr> <code class="docutils literal"><span class="pre">&lt;number&gt;</span></code>.</li>
+<li><code class="docutils literal"><span class="pre">devguide</span></code> (lowercase), <code class="docutils literal"><span class="pre">devguide/triaging</span></code>, and
+<code class="docutils literal"><span class="pre">devguide/triaging#generating-special-links-in-a-comment</span></code> generate links to
+the Devguide, this page, and this section respectively.</li>
+</ul>
+
+
+
+
+    </article>
+  </slide>
+
+
+    <slide class="thank-you-slide segue nobackground">
+    <article class="flexbox vleft auto-fadein">
+      <h2>&lt;Thank You!&gt;</h2>
+    </article>
+    <p class="auto-fadein" data-config-contact>
+      <!-- populated from slide_config.json -->
+    </p>
+  </slide>
+
+  <slide class="backdrop"></slide>
+
+</slides>
+
+<!--[if IE]>
+  <script src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js"></script>
+  <script>CFInstall.check({mode: 'overlay'});</script>
+<![endif]-->
+</body>
+</html>

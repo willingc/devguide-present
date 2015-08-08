@@ -1,0 +1,333 @@
+<!--
+Google IO 2012/2013 HTML5 Slide Template
+
+Authors: Eric Bidelman <ebidel@gmail.com>
+         Luke Mahé <lukem@google.com>
+
+URL: https://code.google.com/p/io-2012-slides
+--><!DOCTYPE html>
+
+
+<html>
+<head>
+  <title>17. Development Cycle &mdash; Devguide</title>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <!--<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">-->
+  <!--<meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+  <!--This one seems to work all the time, but really small on ipad-->
+  <!--<meta name="viewport" content="initial-scale=0.4">-->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+  <meta name="hieroglyph-title" data-config-title>
+  <meta name="hieroglyph-subtitle" data-config-subtitle>
+  <meta name="hieroglyph-presenter" data-config-presenter>
+
+  
+  <link rel="stylesheet" media="all"
+        href="_static/theme/css/default.css">
+  <link rel="stylesheet" media="all"
+        href="_static/theme/css/hieroglyph.css">
+  <link rel="stylesheet" media="only screen and (max-device-width: 480px)"
+        href="_static/theme/css/phone.css">
+
+    
+
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->
+  
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '2015.08.08',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+
+    <script data-main="_static/js/slides"
+            src="_static/js/require-1.0.8.min.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    
+    <link rel="top" title="Devguide" href="index.html" />
+    <link rel="next" title="18. Continuous Integration" href="buildbots.html" />
+    <link rel="prev" title="15. Committing and Pushing Changes" href="committing.html" /> 
+</head>
+<body style="opacity: 0">
+
+<slides class="layout-widescreen">
+
+  
+
+  
+    <slide class="title-slide segue nobackground level-1" id="development-cycle">
+    <hgroup>
+      <h1>Development Cycle</h1>
+    </hgroup>
+    <article class="">
+      <p>The responsibilities of a core developer shift based on what kind of branch of
+Python a developer is working on and what stage the branch is in.</p>
+<p>To clarify terminology, Python uses a <code class="docutils literal"><span class="pre">major.minor.micro</span></code> nomenclature
+for production-ready releases. So for Python 3.1.2 final, that is a <em>major
+version</em> of 3, a <em>minor version</em> of 1, and a <em>micro version</em> of 2.</p>
+<ul class="simple">
+<li>new <em>major versions</em> are exceptional; they only come when strongly
+incompatible changes are deemed necessary, and are planned very long
+in advance;</li>
+<li>new <em>minor versions</em> are feature releases; they get released roughly
+every 18 months, from the current <a class="reference internal" href="#indevbranch"><span>in-development</span></a>
+branch;</li>
+<li>new <em>micro versions</em> are bugfix releases; they get released roughly
+every 6 months, although they can come more often if necessary; they are
+prepared in <a class="reference internal" href="#maintbranch"><span>maintenance</span></a> branches.</li>
+</ul>
+<p>We also publish non-final versions which get an additional qualifier:
+<a class="reference internal" href="#alpha"><span>Alpha</span></a>, <a class="reference internal" href="#beta"><span>Beta</span></a>, <a class="reference internal" href="#rc"><span>release candidate</span></a>.  These versions
+are aimed at testing by advanced users, not production use.</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-2" id="branches">
+    <hgroup>
+      <h2>Branches</h2>
+    </hgroup>
+    <article class="">
+      <p>There is a branch for each <em>feature version</em>, whether released or not (e.g.
+2.7, 3.5).  Development is handled separately for Python 2 and Python 3:
+no merging happens between 2.x and 3.x branches.</p>
+<p>In each of the 2.x and 3.x realms, the branch for a feature version is always a
+descendant of the previous feature version: for example, the <code class="docutils literal"><span class="pre">3.3</span></code> branch is a
+descendant of the <code class="docutils literal"><span class="pre">3.2</span></code> branch.</p>
+<p>Therefore, each change should be made <strong>first</strong> in the oldest branch to which it
+applies and forward-ported as appropriate: if a bug must be fixed in both Python
+3.4 and 3.5, first fix it in <code class="docutils literal"><span class="pre">3.4</span></code> and then merge <code class="docutils literal"><span class="pre">3.4</span></code> into <code class="docutils literal"><span class="pre">default</span></code>
+(which holds the future 3.5).</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="in-development-main-branch">
+    <hgroup>
+      <h3>In-development (main) branch</h3>
+    </hgroup>
+    <article class="">
+      <p>The <code class="docutils literal"><span class="pre">default</span></code> branch is the branch for the next feature release; it is
+under active development for all kinds of changes: new features, semantic
+changes, performance improvements, bug fixes.  As the name indicates, it
+is the branch <a class="reference internal" href="setup.html#checkout"><span>checked out</span></a> by default by Mercurial.</p>
+<p>At some point during the life-cycle of a release, a
+new <a class="reference internal" href="#maintbranch"><span>maintenance branch</span></a> is created to host all bug fixing
+activity for further micro versions (3.3.1, 3.3.2, etc.).</p>
+<p>For versions 3.4 and before, this was conventionally done when the final
+release was cut (for example, 3.4.0 final).</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">For the 3.5 release we're trying something new. We're creating the 3.5
+maintenance branch at the time we enter beta (3.5.0 beta 1).  This will
+allow feature development for 3.6 to occur alongside the beta and release
+candidate stabilization periods for 3.5.</p>
+</div>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="maintenance-branches">
+    <hgroup>
+      <h3>Maintenance branches</h3>
+    </hgroup>
+    <article class="">
+      <p>A branch for a previous feature release, currently being maintained for bug
+fixes.  There are usually two maintenance branches at any given time: one for
+Python 3.x and
+one for Python 2.x.  At some point in the future, Python 2.x will be closed
+for bug fixes and there will be only one maintenance branch left.</p>
+<p>The only changes allowed to occur in a maintenance branch without debate are
+bug fixes.  Also, a general rule for maintenance branches is that compatibility
+must not be broken at any point between sibling minor releases (3.4.1, 3.4.2,
+etc.).  For both rules, only rare exceptions are accepted and <strong>must</strong> be
+discussed first.</p>
+<p>Sometime after a new maintenance branch is created (after a new <em>minor version</em>
+is released), the old maintenance branch on that major version will go into
+<a class="reference internal" href="#secbranch"><span>security mode</span></a>,
+usually after one last maintenance release at the discretion of the
+release manager.  For example, the 3.2 maintenance branch was put into
+<a class="reference internal" href="#secbranch"><span>security mode</span></a> after the 3.2.4 final maintenance release
+following the release of 3.3.0.</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="security-branches">
+    <hgroup>
+      <h3>Security branches</h3>
+    </hgroup>
+    <article class="">
+      <p>A branch less than 5 years old but no longer in maintenance mode.</p>
+<p>The only changes made to a security branch are those fixing issues exploitable
+by attackers such as crashes, privilege escalation and, optionally, other
+issues such as denial of service attacks.  Any other changes are
+<strong>not</strong> considered a security risk and thus not backported to a security branch.</p>
+<p>Commits to security branches are to be coordinated with the release manager
+for the corresponding feature version, as listed below in the <a class="reference internal" href="#summary">Summary</a>.
+Any release made from a security branch is source-only and done only when actual
+security patches have been applied to the branch.</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="summary">
+    <hgroup>
+      <h3>Summary</h3>
+    </hgroup>
+    <article class="">
+      <p>There are 5 open branches right now in the Mercurial repository:</p>
+<ul class="simple">
+<li>the <code class="docutils literal"><span class="pre">default</span></code> branch holds the future 3.5 version and descends from <code class="docutils literal"><span class="pre">3.4</span></code>
+(RM: Larry Hastings)</li>
+<li>the <code class="docutils literal"><span class="pre">3.4</span></code> branch holds bug fixes for future 3.4.x maintenance releases
+and descends from <code class="docutils literal"><span class="pre">3.3</span></code> (RM: Larry Hastings)</li>
+<li>the <code class="docutils literal"><span class="pre">3.3</span></code> branch holds security fixes for future 3.3.x security releases
+and descends from <code class="docutils literal"><span class="pre">3.2</span></code> (RM: Georg Brandl)</li>
+<li>the <code class="docutils literal"><span class="pre">3.2</span></code> branch holds security fixes for future 3.2.x security releases
+(RM: Georg Brandl)</li>
+<li>the <code class="docutils literal"><span class="pre">2.7</span></code> branch holds bug fixes for future 2.7.x maintenance releases and
+descends from <code class="docutils literal"><span class="pre">2.6</span></code> (RM: Benjamin Peterson)</li>
+</ul>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-2" id="stages">
+    <hgroup>
+      <h2>Stages</h2>
+    </hgroup>
+    <article class="">
+      <p>Based on what stage the <a class="reference internal" href="#indevbranch"><span>in-development</span></a> version of Python
+is in, the responsibilities of a core developer change in regards to commits
+to the <abbr title="version control system">VCS</abbr>.</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="pre-alpha">
+    <hgroup>
+      <h3>Pre-alpha</h3>
+    </hgroup>
+    <article class="">
+      <p>The branch is in this stage when no official release has been done since
+the latest final release.  There are no special restrictions placed on
+commits, although the usual advice applies (getting patches reviewed, avoiding
+breaking the buildbots).</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="alpha">
+    <hgroup>
+      <h3>Alpha</h3>
+    </hgroup>
+    <article class="">
+      <p>Alpha releases typically serve as a reminder to core developers that they
+need to start getting in changes that change semantics or add something to
+Python as such things should not be added during a <a class="reference internal" href="#beta">Beta</a>. Otherwise no new
+restrictions are in place while in alpha.</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="beta">
+    <hgroup>
+      <h3>Beta</h3>
+    </hgroup>
+    <article class="">
+      <p>After a first beta release is published, no new features are accepted.  Only
+bug fixes can now be committed.  This is when core developers should concentrate
+on the task of fixing regressions and other new issues filed by users who have
+downloaded the alpha and beta releases.</p>
+<p>Being in beta can be viewed much like being in <a class="reference internal" href="#rc">RC</a> but without the extra overhead
+of needing commit reviews.</p>
+<p>Please see the note in the <a class="reference internal" href="#in-development-main-branch">In-development (main) branch</a> section above
+for new information about the creation of the 3.5 maintenance branch during beta.</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="release-candidate-rc">
+    <hgroup>
+      <h3>Release Candidate (RC)</h3>
+    </hgroup>
+    <article class="">
+      <p>A branch preparing for an RC release can only have bugfixes applied that have
+been reviewed by other core developers.  Generally, these issues must be
+severe enough (e.g. crashes) that they deserve fixing before the final release.
+All other issues should be deferred to the next development cycle, since stability
+is the strongest concern at this point.</p>
+<p>You <strong>cannot</strong> skip the peer review during an RC, no matter how small! Even if
+it is a simple copy-and-paste change, <strong>everything</strong> requires peer review from
+a core developer.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>For the 3.5 release we're trying something new.  At the point that we reach 3.5.0
+release candidate 1, the official release branch will no longer be hosted at
+<code class="docutils literal"><span class="pre">hg.python.org</span></code>.  Instead, 3.5.0 rc 1 through final will be hosted
+by the 3.5 release manager on bitbucket.</p>
+<p class="last">Bugfixes for 3.5 should still be checked in to the 3.5 branch.  However, if the
+core developer responsible for the bugfix feels it should be merged into 3.5.0, they
+will need to create a bitbucket &quot;pull request&quot; for this change.  Any bugfixes not
+merged into 3.5.0 in this way will be automatically shipped with 3.5.1.</p>
+</div>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="final">
+    <hgroup>
+      <h3>Final</h3>
+    </hgroup>
+    <article class="">
+      <p>When a final release is being cut, only the release manager (RM) can make
+changes to the branch.  After the final release is published, the full
+<a class="reference internal" href="#stages"><span>development cycle</span></a> starts again for the next minor version.</p>
+
+
+
+
+    </article>
+  </slide>
+
+
+    <slide class="thank-you-slide segue nobackground">
+    <article class="flexbox vleft auto-fadein">
+      <h2>&lt;Thank You!&gt;</h2>
+    </article>
+    <p class="auto-fadein" data-config-contact>
+      <!-- populated from slide_config.json -->
+    </p>
+  </slide>
+
+  <slide class="backdrop"></slide>
+
+</slides>
+
+<!--[if IE]>
+  <script src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js"></script>
+  <script>CFInstall.check({mode: 'overlay'});</script>
+<![endif]-->
+</body>
+</html>

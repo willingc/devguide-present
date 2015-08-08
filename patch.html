@@ -1,0 +1,308 @@
+<!--
+Google IO 2012/2013 HTML5 Slide Template
+
+Authors: Eric Bidelman <ebidel@gmail.com>
+         Luke Mahé <lukem@google.com>
+
+URL: https://code.google.com/p/io-2012-slides
+--><!DOCTYPE html>
+
+
+<html>
+<head>
+  <title>3. Lifecycle of a Patch &mdash; Devguide</title>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <!--<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">-->
+  <!--<meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+  <!--This one seems to work all the time, but really small on ipad-->
+  <!--<meta name="viewport" content="initial-scale=0.4">-->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+  <meta name="hieroglyph-title" data-config-title>
+  <meta name="hieroglyph-subtitle" data-config-subtitle>
+  <meta name="hieroglyph-presenter" data-config-presenter>
+
+  
+  <link rel="stylesheet" media="all"
+        href="_static/theme/css/default.css">
+  <link rel="stylesheet" media="all"
+        href="_static/theme/css/hieroglyph.css">
+  <link rel="stylesheet" media="only screen and (max-device-width: 480px)"
+        href="_static/theme/css/phone.css">
+
+    
+
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->
+  
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '2015.08.08',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+
+    <script data-main="_static/js/slides"
+            src="_static/js/require-1.0.8.min.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    
+    <link rel="top" title="Devguide" href="index.html" />
+    <link rel="next" title="4. Running &amp; Writing Tests" href="runtests.html" />
+    <link rel="prev" title="2. Where to Get Help" href="help.html" /> 
+</head>
+<body style="opacity: 0">
+
+<slides class="layout-widescreen">
+
+  
+
+  
+    <slide class="title-slide segue nobackground level-1" id="lifecycle-of-a-patch">
+    <hgroup>
+      <h1>Lifecycle of a Patch</h1>
+    </hgroup>
+    <article class="">
+      
+
+
+
+    </article>
+  </slide>  <slide class="level-2" id="creating">
+    <hgroup>
+      <h2>Creating</h2>
+    </hgroup>
+    <article class="">
+      
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="tool-usage">
+    <hgroup>
+      <h3>Tool Usage</h3>
+    </hgroup>
+    <article class="">
+      <p id="workflow">Mercurial allows for various workflows according to each person's or
+project's preference.  It is out of this guide's scope to present them all,
+so we will stick to a basic workflow where you work on a patch in your
+working copy without ever making any local commits.</p>
+<p>If you use this workflow, and your work adds or removes files to the
+source tree, you will have to temporarily <code class="docutils literal"><span class="pre">hg</span> <span class="pre">add</span></code> or <code class="docutils literal"><span class="pre">hg</span> <span class="pre">remove</span></code> them,
+respectively, before generating a patch.</p>
+<p>To generate a patch, just invoke <code class="docutils literal"><span class="pre">hg</span> <span class="pre">diff</span></code> which will print out a
+patch of the working copy's changes against the current revision:</p>
+<div class="highlight-python"><div class="highlight"><pre>hg diff &gt; mywork.patch
+</pre></div>
+</div>
+<p>If you want to undo your changes, you can revert them from the working copy:</p>
+<div class="highlight-python"><div class="highlight"><pre>hg revert -a
+</pre></div>
+</div>
+<p>You can later re-apply the changes if you want to continue working on the
+patch:</p>
+<div class="highlight-python"><div class="highlight"><pre>hg import --no-commit mywork.patch
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last">Refer to the <a class="reference internal" href="faq.html#faq"><span>FAQ</span></a> for
+<a class="reference internal" href="faq.html#hg-local-workflow"><span>more information on using Mercurial</span></a>.</p>
+</div>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="preparation">
+    <hgroup>
+      <h3>Preparation</h3>
+    </hgroup>
+    <article class="">
+      <p>When creating a patch for submission, there are several things that you should
+do to help ensure that your patch is accepted.</p>
+<p>First, make sure to follow Python's style guidelines. For Python code you
+should follow <span class="target" id="index-0"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0008"><strong>PEP 8</strong></a>, and for C code you should follow <span class="target" id="index-1"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0007"><strong>PEP 7</strong></a>. If you have
+one or two discrepancies those can be fixed by the core developer who commits
+your patch. But if you have systematic deviations from the style guides your
+patch will be put on hold until you fix the formatting issues.</p>
+<p>Second, be aware of backwards-compatibility considerations. While the core
+developer who eventually handles your patch will make the final call on whether
+something is acceptable, thinking about backwards-compatibility early
+will help prevent having your patch rejected on these grounds. Put yourself in
+the shoes of someone whose code will be broken by the change(s) introduced by
+the patch. It is quite likely that any change made will break
+someone's code, so you need to have a good reason to make a change as you will
+be forcing someone to update their code. (This obviously does not apply to new
+classes or functions; new arguments should be optional and have default values
+which maintain the existing behavior.) If in doubt, have a look at
+<span class="target" id="index-2"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0387"><strong>PEP 387</strong></a> or <a class="reference internal" href="communication.html#communication"><span>discuss</span></a> the issue with experienced
+developers.</p>
+<p>Third, make sure you have proper tests to verify your patch works as expected.
+Patches will not be accepted without the proper tests!</p>
+<p>Fourth, make sure the entire test suite <a class="reference internal" href="runtests.html#runtests"><span>runs</span></a> <strong>without
+failure</strong> because of your changes.  It is not sufficient to only run whichever
+test seems impacted by your changes, because there might be interferences
+unknown to you between your changes and some other part of the interpreter.</p>
+<p>Fifth, proper <a class="reference internal" href="documenting.html#documenting"><span>documentation</span></a>
+additions/changes should be included.</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="generation">
+    <hgroup>
+      <h3>Generation</h3>
+    </hgroup>
+    <article class="">
+      <p>To perform a quick sanity check on your patch, you can run:</p>
+<div class="highlight-python"><div class="highlight"><pre>make patchcheck
+</pre></div>
+</div>
+<p>This will check and/or fix various common things people forget to do for
+patches, such as adding any new files needed for the patch to work (note
+that not all checks apply to non-core developers).  On Windows, use this
+command:</p>
+<div class="highlight-python"><div class="highlight"><pre>./python.exe Tools/scripts/patchcheck.py
+</pre></div>
+</div>
+<p>Assuming you are using the <a class="reference internal" href="#workflow"><span>basic approach</span></a> suggested earlier,
+just type the following:</p>
+<div class="highlight-python"><div class="highlight"><pre>hg diff &gt; mywork.patch
+</pre></div>
+</div>
+<p>If you are using another approach, you probably need to find out the right
+invocation of <code class="docutils literal"><span class="pre">hg</span> <span class="pre">diff</span></code> for your purposes; see <code class="docutils literal"><span class="pre">hg</span> <span class="pre">help</span> <span class="pre">diff</span></code> and <code class="docutils literal"><span class="pre">hg</span>
+<span class="pre">help</span> <span class="pre">revisions</span></code>. Just please make sure that you generate a
+<strong>single, condensed</strong> patch rather than a series of several changesets.</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-2" id="licensing">
+    <hgroup>
+      <h2>Licensing</h2>
+    </hgroup>
+    <article class="">
+      <p>For non-trivial changes, we must have your formal approval for distributing
+your work under the <a class="reference external" href="http://docs.python.org/3.4/license.html#terms-and-conditions-for-accessing-or-otherwise-using-python">PSF license</a>.  Therefore, you need to fill out a
+<a class="reference external" href="http://www.python.org/psf/contrib/">contributor form</a> which allows the <a class="reference external" href="http://www.python.org/psf/">Python Software Foundation</a> to
+license your code for use with Python (you retain the copyright).</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">You only have to sign this document once, it will then apply to all
+your further contributions to Python.</p>
+</div>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-2" id="submitting">
+    <hgroup>
+      <h2>Submitting</h2>
+    </hgroup>
+    <article class="">
+      <p>If this is a patch in response to a pre-existing issue on the <a class="reference external" href="http://bugs.python.org">issue tracker</a>,
+attach the patch to the issue; use the <code class="docutils literal"><span class="pre">Choose</span> <span class="pre">File</span></code> button on the tracker
+web page for the issue to upload your patch file. Please provide any details
+about your patch that
+would be relevant to the discussion of the issue or your patch.</p>
+<p>If this is a patch for an unreported issue (assuming you already performed a
+search on the issue tracker for a pre-existing issue), create a new issue and
+attach your patch. Please fill in as much relevant detail as possible to
+prevent patch reviewers from having to delay reviewing your patch because of
+lack of information.</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-2" id="reviewing">
+    <hgroup>
+      <h2>Reviewing</h2>
+    </hgroup>
+    <article class="">
+      <p>To begin with, please be patient! There are many more people submitting patches
+than there are people capable of reviewing your patch. Getting your patch
+reviewed requires a reviewer to have the spare time and motivation to
+look at your patch (we cannot force anyone to review patches). If your patch has
+not received any notice from reviewers (i.e., no comment made) after one
+month, first &quot;ping&quot; the issue on the <a class="reference external" href="http://bugs.python.org">issue tracker</a> to remind the nosy list
+that the patch needs a review.  If you don't get a response within a few days
+after pinging the issue, then you can try emailing <a class="reference external" href="mailto:python-dev&#37;&#52;&#48;python&#46;org">python-dev<span>&#64;</span>python<span>&#46;</span>org</a> asking
+for someone to review your patch.</p>
+<p>When someone does manage to find the time to look at your patch they will most
+likely make comments about how it can be improved (don't worry, even core
+developers of Python have their patches sent back to them for changes).  It
+is then expected that you post a new patch addressing these comments, and the
+review process will thus iterate until a satisfactory solution has emerged.</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-2" id="committing-rejecting">
+    <hgroup>
+      <h2>Committing/Rejecting</h2>
+    </hgroup>
+    <article class="">
+      <p>Once your patch has reached an acceptable state (and thus considered
+&quot;accepted&quot;), it will either be committed or rejected. If it is rejected, please
+do not take it personally! Your work is still appreciated regardless of whether
+your patch is committed. Balancing what <em>does</em> and <em>does not</em> go into Python
+is tricky and we simply cannot accept everyone's contributions.</p>
+<p>But if your patch is committed it will then go into Python's
+<abbr title="version control system">VCS</abbr> to be released
+with the next major release of Python. It may also be backported to older
+versions of Python as a bugfix if the core developer doing the commit believes
+it is warranted.</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-2" id="crediting">
+    <hgroup>
+      <h2>Crediting</h2>
+    </hgroup>
+    <article class="">
+      <p>Non-trivial contributions are credited in the <code class="docutils literal"><span class="pre">Misc/ACKS</span></code> file (and, most
+often, in a contribution's <code class="docutils literal"><span class="pre">Misc/NEWS</span></code> entry as well).  This is something
+the core developer will do when committing your patch, you don't have to
+propose the addition by yourself.</p>
+
+
+
+
+    </article>
+  </slide>
+
+
+    <slide class="thank-you-slide segue nobackground">
+    <article class="flexbox vleft auto-fadein">
+      <h2>&lt;Thank You!&gt;</h2>
+    </article>
+    <p class="auto-fadein" data-config-contact>
+      <!-- populated from slide_config.json -->
+    </p>
+  </slide>
+
+  <slide class="backdrop"></slide>
+
+</slides>
+
+<!--[if IE]>
+  <script src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js"></script>
+  <script>CFInstall.check({mode: 'overlay'});</script>
+<![endif]-->
+</body>
+</html>

@@ -1,0 +1,172 @@
+<!--
+Google IO 2012/2013 HTML5 Slide Template
+
+Authors: Eric Bidelman <ebidel@gmail.com>
+         Luke Mahé <lukem@google.com>
+
+URL: https://code.google.com/p/io-2012-slides
+--><!DOCTYPE html>
+
+
+<html>
+<head>
+  <title>12. Following Python&#39;s Development &mdash; Devguide</title>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <!--<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">-->
+  <!--<meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+  <!--This one seems to work all the time, but really small on ipad-->
+  <!--<meta name="viewport" content="initial-scale=0.4">-->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+  <meta name="hieroglyph-title" data-config-title>
+  <meta name="hieroglyph-subtitle" data-config-subtitle>
+  <meta name="hieroglyph-presenter" data-config-presenter>
+
+  
+  <link rel="stylesheet" media="all"
+        href="_static/theme/css/default.css">
+  <link rel="stylesheet" media="all"
+        href="_static/theme/css/hieroglyph.css">
+  <link rel="stylesheet" media="only screen and (max-device-width: 480px)"
+        href="_static/theme/css/phone.css">
+
+    
+
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->
+  
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '2015.08.08',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+
+    <script data-main="_static/js/slides"
+            src="_static/js/require-1.0.8.min.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    
+    <link rel="top" title="Devguide" href="index.html" />
+    <link rel="next" title="13. How to Become a Core Developer" href="coredev.html" />
+    <link rel="prev" title="11. Triaging an Issue" href="triaging.html" /> 
+</head>
+<body style="opacity: 0">
+
+<slides class="layout-widescreen">
+
+  
+
+  
+    <slide class="title-slide segue nobackground level-1" id="following-python-s-development">
+    <hgroup>
+      <h1>Following Python's Development</h1>
+    </hgroup>
+    <article class="">
+      <p>Python's development is communicated through a myriad of ways, mostly through
+mailing lists, but also other forms.</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-2" id="mailing-lists">
+    <hgroup>
+      <h2>Mailing Lists</h2>
+    </hgroup>
+    <article class="">
+      <p>The primary mailing list where discussions about Python's development occur is
+<a class="reference external" href="http://mail.python.org/mailman/listinfo/python-dev">python-dev</a>. The list is open to the public and is subscribed to by all core
+developers plus many people simply interested in following Python's
+development. Discussion is focused on issues related to Python's development,
+such as how to handle a specific issue, a PEP, etc. Ideas about new
+functionality should <strong>not</strong> start here and instead should be sent to
+<a class="reference external" href="http://mail.python.org/mailman/listinfo/python-ideas">python-ideas</a>. Technical support questions should also not be asked here and
+instead should go to <a class="reference external" href="http://mail.python.org/mailman/listinfo/python-list">python-list</a> or <a class="reference external" href="http://mail.python.org/mailman/listinfo/python-help">python-help</a>.</p>
+<p>The <a class="reference external" href="http://mail.python.org/mailman/listinfo/python-committers">python-committers</a> mailing list is a private mailing list for core
+developers (the archives are publicly available).
+If something only affects core developers (e.g., the
+tree is frozen for commits, etc.), it is discussed here instead of python-dev
+to keep traffic down on the latter.</p>
+<p><a class="reference external" href="http://mail.python.org/mailman/listinfo/python-ideas">Python-ideas</a> is a mailing list open to the public to discuss ideas on changing
+Python. If a new idea does not start here (or <a class="reference external" href="http://mail.python.org/mailman/listinfo/python-list">python-list</a>, discussed below),
+it will get redirected here.</p>
+<p><a class="reference external" href="http://mail.python.org/mailman/listinfo/python-checkins">Python-checkins</a> sends out an email for every commit to Python's various
+repositories from <a class="reference external" href="https://hg.python.org">https://hg.python.org</a>. All core developers
+subscribe to this list and are known to reply to these emails to make comments
+about various issues they catch in the commit. Replies get redirected to
+python-dev.</p>
+<p>There are two mailing lists related to issues on the <a class="reference external" href="http://bugs.python.org">issue tracker</a>. If you
+only want an email for when a new issue is open, subscribe to
+<a class="reference external" href="http://mail.python.org/mailman/listinfo/new-bugs-announce">new-bugs-announce</a>. If you would rather receive an email for all changes made
+to any issue, subscribe to <a class="reference external" href="http://mail.python.org/mailman/listinfo/python-bugs-list">python-bugs-list</a>.</p>
+<p>Sometimes people post new ideas to <a class="reference external" href="http://mail.python.org/mailman/listinfo/python-list">python-list</a> to gather community opinion before
+heading to <a class="reference external" href="http://mail.python.org/mailman/listinfo/python-ideas">python-ideas</a>. The list is also sometimes known as comp.lang.python,
+the name of the newsgroup is mirrors (it is also known by the abbreviation
+c.l.py).</p>
+<p>A complete list of Python mailing lists can be found at <a class="reference external" href="http://mail.python.org">http://mail.python.org</a>.
+Most lists are also mirrored at <a class="reference external" href="http://news.gmane.org/">http://news.gmane.org/</a> and can be read and
+posted to in various ways, including via web browsers, NNTP newsreaders, and
+RSS feed readers.</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-2" id="irc">
+    <hgroup>
+      <h2>IRC</h2>
+    </hgroup>
+    <article class="">
+      <p>Some core developers enjoy spending time on IRC discussing various issues
+regarding Python's development in the <code class="docutils literal"><span class="pre">#python-dev</span></code> channel on
+<code class="docutils literal"><span class="pre">irc.freenode.net</span></code>. This is not a place to ask for help with Python, but to
+discuss issues related to Python's own development.  You can use freenode's
+<a class="reference external" href="http://webchat.freenode.net/">Web interface</a> if you don't have an IRC
+client.</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-2" id="blogs">
+    <hgroup>
+      <h2>Blogs</h2>
+    </hgroup>
+    <article class="">
+      <p>Several core developers are active bloggers and discuss Python's development
+that way. You can find their blogs (and various other developers who use Python)
+at <a class="reference external" href="http://planet.python.org/">http://planet.python.org/</a>.</p>
+
+
+
+
+    </article>
+  </slide>
+
+
+    <slide class="thank-you-slide segue nobackground">
+    <article class="flexbox vleft auto-fadein">
+      <h2>&lt;Thank You!&gt;</h2>
+    </article>
+    <p class="auto-fadein" data-config-contact>
+      <!-- populated from slide_config.json -->
+    </p>
+  </slide>
+
+  <slide class="backdrop"></slide>
+
+</slides>
+
+<!--[if IE]>
+  <script src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js"></script>
+  <script>CFInstall.check({mode: 'overlay'});</script>
+<![endif]-->
+</body>
+</html>

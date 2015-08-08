@@ -1,0 +1,284 @@
+========================
+Python Developer's Guide
+========================
+
+Welcome to the Python developer community's comprehensive resource for
+:ref:`contributing <contributing>` to Python_. The guide shares information that
+new, developing, and experienced contributors have found helpful. It is
+:ref:`maintained <helping-with-the-developers-guide>` by the same community
+that maintains Python, and we hope you will share it with others.
+
+
+Quick Start: Community workflow
+-------------------------------
+
+Our Python development community works to grow and improve the Python language.
+We also sustain and maintain many projects that support our developers. It's a
+big job with many contributors pitching in their time and ideas.
+
+To be an effective developer, these community workflow actions are critical:
+
+1. Use `Python Mentors`_ and its :ref:`core mentorship <help-core-mentorship>`
+   resources.
+
+2. Learn the :ref:`mailing lists <help-mailing-lists>` and use them effectively.
+
+  * `tutor`_, `python-help`_, `python-list`_ for
+    :ref:`general questions <general-questions>`
+  * `python-ideas`_ for :ref:`suggesting new features <suggesting-changes>`
+  * `python-dev`_ for current development, release mechanics and maintenance,
+    and :ref:`issue resolution of disagreements <faq-issue-resolution>`
+  * `python-bugs-list`_, `new-bugs-announce`_
+  * `docs`_
+
+3. Respect community expectations.
+
+4. Strive for high :ref:`standards of behavior <standards-behaviour>`.
+
+  * Everyone makes mistakes. Apologize if you do.
+  * When we disagree, please keep discussion on the issue and its improvement.
+  * Avoid rehashing history. Offer constructive options and be open to
+    compromise.
+  * Consider that developers contribute care and time to do their best.
+  * Pause and recharge as needed.
+
+Constructive community workflow creates more opportunities for Python
+excellence. Be a part of it!
+
+
+Quick Start: Code development
+-----------------------------
+
+Here are the basic steps needed to :ref:`set up <setup>` your development
+environment and contribute a patch:
+
+1. :ref:`Get the source code <checkout>`::
+
+      hg clone https://hg.python.org/cpython
+
+   See :ref:`version control setup <vcsetup>` for installing Mercurial.
+
+2. :ref:`Build Python <compiling>`.  On all platforms, install build
+   dependencies (such as compilers). On :ref:`UNIX <unix-compiling>`
+   (including Mac OS X)::
+
+      ./configure --with-pydebug && make -j2
+
+   On :ref:`Windows <windows-compiling>`::
+
+      PCbuild\build.bat -e -d
+
+   If the build outputs warnings or errors, :ref:`build-dependencies` provides
+   detail on standard library extensions that depend on installing third-party
+   libraries for some operating systems.
+
+3. :doc:`Run the tests <runtests>`::
+
+   ./python -m test -j3
+
+   On :ref:`most <mac-python.exe>` Mac OS X systems, replace :file:`./python`
+   with :file:`./python.exe`.  On Windows, use :file:`python.bat` or
+   check the :ref:`Windows instructions <win-python.exe>`.  With Python 2.7,
+   replace ``test`` with ``test.regrtest``.
+
+4. Make the :doc:`patch <patch>`.
+
+5. Submit the patch to the `issue tracker`_.
+
+
+Quick Links
+-----------
+
+Here are some links that you probably will reference frequently while
+contributing to Python.
+
+* `Issue tracker`_
+* `Buildbot status`_
+* :doc:`faq`
+* PEPs_ (Python Enhancement Proposals)
+* :doc:`gitdevs`
+
+
+.. _contributing:
+
+Contributing
+------------
+
+We encourage everyone to contribute to Python and that's why we have put up this
+developer's guide.  If you still have questions after reviewing the material in
+this guide, then the `Python Mentors`_ group is available to help guide new
+contributors through the process.  The :doc:`Developer FAQ <faq>` is another
+useful source of information.
+
+Guide for contributing to Python:
+
+* :doc:`setup`
+* :doc:`help`
+* :doc:`patch`
+* :doc:`runtests`
+* Starter tasks to become familiar with the development process
+    * :doc:`docquality`
+    * :doc:`coverage`
+* Additional tasks for once you are comfortable with the development process
+    * :doc:`silencewarnings`
+    * Fixing issues found by the :doc:`buildbots <buildbots>`
+    * :doc:`fixingissues`
+* :ref:`tracker` and :ref:`helptriage`
+    * :doc:`triaging`
+* :doc:`communication`
+* :doc:`coredev`
+    * :doc:`committing`
+    * :doc:`devcycle`
+    * :doc:`buildbots`
+    * :doc:`coverity`
+* :doc:`gitdevs`
+
+It is **recommended** that the above documents be read in the order listed.  You
+can stop where you feel comfortable and begin contributing immediately without
+reading and understanding these documents all at once.  If you do choose to skip
+around within the documentation, be aware that it is written assuming preceding
+documentation has been read so you may find it necessary to backtrack to fill in
+missing concepts and terminology.
+
+
+Proposing changes to Python itself
+----------------------------------
+
+Improving Python's code, documentation and tests are ongoing tasks that are
+never going to be "finished", as Python operates as part of an ever-evolving
+system of technology.  An even more challenging ongoing task than these
+necessary maintenance activities is finding ways to make Python, in the form of
+the standard library and the language definition, an even better tool in a
+developer's toolkit.
+
+While these kinds of change are much rarer than those described above, they do
+happen and that process is also described as part of this guide:
+
+* :doc:`stdlibchanges`
+* :doc:`langchanges`
+
+Also refer to :ref:`suggesting-changes` in the FAQ.
+
+
+Other Interpreter Implementations
+---------------------------------
+
+This guide is specifically for contributing to the Python reference interpreter,
+also known as CPython (while most of the standard library is written in Python,
+the interpreter core is written in C and integrates most easily with the C and
+C++ ecosystems).
+
+There are other Python implementations, each with a different focus.  Like
+CPython, they always have more things they would like to do than they have
+developers to work on them.  Some major example that may be of interest are:
+
+* PyPy_: A Python interpreter focused on high speed (JIT-compiled) operation
+  on major platforms
+* Jython_: A Python interpreter focused on good integration with the Java
+  Virtual Machine (JVM) environment
+* IronPython_: A Python interpreter focused on good integration with the
+  Common Language Runtime (CLR) provided by .NET and Mono
+* Stackless_: A Python interpreter focused on providing lightweight
+  microthreads while remaining largely compatible with CPython specific
+  extension modules
+
+
+Key Resources
+-------------
+
+* Coding style guides
+    * :PEP:`7` (Style Guide for C Code)
+    * :PEP:`8` (Style Guide for Python Code)
+* `Issue tracker`_
+    * `Meta tracker <http://psf.upfronthosting.co.za/roundup/meta>`_ (issue
+      tracker for the issue tracker)
+    * :doc:`experts`
+    * `Firefox search engine plug-in`_
+* `Buildbot status`_
+* Source code
+    * `Browse online <https://hg.python.org/cpython/file/default/>`_
+    * `Snapshot of py3k <https://hg.python.org/cpython/archive/default.tar.bz2>`_
+    * `Daily OS X installer <http://buildbot.python.org/daily-dmg/>`_
+* PEPs_ (Python Enhancement Proposals)
+* :doc:`faq`
+* :doc:`developers`
+
+
+.. _resources:
+
+Additional Resources
+--------------------
+
+* Anyone can clone the sources for this guide.  See
+  :ref:`helping-with-the-developers-guide`.
+* Help with ...
+    * :doc:`grammar`
+    * :doc:`compiler`
+* Tool support
+    * :doc:`gdb`
+    * :doc:`clang`
+    * Various tools with configuration files as found in the `Misc directory`_
+    * Information about editors and their configurations can be found in the
+      `wiki <https://wiki.python.org/moin/PythonEditors>`_
+* `python.org maintenance`_
+
+* :ref:`Search this guide <search>`
+
+
+.. _contents:
+
+Full Table of Contents
+----------------------
+
+.. toctree::
+   :numbered:
+
+   setup
+   help
+   patch
+   runtests
+   coverage
+   docquality
+   documenting
+   silencewarnings
+   fixingissues
+   tracker
+   triaging
+   communication
+   coredev
+   developers
+   committing
+   devcycle
+   buildbots
+   stdlibchanges
+   langchanges
+   experts
+   gdb
+   grammar
+   compiler
+   coverity
+   clang
+   gitdevs
+   faq
+
+
+.. _Buildbot status: http://python.org/dev/buildbot/
+.. _Firefox search engine plug-in: http://www.python.org/dev/searchplugin/
+.. _Misc directory: https://hg.python.org/cpython/file/default/Misc
+.. _PEPs: http://www.python.org/dev/peps/
+.. _python.org maintenance: http://python.org/dev/pydotorg/
+.. _Python: http://www.python.org/
+.. _Python Mentors: http://pythonmentors.com/
+.. _PyPy: http://www.pypy.org/
+.. _Jython: http://www.jython.org/
+.. _IronPython: http://ironpython.net/
+.. _Stackless: http://www.stackless.com/
+.. _Issue tracker: http://bugs.python.org/
+.. _python-ideas: http://mail.python.org/mailman/listinfo/python-ideas
+.. _python-dev: http://mail.python.org/mailman/listinfo/python-dev
+.. _tutor: http://mail.python.org/mailman/listinfo/tutor
+.. _python-help: http://mail.python.org/mailman/listinfo/python-help
+.. _python-list: http://mail.python.org/mailman/listinfo/python-list
+.. _docs: http://mail.python.org/mailman/listinfo/docs
+.. _python-bugs-list: http://mail.python.org/mailman/listinfo/python-bugs-list
+.. _new-bugs-announce: http://mail.python.org/mailman/listinfo/new-bugs-announce

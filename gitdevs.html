@@ -1,0 +1,674 @@
+<!--
+Google IO 2012/2013 HTML5 Slide Template
+
+Authors: Eric Bidelman <ebidel@gmail.com>
+         Luke Mahé <lukem@google.com>
+
+URL: https://code.google.com/p/io-2012-slides
+--><!DOCTYPE html>
+
+
+<html>
+<head>
+  <title>27. Mercurial for git developers &mdash; Devguide</title>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <!--<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">-->
+  <!--<meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+  <!--This one seems to work all the time, but really small on ipad-->
+  <!--<meta name="viewport" content="initial-scale=0.4">-->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+  <meta name="hieroglyph-title" data-config-title>
+  <meta name="hieroglyph-subtitle" data-config-subtitle>
+  <meta name="hieroglyph-presenter" data-config-presenter>
+
+  
+  <link rel="stylesheet" media="all"
+        href="_static/theme/css/default.css">
+  <link rel="stylesheet" media="all"
+        href="_static/theme/css/hieroglyph.css">
+  <link rel="stylesheet" media="only screen and (max-device-width: 480px)"
+        href="_static/theme/css/phone.css">
+
+    
+
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->
+  
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '2015.08.08',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+
+    <script data-main="_static/js/slides"
+            src="_static/js/require-1.0.8.min.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    
+    <link rel="top" title="Devguide" href="index.html" />
+    <link rel="next" title="28. Python Developer FAQ" href="faq.html" />
+    <link rel="prev" title="26. Dynamic Analysis with Clang" href="clang.html" /> 
+</head>
+<body style="opacity: 0">
+
+<slides class="layout-widescreen">
+
+  
+
+  
+    <slide class="title-slide segue nobackground level-1" id="mercurial-for-git-developers">
+    <hgroup>
+      <h1>Mercurial for git developers</h1>
+    </hgroup>
+    <article class="">
+      <div class="contents local topic" id="contents">
+<ul class="simple">
+<li><a class="reference internal" href="#overview" id="id1">Overview</a></li>
+<li><a class="reference internal" href="#git-workflow" id="id2">Git workflow</a></li>
+<li><a class="reference internal" href="#main-differences-between-git-and-hg" id="id3">Main differences between git and hg</a><ul>
+<li><a class="reference internal" href="#mercurial-branches-are-global-and-permanent" id="id4">Mercurial branches are global and permanent</a></li>
+<li><a class="reference internal" href="#workflow-options-using-mercurial" id="id5">Workflow options using Mercurial</a><ul>
+<li><a class="reference internal" href="#named-branches" id="id6">Named branches</a></li>
+<li><a class="reference internal" href="#queues" id="id7">Queues</a></li>
+<li><a class="reference internal" href="#bookmarks" id="id8">Bookmarks</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#an-introduction-to-mercurial-bookmarks" id="id9">An introduction to Mercurial bookmarks</a><ul>
+<li><a class="reference internal" href="#bookmarks-are-not-git-branches" id="id10">Bookmarks are not git branches</a></li>
+<li><a class="reference internal" href="#bookmarks-are-local" id="id11">Bookmarks are local</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#mercurial-workflow" id="id12">Mercurial workflow</a><ul>
+<li><a class="reference internal" href="#cloning" id="id13">Cloning</a></li>
+<li><a class="reference internal" href="#working-on-issuea" id="id14">Working on issueA</a></li>
+<li><a class="reference internal" href="#working-on-issueb" id="id15">Working on issueB</a></li>
+<li><a class="reference internal" href="#addressing-issuea-review-comments" id="id16">Addressing issueA review comments</a></li>
+<li><a class="reference internal" href="#continue-work-on-issueb" id="id17">Continue work on issueB</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#rebasing-your-work" id="id18">Rebasing your work</a></li>
+<li><a class="reference internal" href="#workflow-comparison" id="id19">Workflow comparison</a></li>
+</ul>
+</div>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-2" id="overview">
+    <hgroup>
+      <h2>Overview</h2>
+    </hgroup>
+    <article class="">
+      <p>This guide is geared towards prospective contributors who are accustomed to
+git-based development. The intention of this guide is to lower the initial
+barrier of entry for prospective contributors in learning a new source control
+tool. While there are projects that focus on automating this to allow seamless
+bridges between the two systems, this guide focusses solely on native Mercurial
+functionality. As with most tools, this is not the only method of achieving
+git-like workflows with Mercurial. It is intended solely to provide one
+potential path.</p>
+<p>Note that this geared towards prospective contributors and the patch workflow.
+Core developers will have a similar workflow, but it will differ in the later
+stages (merge vs patch generation).</p>
+<p>The workflow that will be used as the case study for this guide is as follows:</p>
+<ul class="simple">
+<li>Clone CPython</li>
+<li>Find/Create issue in the issue tracker (issueA)<ul>
+<li>Work on issue</li>
+<li>Submit patch for review</li>
+</ul>
+</li>
+<li>Work on another issue (issueB)<ul>
+<li>Work on issue</li>
+<li>Commit work in progress</li>
+</ul>
+</li>
+<li>Address review comments (issueA)<ul>
+<li>Commit work</li>
+<li>Submit patch for review</li>
+</ul>
+</li>
+<li>Continue feature work (issueB)</li>
+<li><em>Rinse and repeat</em></li>
+</ul>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-2" id="git-workflow">
+    <hgroup>
+      <h2>Git workflow</h2>
+    </hgroup>
+    <article class="">
+      <p>With the above workflow in mind, simplified steps using git may look like
+this:</p>
+<div class="highlight-bash"><div class="highlight"><pre>git clone git@github.com:python/cpython.git
+
+<span class="c"># work on issueA</span>
+git checkout -b issueA
+git commit -a
+
+<span class="c"># start working on issueB</span>
+git checkout master
+git checkout -b issueB
+git commit -a
+
+<span class="c"># address review comments</span>
+git checkout issueA
+git commit -a
+
+<span class="c"># optionally rebase work</span>
+git pull --rebase
+
+<span class="c"># generate patch for submission</span>
+git diff master..issueA &gt; issueA.patch
+
+<span class="c"># continue working on issueB</span>
+git checkout issueB
+</pre></div>
+</div>
+<p>This flow will be used as the base for comparison against Mercurial usage that
+aims to achieve a similar, if not identical, workflow.</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-2" id="main-differences-between-git-and-hg">
+    <hgroup>
+      <h2>Main differences between git and hg</h2>
+    </hgroup>
+    <article class="">
+      <p>This section aims to list major differences that may be unexpected by a git
+developer. While there are many differences between git and Mercurial, only
+those that are immediately relevant to new users coming from git are examined.</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="mercurial-branches-are-global-and-permanent">
+    <hgroup>
+      <h3>Mercurial branches are global and permanent</h3>
+    </hgroup>
+    <article class="">
+      <p>This means that if you create a named branch, it is intended to be long-lived:</p>
+<q>
+Mercurial branch names may be used for whatever reasons users want.
+However, a good rule of thumb is to use branch names sparingly and for
+rather longer lived concepts like &quot;release branches&quot; (rel-1, rel-2, etc)
+and rather not for short lived work of single developers.</q>
+<div class="author">
+<a class="reference external" href="http://mercurial.selenic.com/wiki/Branch#Named_branches">http://mercurial.selenic.com/wiki/Branch#Named_branches</a></div>
+<p>If you routinely create short-lived branches for development work and then
+delete them after they've been merged to master, this is something to be aware
+of. You <em>can</em> still only push select branches to remotes, so it's not a
+functional issue as far as the public repo goes.</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="workflow-options-using-mercurial">
+    <hgroup>
+      <h3>Bookmarks</h3>
+    </hgroup>
+    <article class="">
+      <p>There are a number of paths that could be taken to achieve a sane development
+workflow. Some of these are:</p>
+<div class="section level-4" id="named-branches">
+<blockquote>
+<div><p>Mercurial supports giving names to branches, by using the branch name
+property of the changeset (see <a class="reference external" href="http://mercurial.selenic.com/wiki/NamedBranches">NamedBranches</a>). If no branch name was set,
+Mercurial assigns the branch name &quot;default&quot;. So the name of the default
+branch in a repository is &quot;default&quot; (which, for example, is not displayed
+when doing a hg log).</p>
+<p>Unfortunately, as Mercurial named (and default) branches are global and
+permanent, they don't lend themselves well to local development workflows.</p>
+</div></blockquote>
+</div><div class="section level-4" id="queues">
+<blockquote>
+<div><p>The patch queue extension integrates quilt functionality into Mercurial.
+Changes are maintained as patches which are committed into Mercurial.
+Commits can be removed or reordered, and the underlying patch can be
+refreshed based on changes made in the working directory. The patch
+directory can also be placed under revision control, so you can have a
+separate history of changes made to your patches.</p>
+<p>While the mq extension can indeed achieve similar functionality, it's quite
+a different workflow than git and may be difficult to adapt to for those
+coming from git.</p>
+</div></blockquote>
+</div><div class="section level-4" id="bookmarks">
+<blockquote>
+<div><p>Bookmarks can be used as an alternative to <a class="reference external" href="http://mercurial.selenic.com/wiki/NamedBranches">NamedBranches</a> for tracking
+multiple lines of development. Systems like Mercurial, CVS, and Subversion
+store their branch information as a permanent part of each commit. This
+is useful for future auditing of long-lived branches, as it's always
+possible to identify which branch a commit was introduced on. Git, by
+contrast, has &quot;branches&quot; that are not stored in history, which is useful
+for working with numerous short-lived feature branches, but makes future
+auditing impossible. Mercurial's bookmark feature is analogous to Git's
+branching scheme, but can also be used in conjunction with Mercurial's
+traditional named branches.</p>
+<p>Bookmarks are the feature that emulate git workflows most closely and will
+therefore be used throughout the remainder of this guide.</p>
+</div></blockquote>
+</div>
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="an-introduction-to-mercurial-bookmarks">
+    <hgroup>
+      <h3>Bookmarks are local</h3>
+    </hgroup>
+    <article class="">
+      <p>While the functionality may seem entirely analogous to git branches
+at first, there are fundamental differences to be aware of:</p>
+<div class="section level-4" id="bookmarks-are-not-git-branches">
+<p>Bookmarks are <em>not</em> lightweight Git branches. Bookmarks are simply named
+references to commits that are automatically updated when new commits are made.
+This, coupled with the creation of new branch heads when committing from a
+previous commit provides a workflow similar to git branching, but the fact that
+a new branch is <em>not</em> created is an important detail to be aware of. This will
+be demonstrated in the <a class="reference internal" href="#mercurial-workflow">Mercurial workflow</a> section.</p>
+</div><div class="section level-4" id="bookmarks-are-local">
+<p>Mercurial bookmarks are intended for local
+development and can be deleted with ease, whereas branches cannot.
+Note that deleting a bookmark does not mean that the releated changesets
+are also deleted. You must use the <a class="reference external" href="http://mercurial.selenic.com/wiki/StripExtension">strip extension</a> to do that. Bookmarks can
+be published to a remote repo to be shared, but must explicitly be pushed (see
+<a class="reference external" href="http://mercurial.selenic.com/wiki/Bookmarks#Working_with_remote_repositories">http://mercurial.selenic.com/wiki/Bookmarks#Working_with_remote_repositories</a>
+for details).</p>
+</div>
+
+
+
+    </article>
+  </slide>  <slide class="level-2" id="mercurial-workflow">
+    <hgroup>
+      <h2>Mercurial workflow</h2>
+    </hgroup>
+    <article class="">
+      <p>The following details hg usage with the above git workflow in mind. The
+changeset graphs are displayed using <code class="code docutils literal"><span class="pre">hg</span> <span class="pre">log</span> <span class="pre">-G</span> <span class="pre">-l</span> <span class="pre">[num_commits]</span></code>,
+which can be tremendously useful when first starting to use hg in order
+to help you understand through visuals what it is that hg does with the
+branches.</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="cloning">
+    <hgroup>
+      <h3>Cloning</h3>
+    </hgroup>
+    <article class="">
+      <p>Pulling the latest CPython code and looking at the current commits:</p>
+<div class="highlight-bash"><div class="highlight"><pre>hg clone https://hg.python.org/cpython
+
+@    changeset:   93654:bd97eab25c70
+<span class="p">|</span><span class="se">\ </span>  tag:         tip
+<span class="p">|</span> <span class="p">|</span>  parent:      93652:70163e18da87
+<span class="p">|</span> <span class="p">|</span>  parent:      93653:21257f916668
+<span class="p">|</span> <span class="p">|</span>  user:        Ned Deily &lt;nad@example.com&gt;
+<span class="p">|</span> <span class="p">|</span>  date:        Fri Nov <span class="m">28</span> 15:22:15 <span class="m">2014</span> -0800
+<span class="p">|</span> <span class="p">|</span>  summary:     Issue <span class="c">#16113: Also remove test_case_sha3_224_huge</span>
+<span class="p">|</span> <span class="p">|</span>
+<span class="p">|</span> o  changeset:   93653:21257f916668
+<span class="p">|</span> <span class="p">|</span>  branch:      3.4
+<span class="p">|</span> <span class="p">|</span>  parent:      93647:737355f61ba2
+<span class="p">|</span> <span class="p">|</span>  user:        Ned Deily &lt;nad@example.com&gt;
+<span class="p">|</span> <span class="p">|</span>  date:        Fri Nov <span class="m">28</span> 15:21:12 <span class="m">2014</span> -0800
+<span class="p">|</span> <span class="p">|</span>  summary:     Issue <span class="c">#16113: Also remove test_case_sha3_224_huge</span>
+<span class="p">|</span> <span class="p">|</span>
+o <span class="p">|</span>  changeset:   93652:70163e18da87
+<span class="p">|</span> <span class="p">|</span>  user:        Raymond Hettinger &lt;python@rcn.com&gt;
+<span class="p">|</span> <span class="p">|</span>  date:        Fri Nov <span class="m">28</span> 14:52:14 <span class="m">2014</span> -0800
+<span class="p">|</span> <span class="p">|</span>  summary:     Minor code cleanup.
+</pre></div>
+</div>
+<p><em>Note that in the above graph, `&#64;` represents your current changeset</em></p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="working-on-issuea">
+    <hgroup>
+      <h3>Working on issueA</h3>
+    </hgroup>
+    <article class="">
+      <p>Assuming you've found a bug logged against default tip (master head in git-speak),
+create a bookmark, which automatically activates it:</p>
+<div class="highlight-bash"><div class="highlight"><pre>hg bookmark issueA
+</pre></div>
+</div>
+<p>Now, the history graph should look like this:</p>
+<div class="highlight-bash"><div class="highlight"><pre>@    changeset:   93654:bd97eab25c70
+<span class="p">|</span><span class="se">\ </span>  bookmark:    issueA
+<span class="p">|</span> <span class="p">|</span>  tag:         tip
+<span class="p">|</span> <span class="p">|</span>  parent:      93652:70163e18da87
+<span class="p">|</span> <span class="p">|</span>  parent:      93653:21257f916668
+<span class="p">|</span> <span class="p">|</span>  user:        Ned Deily &lt;nad@example.com&gt;
+<span class="p">|</span> <span class="p">|</span>  date:        Fri Nov <span class="m">28</span> 15:22:15 <span class="m">2014</span> -0800
+<span class="p">|</span> <span class="p">|</span>  summary:     Issue <span class="c">#16113: Also remove test_case_sha3_224_huge</span>
+<span class="p">|</span> <span class="p">|</span>
+<span class="p">|</span> o  changeset:   93653:21257f916668
+<span class="p">|</span> <span class="p">|</span>  branch:      3.4
+<span class="p">|</span> <span class="p">|</span>  parent:      93647:737355f61ba2
+<span class="p">|</span> <span class="p">|</span>  user:        Ned Deily &lt;nad@example.com&gt;
+<span class="p">|</span> <span class="p">|</span>  date:        Fri Nov <span class="m">28</span> 15:21:12 <span class="m">2014</span> -0800
+<span class="p">|</span> <span class="p">|</span>  summary:     Issue <span class="c">#16113: Also remove test_case_sha3_224_huge</span>
+<span class="p">|</span> <span class="p">|</span>
+o <span class="p">|</span>  changeset:   93652:70163e18da87
+<span class="p">|</span> <span class="p">|</span>  user:        Raymond Hettinger &lt;python@rcn.com&gt;
+<span class="p">|</span> <span class="p">|</span>  date:        Fri Nov <span class="m">28</span> 14:52:14 <span class="m">2014</span> -0800
+<span class="p">|</span> <span class="p">|</span>  summary:     Minor code cleanup.
+</pre></div>
+</div>
+<p>Notice that the only difference between this and the previous one is that
+changeset 91935 now also has the bookmark &quot;issueA&quot;. Bookmarks are advanced
+automatically with each subsequent commit.</p>
+<p>Once work has been completed on issueA, commit and prepare a patch for
+submission to the issue tracker. Note that Mercurial doesn't have git's concept
+of staging, so all changes will be committed:</p>
+<div class="highlight-bash"><div class="highlight"><pre>hg commit -m <span class="s1">&#39;fix for issueA&#39;</span>
+
+@  changeset:   93655:a542bc2066d1
+<span class="p">|</span>  bookmark:    issueA
+<span class="p">|</span>  tag:         tip
+<span class="p">|</span>  user:        Demian Brecht &lt;demianbrecht@example.com&gt;
+<span class="p">|</span>  date:        Thu Dec <span class="m">04</span> 17:33:42 <span class="m">2014</span> -0800
+<span class="p">|</span>  summary:     issueA
+<span class="p">|</span>
+o    changeset:   93654:bd97eab25c70
+<span class="p">|</span><span class="se">\ </span>  parent:      93652:70163e18da87
+<span class="p">|</span> <span class="p">|</span>  parent:      93653:21257f916668
+<span class="p">|</span> <span class="p">|</span>  user:        Ned Deily &lt;nad@example.com&gt;
+<span class="p">|</span> <span class="p">|</span>  date:        Fri Nov <span class="m">28</span> 15:22:15 <span class="m">2014</span> -0800
+<span class="p">|</span> <span class="p">|</span>  summary:     Issue <span class="c">#16113: Also remove test_case_sha3_224_huge</span>
+<span class="p">|</span> <span class="p">|</span>
+o <span class="p">|</span>  changeset:   93653:21257f916668
+<span class="p">|</span> <span class="p">|</span>  branch:      3.4
+<span class="p">|</span> <span class="p">|</span>  parent:      93647:737355f61ba2
+<span class="p">|</span> <span class="p">|</span>  user:        Ned Deily &lt;nad@example.com&gt;
+<span class="p">|</span> <span class="p">|</span>  date:        Fri Nov <span class="m">28</span> 15:21:12 <span class="m">2014</span> -0800
+<span class="p">|</span> <span class="p">|</span>  summary:     Issue <span class="c">#16113: Also remove test_case_sha3_224_huge</span>
+</pre></div>
+</div>
+<p>Notice that the new commit's parent was the previous default tip and the
+bookmark has automatically been advanced to the new tip. A patch for submission
+to the issue tracker can now be prepared with:</p>
+<div class="highlight-bash"><div class="highlight"><pre>hg diff -c <span class="m">93655</span> &gt; issueA.patch
+</pre></div>
+</div>
+<p>The above will diff revision 93655 against its parent. This will work
+regardless of the commit that you happen to currently updated to.</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="working-on-issueb">
+    <hgroup>
+      <h3>Working on issueB</h3>
+    </hgroup>
+    <article class="">
+      <p>Now that the patch has been submitted and it's pending review, work on another
+issue can be started. Because of how bookmarks work (and as can be seen in the
+previous history graph), the named branch &quot;default&quot; is advanced (remember that
+bookmarks are not git branches). A new named branch (such as in git) has not
+been created. This means that in order to update the working copy back to the
+latest public commit, you must know which commit to revert back to before
+creating a new bookmark:</p>
+<div class="highlight-bash"><div class="highlight"><pre>hg update 93654
+hg bookmark issueB
+
+o  changeset:   93655:a542bc2066d1
+<span class="p">|</span>  bookmark:    issueA
+<span class="p">|</span>  tag:         tip
+<span class="p">|</span>  user:        Demian Brecht &lt;demianbrecht@example.com&gt;
+<span class="p">|</span>  date:        Thu Dec <span class="m">04</span> 17:33:42 <span class="m">2014</span> -0800
+<span class="p">|</span>  summary:     issueA
+<span class="p">|</span>
+@    changeset:   93654:bd97eab25c70
+<span class="p">|</span><span class="se">\ </span>  bookmark:    issueB
+<span class="p">|</span> <span class="p">|</span>  parent:      93652:70163e18da87
+<span class="p">|</span> <span class="p">|</span>  parent:      93653:21257f916668
+<span class="p">|</span> <span class="p">|</span>  user:        Ned Deily &lt;nad@example.com&gt;
+<span class="p">|</span> <span class="p">|</span>  date:        Fri Nov <span class="m">28</span> 15:22:15 <span class="m">2014</span> -0800
+<span class="p">|</span> <span class="p">|</span>  summary:     Issue <span class="c">#16113: Also remove test_case_sha3_224_huge</span>
+<span class="p">|</span> <span class="p">|</span>
+o <span class="p">|</span>  changeset:   93653:21257f916668
+<span class="p">|</span> <span class="p">|</span>  branch:      3.4
+<span class="p">|</span> <span class="p">|</span>  parent:      93647:737355f61ba2
+<span class="p">|</span> <span class="p">|</span>  user:        Ned Deily &lt;nad@example.com&gt;
+<span class="p">|</span> <span class="p">|</span>  date:        Fri Nov <span class="m">28</span> 15:21:12 <span class="m">2014</span> -0800
+<span class="p">|</span> <span class="p">|</span>  summary:     Issue <span class="c">#16113: Also remove test_case_sha3_224_huge</span>
+</pre></div>
+</div>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="addressing-issuea-review-comments">
+    <hgroup>
+      <h3>Addressing issueA review comments</h3>
+    </hgroup>
+    <article class="">
+      <p>While working on my new feature, I've received reviews of my bug fix and want to
+finish that up before continuing on this much longer feature task. First step is
+to commit my current feature work:
+While working on issueB, a review has been completed for issueA. The following
+demonstrates one method of store current state of issueB, and update back to
+issueA:</p>
+<div class="highlight-bash"><div class="highlight"><pre>hg commit -m <span class="s1">&#39;issueB WIP&#39;</span>
+created new head
+</pre></div>
+</div>
+<p>In the above, hg will confirm that a divergent path has been created. This is
+intentional and to be expected:</p>
+<div class="highlight-bash"><div class="highlight"><pre>hg update issueA
+</pre></div>
+</div>
+<p>Reviewing the history graph, a new head can now be seen:</p>
+<div class="highlight-bash"><div class="highlight"><pre>o  changeset:   93656:6c166f6c1970
+<span class="p">|</span>  bookmark:    issueB
+<span class="p">|</span>  tag:         tip
+<span class="p">|</span>  parent:      93654:bd97eab25c70
+<span class="p">|</span>  user:        Demian Brecht &lt;demianbrecht@example.com&gt;
+<span class="p">|</span>  date:        Thu Dec <span class="m">04</span> 17:36:36 <span class="m">2014</span> -0800
+<span class="p">|</span>  summary:     issueB WIP
+<span class="p">|</span>
+<span class="p">|</span> @  changeset:   93655:a542bc2066d1
+<span class="p">|</span>/   bookmark:    issueA
+<span class="p">|</span>    user:        Demian Brecht &lt;demianbrecht@example.com&gt;
+<span class="p">|</span>    date:        Thu Dec <span class="m">04</span> 17:33:42 <span class="m">2014</span> -0800
+<span class="p">|</span>    summary:     issueA
+<span class="p">|</span>
+o    changeset:   93654:bd97eab25c70
+<span class="p">|</span><span class="se">\ </span>  parent:      93652:70163e18da87
+<span class="p">|</span> <span class="p">|</span>  parent:      93653:21257f916668
+<span class="p">|</span> <span class="p">|</span>  user:        Ned Deily &lt;nad@example.com&gt;
+<span class="p">|</span> <span class="p">|</span>  date:        Fri Nov <span class="m">28</span> 15:22:15 <span class="m">2014</span> -0800
+<span class="p">|</span> <span class="p">|</span>  summary:     Issue <span class="c">#16113: Also remove test_case_sha3_224_huge</span>
+</pre></div>
+</div>
+<p>Once review comments have been addressed, commit again and prepare an updated
+patch. In this case, using <code class="code docutils literal"><span class="pre">hg</span> <span class="pre">commit</span> <span class="pre">--amend</span></code> will amend the previous
+commit with the most recent changes:</p>
+<div class="highlight-bash"><div class="highlight"><pre>hg commit --amend
+hg diff -c issueA &gt; issueA.patch
+
+@  changeset:   93656:bba24fde02f0
+<span class="p">|</span>  bookmark:    issueA
+<span class="p">|</span>  tag:         tip
+<span class="p">|</span>  parent:      93654:bd97eab25c70
+<span class="p">|</span>  user:        Demian Brecht &lt;demianbrecht@example.com&gt;
+<span class="p">|</span>  date:        Thu Dec <span class="m">04</span> 17:33:42 <span class="m">2014</span> -0800
+<span class="p">|</span>  summary:     issueA
+<span class="p">|</span>
+<span class="p">|</span> o  changeset:   93655:6c166f6c1970
+<span class="p">|</span>/   bookmark:    issueB
+<span class="p">|</span>    user:        Demian Brecht &lt;demianbrecht@example.com&gt;
+<span class="p">|</span>    date:        Thu Dec <span class="m">04</span> 17:36:36 <span class="m">2014</span> -0800
+<span class="p">|</span>    summary:     issueB WIP
+<span class="p">|</span>
+o    changeset:   93654:bd97eab25c70
+<span class="p">|</span><span class="se">\ </span>  parent:      93652:70163e18da87
+<span class="p">|</span> <span class="p">|</span>  parent:      93653:21257f916668
+<span class="p">|</span> <span class="p">|</span>  user:        Ned Deily &lt;nad@example.com&gt;
+<span class="p">|</span> <span class="p">|</span>  date:        Fri Nov <span class="m">28</span> 15:22:15 <span class="m">2014</span> -0800
+<span class="p">|</span> <span class="p">|</span>  summary:     Issue <span class="c">#16113: Also remove test_case_sha3_224_huge</span>
+</pre></div>
+</div>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="continue-work-on-issueb">
+    <hgroup>
+      <h3>Continue work on issueB</h3>
+    </hgroup>
+    <article class="">
+      <p>Work can now be continued on issueB:</p>
+<div class="highlight-bash"><div class="highlight"><pre>hg update issueB
+
+o  changeset:   93656:bba24fde02f0
+<span class="p">|</span>  bookmark:    issueA
+<span class="p">|</span>  tag:         tip
+<span class="p">|</span>  parent:      93654:bd97eab25c70
+<span class="p">|</span>  user:        Demian Brecht &lt;demianbrecht@example.com&gt;
+<span class="p">|</span>  date:        Thu Dec <span class="m">04</span> 17:33:42 <span class="m">2014</span> -0800
+<span class="p">|</span>  summary:     issueA
+<span class="p">|</span>
+<span class="p">|</span> @  changeset:   93655:6c166f6c1970
+<span class="p">|</span>/   bookmark:    issueB
+<span class="p">|</span>    user:        Demian Brecht &lt;demianbrecht@example.com&gt;
+<span class="p">|</span>    date:        Thu Dec <span class="m">04</span> 17:36:36 <span class="m">2014</span> -0800
+<span class="p">|</span>    summary:     issueB WIP
+<span class="p">|</span>
+o    changeset:   93654:bd97eab25c70
+<span class="p">|</span><span class="se">\ </span>  parent:      93652:70163e18da87
+<span class="p">|</span> <span class="p">|</span>  parent:      93653:21257f916668
+<span class="p">|</span> <span class="p">|</span>  user:        Ned Deily &lt;nad@example.com&gt;
+<span class="p">|</span> <span class="p">|</span>  date:        Fri Nov <span class="m">28</span> 15:22:15 <span class="m">2014</span> -0800
+<span class="p">|</span> <span class="p">|</span>  summary:     Issue <span class="c">#16113: Also remove test_case_sha3_224_huge</span>
+</pre></div>
+</div>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-2" id="rebasing-your-work">
+    <hgroup>
+      <h2>Rebasing your work</h2>
+    </hgroup>
+    <article class="">
+      <p>Rebasing was not previously included as it's an optional step.</p>
+<p>As patches sometimes take time to have merged, there can be times when you'll
+need to re-apply commits against the latest version in the public repo. Using
+git, you might do this:</p>
+<div class="highlight-bash"><div class="highlight"><pre>git pull --rebase
+</pre></div>
+</div>
+<p>The Mercurial equivalent is:</p>
+<div class="highlight-bash"><div class="highlight"><pre>hg pull --rebase
+</pre></div>
+</div>
+<p>As this alters history (which Mercurial largely avoids in practice), the rebase
+extension will need to be enabled. To enable the rebase extension, it must be
+added to your .hgrc file:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">[</span>extensions<span class="o">]</span>
+<span class="nv">rebase</span> <span class="o">=</span>
+</pre></div>
+</div>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-2" id="workflow-comparison">
+    <hgroup>
+      <h2>Workflow comparison</h2>
+    </hgroup>
+    <article class="">
+      <p>Comparing against the git workflow above (skipping optional steps), the hg
+equivalent in its entirety looks like this:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="c"># git clone git@github.com:python/cpython.git</span>
+hg clone https://hg.python.org/cpython
+
+<span class="c"># work on issueA</span>
+<span class="c"># git checkout -b issueA</span>
+<span class="c"># git commit -a</span>
+hg bookmark issueA
+hg commit
+
+<span class="c"># start work on issueB</span>
+<span class="c"># git checkout master</span>
+hg update <span class="o">[</span>revision_number<span class="o">]</span>
+
+<span class="c"># git checkout -b issueB</span>
+<span class="c"># git commit -a</span>
+hg bookmark issueB
+hg commit
+
+<span class="c"># address review comments</span>
+<span class="c"># git checkout issueA</span>
+<span class="c"># git commit -a</span>
+hg update issueA
+hg commit --amend
+
+<span class="c"># create patch</span>
+<span class="c"># git diff master..issueA &gt; issueA.patch</span>
+hg diff -c issueA &gt; issueA.patch
+
+<span class="c"># continue working on issueB</span>
+<span class="c"># git checkout issueB</span>
+hg update issueB
+</pre></div>
+</div>
+
+
+
+
+    </article>
+  </slide>
+
+
+    <slide class="thank-you-slide segue nobackground">
+    <article class="flexbox vleft auto-fadein">
+      <h2>&lt;Thank You!&gt;</h2>
+    </article>
+    <p class="auto-fadein" data-config-contact>
+      <!-- populated from slide_config.json -->
+    </p>
+  </slide>
+
+  <slide class="backdrop"></slide>
+
+</slides>
+
+<!--[if IE]>
+  <script src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js"></script>
+  <script>CFInstall.check({mode: 'overlay'});</script>
+<![endif]-->
+</body>
+</html>

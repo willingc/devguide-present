@@ -1,0 +1,317 @@
+<!--
+Google IO 2012/2013 HTML5 Slide Template
+
+Authors: Eric Bidelman <ebidel@gmail.com>
+         Luke Mahé <lukem@google.com>
+
+URL: https://code.google.com/p/io-2012-slides
+--><!DOCTYPE html>
+
+
+<html>
+<head>
+  <title>10. Issue Tracking &mdash; Devguide</title>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <!--<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">-->
+  <!--<meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+  <!--This one seems to work all the time, but really small on ipad-->
+  <!--<meta name="viewport" content="initial-scale=0.4">-->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+  <meta name="hieroglyph-title" data-config-title>
+  <meta name="hieroglyph-subtitle" data-config-subtitle>
+  <meta name="hieroglyph-presenter" data-config-presenter>
+
+  
+  <link rel="stylesheet" media="all"
+        href="_static/theme/css/default.css">
+  <link rel="stylesheet" media="all"
+        href="_static/theme/css/hieroglyph.css">
+  <link rel="stylesheet" media="only screen and (max-device-width: 480px)"
+        href="_static/theme/css/phone.css">
+
+    
+
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->
+  
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '2015.08.08',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+
+    <script data-main="_static/js/slides"
+            src="_static/js/require-1.0.8.min.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    
+    <link rel="top" title="Devguide" href="index.html" />
+    <link rel="next" title="11. Triaging an Issue" href="triaging.html" />
+    <link rel="prev" title="9. Fixing &#34;easy&#34; Issues (and Beyond)" href="fixingissues.html" /> 
+</head>
+<body style="opacity: 0">
+
+<slides class="layout-widescreen">
+
+  
+
+  
+    <slide class="title-slide segue nobackground level-1" id="issue-tracking">
+    <hgroup>
+      <h1>Issue Tracking</h1>
+    </hgroup>
+    <article class="">
+      
+
+
+
+    </article>
+  </slide>  <slide class="level-2" id="using-the-issue-tracker">
+    <hgroup>
+      <h2>Using the Issue Tracker</h2>
+    </hgroup>
+    <article class="">
+      <p>If you think you found a bug in Python, you can report it to the
+<a class="reference external" href="http://bugs.python.org/">issue tracker</a>.  Documentation bugs can also be reported there.
+Issues about the tracker should be reported to the <a class="reference external" href="http://psf.upfronthosting.co.za/roundup/meta/">meta tracker</a>.</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="checking-if-a-bug-already-exists">
+    <hgroup>
+      <h3>Checking if a bug already exists</h3>
+    </hgroup>
+    <article class="">
+      <p>The first step in filing a report is to determine whether the problem has
+already been reported.  The advantage in doing so, aside from saving the
+developers time, is that you learn what has been done to fix it; it may be that
+the problem has already been fixed for the next release, or additional
+information is needed (in which case you are welcome to provide it if you can!).</p>
+<p>To do this, search the bug database using the search box on the top of the page.
+An <a class="reference external" href="http://bugs.python.org/issue?&#64;template=search">advanced search</a> is also available by clicking on &quot;Search&quot; in
+the sidebar.</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="reporting-an-issue">
+    <hgroup>
+      <h3>Reporting an issue</h3>
+    </hgroup>
+    <article class="">
+      <p>If the problem you're reporting is not already in the <a class="reference external" href="http://bugs.python.org/">issue tracker</a>, you
+need to log in by entering your user and password in the form on the left.
+If you don't already have a tracker account, select the &quot;Register&quot; link or,
+if you use OpenID, one of the OpenID provider logos in the sidebar.</p>
+<p>It is not possible to submit a bug report anonymously.</p>
+<p>Being now logged in, you can submit a bug by clicking on the &quot;Create New&quot; link
+in the sidebar.</p>
+<p>The submission form has a number of fields, and they are described in detail
+in the <a class="reference internal" href="triaging.html#triaging"><span>Triaging an Issue</span></a> page.  This is a short summary:</p>
+<ul class="simple">
+<li>in the <strong>Title</strong> field, enter a <em>very</em> short description of the problem;
+less than ten words is good;</li>
+<li>in the <strong>Type</strong> field, select the type of your problem (usually behavior);</li>
+<li>if you know which <strong>Components</strong> and <strong>Versions</strong> are affected by the issue,
+you can select these too;</li>
+<li>if you have JavaScript enabled, you can use the <strong>Nosy List</strong> field to search
+developers that can help with the issue by entering the name of the affected
+module, operating system, or interest area.</li>
+<li>last but not least, you have to describe the problem in detail, including
+what you expected to happen and what did happen, in the <strong>Comment</strong> field.
+Be sure to include whether any extension modules were involved, and what
+hardware and software platform you were using (including version information
+as appropriate).</li>
+</ul>
+<p>The triaging team will take care of setting other fields, and possibly assign
+the issue to a specific developer.  You will automatically receive an update
+each time an action is taken on the bug.</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-2" id="helping-triage-issues">
+    <hgroup>
+      <h2>Helping Triage Issues</h2>
+    </hgroup>
+    <article class="">
+      <p>Once you know your way around how Python's source files are
+structured and you are comfortable working with patches, a great way to
+participate is to help triage issues. Do realize, though, that experience
+working on Python is needed in order to effectively help triage.</p>
+<p>Around the clock, new issues are being opened on the <a class="reference external" href="http://bugs.python.org/">issue tracker</a> and
+existing issues are being updated. Every
+issue needs to be triaged to make sure various things are in proper order. Even
+without special privileges you can help with this process.</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="classifying-reports">
+    <hgroup>
+      <h3>Classifying Reports</h3>
+    </hgroup>
+    <article class="">
+      <p>For bugs, an issue needs to:</p>
+<ul class="simple">
+<li>clearly explain the bug so it can be reproduced</li>
+<li>include all relevant platform details</li>
+<li>state what version(s) of Python are affected by the bug.</li>
+</ul>
+<p>These are things you can help with once you have experience developing for
+Python. For instance, if a bug is not clearly explained enough for you to
+reproduce it then there is a good chance a core developer won't be able to
+either. And it is always helpful to know if a bug not only affects the
+in-development version of Python, but whether it also affects other versions in
+maintenance mode. And if the bug lacks a unit test that should end up in
+Python's test suite, having that written can be very helpful.</p>
+<p>This is all helpful as it allows triagers (i.e.,
+<a class="reference internal" href="#devrole"><span>people with the Developer role on the issue tracker</span></a>) to
+properly classify an issue so it can be handled by the right core developers in
+a timely fashion.</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="reviewing-patches">
+    <hgroup>
+      <h3>Reviewing Patches</h3>
+    </hgroup>
+    <article class="">
+      <p>If an issue has a patch attached that has not been reviewed, you can help by
+making sure the patch:</p>
+<ul class="simple">
+<li>follows the style guides</li>
+<li>applies cleanly to an up-to-date clone</li>
+<li>is a good solution to the problem it is trying to solve</li>
+<li>includes proper tests</li>
+<li>includes proper documentation changes</li>
+<li>submitter is listed in <code class="docutils literal"><span class="pre">Misc/ACKS</span></code>, either already or the patch adds them</li>
+</ul>
+<p>Doing all of this allows core developers and <a class="reference internal" href="#devrole"><span>triagers</span></a> to more
+quickly look for subtle issues that only people with extensive experience
+working on Python's code base will notice.</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-3" id="finding-an-issue-you-can-help-with">
+    <hgroup>
+      <h3>Finding an Issue You Can Help With</h3>
+    </hgroup>
+    <article class="">
+      <p>If you want to help triaging issues, you might also want to search for issues
+that you are knowledgeable about.  An easy way to do it, is to search for
+the name of a module you are familiar with.  You can also use the
+<a class="reference external" href="http://bugs.python.org/issue?&#64;template=search">advanced search</a> and search for specific components (e.g. &quot;Windows&quot; if you
+are a Windows developer, &quot;Extension Modules&quot; if you are familiar with C, etc.).
+Finally you can use the &quot;Random issue&quot; link in the sidebar to pick random
+issues until you find an issue that you like.  Is not so uncommon to find old
+issues that can be closed, either because they are no longer valid, or
+because they have a patch that is ready to be committed, but no one had
+time to do it yet.</p>
+<p>In the sidebar you can also find links to summaries for easy issues and
+issues with a patch.</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-2" id="gaining-the-developer-role-on-the-issue-tracker">
+    <hgroup>
+      <h2>Gaining the &quot;Developer&quot; Role on the Issue Tracker</h2>
+    </hgroup>
+    <article class="">
+      <p>When you have consistently shown the ability to properly
+help triage issues without guidance, you may request that you
+be given the &quot;Developer&quot; role on the <a class="reference external" href="http://bugs.python.org/">issue tracker</a>. You can make the request
+of any person who already has the Developer role. If they decide you are ready
+to gain the extra privileges on the tracker they will then act as a mentor to
+you until you are ready to do things entirely on your own. There is no set rule
+as to how many issues you need to have helped with before or how long you have
+been participating. The key requirements are that you show the desire to
+help, you are able to work well with others (especially those already with the
+Developer role), and that have a firm grasp of how to do things on the issue
+tracker properly on your own.</p>
+<p>Gaining the Developer role will allow you to set any value on any issue in the
+tracker, releasing you from the burden of having to ask others to set values on
+an issue for you in order to properly triage something. This will not only help
+speed up and simplify your work in helping out, but also help lessen the
+workload for everyone by gaining your help.</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-2" id="the-meta-tracker">
+    <hgroup>
+      <h2>The Meta Tracker</h2>
+    </hgroup>
+    <article class="">
+      <p>If you find an issue with the <a class="reference external" href="http://bugs.python.org/">issue tracker</a>, you can report it to the
+<a class="reference external" href="http://psf.upfronthosting.co.za/roundup/meta/">meta tracker</a>.  The meta tracker is where you file issues against anything
+you come across when working with the issue tracker itself (e.g you can't
+attach a file, the layout is broken on your browser, Rietveld gave you an
+error, etc.).</p>
+<p>If you want to contribute to the tracker you can get a checkout of the source
+and install a local instance where to experiment.  You can find detailed
+instructions on the <a class="reference external" href="http://wiki.python.org/moin/TrackerDevelopment">Tracker Development</a> page.</p>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference external" href="http://bugs.python.org/">The Python issue tracker</a></dt>
+<dd>Where to report issues about Python.</dd>
+<dt><a class="reference external" href="http://mail.python.org/mailman/listinfo/new-bugs-announce">The New-bugs-announce mailing list</a></dt>
+<dd>Where all the new issues created on the tracker are reported.</dd>
+<dt><a class="reference external" href="http://mail.python.org/mailman/listinfo/python-bugs-list">The Python-bugs-list mailing list</a></dt>
+<dd>Where all the changes to issues are reported.</dd>
+<dt><a class="reference external" href="http://psf.upfronthosting.co.za/roundup/meta/">The meta tracker</a></dt>
+<dd>Where to report issues about the tracker itself.</dd>
+<dt><a class="reference external" href="http://wiki.python.org/moin/TrackerDevelopment">The Tracker development wiki page</a></dt>
+<dd>Instructions about setting up a local instance of the bug tracker.</dd>
+<dt><a class="reference external" href="http://mail.python.org/mailman/listinfo/tracker-discuss">The Tracker-discuss mailing list</a></dt>
+<dd>Discussions about the bug tracker.</dd>
+</dl>
+</div>
+
+
+
+
+    </article>
+  </slide>
+
+
+    <slide class="thank-you-slide segue nobackground">
+    <article class="flexbox vleft auto-fadein">
+      <h2>&lt;Thank You!&gt;</h2>
+    </article>
+    <p class="auto-fadein" data-config-contact>
+      <!-- populated from slide_config.json -->
+    </p>
+  </slide>
+
+  <slide class="backdrop"></slide>
+
+</slides>
+
+<!--[if IE]>
+  <script src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js"></script>
+  <script>CFInstall.check({mode: 'overlay'});</script>
+<![endif]-->
+</body>
+</html>

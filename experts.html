@@ -1,0 +1,1042 @@
+<!--
+Google IO 2012/2013 HTML5 Slide Template
+
+Authors: Eric Bidelman <ebidel@gmail.com>
+         Luke Mahé <lukem@google.com>
+
+URL: https://code.google.com/p/io-2012-slides
+--><!DOCTYPE html>
+
+
+<html>
+<head>
+  <title>21. Experts Index &mdash; Devguide</title>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <!--<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">-->
+  <!--<meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+  <!--This one seems to work all the time, but really small on ipad-->
+  <!--<meta name="viewport" content="initial-scale=0.4">-->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+  <meta name="hieroglyph-title" data-config-title>
+  <meta name="hieroglyph-subtitle" data-config-subtitle>
+  <meta name="hieroglyph-presenter" data-config-presenter>
+
+  
+  <link rel="stylesheet" media="all"
+        href="_static/theme/css/default.css">
+  <link rel="stylesheet" media="all"
+        href="_static/theme/css/hieroglyph.css">
+  <link rel="stylesheet" media="only screen and (max-device-width: 480px)"
+        href="_static/theme/css/phone.css">
+
+    
+
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->
+  
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '2015.08.08',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+
+    <script data-main="_static/js/slides"
+            src="_static/js/require-1.0.8.min.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    
+    <link rel="top" title="Devguide" href="index.html" />
+    <link rel="next" title="22. gdb Support" href="gdb.html" />
+    <link rel="prev" title="20. Changing the Python Language" href="langchanges.html" /> 
+</head>
+<body style="opacity: 0">
+
+<slides class="layout-widescreen">
+
+  
+
+  
+  <blockquote>
+<div></div></blockquote>
+  <slide class="title-slide segue nobackground level-1" id="experts-index">
+    <hgroup>
+      <h1>Experts Index</h1>
+    </hgroup>
+    <article class="">
+      <p>This document has tables that list Python Modules, Tools, Platforms and
+Interest Areas and names for each item that indicate a maintainer or an
+expert in the field.  This list is intended to be used by issue submitters,
+issue triage people, and other issue participants to find people to add to
+the nosy list or to contact directly by email for help and decisions on
+feature requests and bug fixes.  People on this list may be asked to render
+final judgement on a feature or bug.  If no active maintainer is listed for
+a given module, then questionable changes should go to python-dev, while
+any other issues can and should be decided by any committer.</p>
+<p>Unless a name is followed by a '*', you should never assign an issue to
+that person, only make them nosy.  Names followed by a '*' may be assigned
+issues involving the module or topic.</p>
+<p>The Platform and Interest Area tables list broader fields in which various
+people have expertise.  These people can also be contacted for help,
+opinions, and decisions when issues involve their areas.</p>
+<p>If a listed maintainer does not respond to requests for comment for an
+extended period (three weeks or more), they should be marked as inactive
+in this list by placing the word 'inactive' in parenthesis behind their
+tracker id.  They are of course free to remove that inactive mark at
+any time.</p>
+<p>Committers should update these tables as their areas of expertise widen.
+New topics may be added to the Interest Area table at will.</p>
+<p>The existence of this list is not meant to indicate that these people
+<em>must</em> be contacted for decisions; it is, rather, a resource to be used
+by non-committers to find responsible parties, and by committers who do
+not feel qualified to make a decision in a particular context.</p>
+<p>See also <span class="target" id="index-0"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0291"><strong>PEP 291</strong></a> and <span class="target" id="index-1"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0360"><strong>PEP 360</strong></a> for information about certain modules
+with special rules.</p>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-2" id="stdlib">
+    <hgroup>
+      <h2>Stdlib</h2>
+    </hgroup>
+    <article class="">
+      <table border="1" class="docutils">
+<colgroup>
+<col width="23%" />
+<col width="77%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Module</th>
+<th class="head">Maintainers</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>__future__</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>__main__</td>
+<td>gvanrossum, ncoghlan</td>
+</tr>
+<tr class="row-even"><td>_dummy_thread</td>
+<td>brett.cannon</td>
+</tr>
+<tr class="row-odd"><td>_thread</td>
+<td>pitrou</td>
+</tr>
+<tr class="row-even"><td>_testbuffer</td>
+<td>skrah</td>
+</tr>
+<tr class="row-odd"><td>abc</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>aifc</td>
+<td>r.david.murray</td>
+</tr>
+<tr class="row-odd"><td>argparse</td>
+<td>bethard</td>
+</tr>
+<tr class="row-even"><td>array</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>ast</td>
+<td>benjamin.peterson, georg.brandl</td>
+</tr>
+<tr class="row-even"><td>asynchat</td>
+<td>josiahcarlson, giampaolo.rodola*, stutzbach</td>
+</tr>
+<tr class="row-odd"><td>asyncio</td>
+<td>gvanrossum, haypo, pitrou, yselivanov, giampaolo.rodola</td>
+</tr>
+<tr class="row-even"><td>asyncore</td>
+<td>josiahcarlson, giampaolo.rodola*, stutzbach</td>
+</tr>
+<tr class="row-odd"><td>atexit</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>audioop</td>
+<td>serhiy.storchaka</td>
+</tr>
+<tr class="row-odd"><td>base64</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>bdb</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>binascii</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>binhex</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>bisect</td>
+<td>rhettinger</td>
+</tr>
+<tr class="row-even"><td>builtins</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>bz2</td>
+<td>nadeem.vawda</td>
+</tr>
+<tr class="row-even"><td>calendar</td>
+<td>rhettinger</td>
+</tr>
+<tr class="row-odd"><td>cgi</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>cgitb</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>chunk</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>cmath</td>
+<td>mark.dickinson</td>
+</tr>
+<tr class="row-odd"><td>cmd</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>code</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>codecs</td>
+<td>lemburg, doerwalter</td>
+</tr>
+<tr class="row-even"><td>codeop</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>collections</td>
+<td>rhettinger</td>
+</tr>
+<tr class="row-even"><td>collections.abc</td>
+<td>rhettinger, stutzbach</td>
+</tr>
+<tr class="row-odd"><td>colorsys</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>compileall</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>concurrent.futures</td>
+<td>bquinlan</td>
+</tr>
+<tr class="row-even"><td>configparser</td>
+<td>lukasz.langa*</td>
+</tr>
+<tr class="row-odd"><td>contextlib</td>
+<td>ncoghlan, yselivanov</td>
+</tr>
+<tr class="row-even"><td>copy</td>
+<td>alexandre.vassalotti</td>
+</tr>
+<tr class="row-odd"><td>copyreg</td>
+<td>alexandre.vassalotti</td>
+</tr>
+<tr class="row-even"><td>cProfile</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>crypt</td>
+<td>jafo*</td>
+</tr>
+<tr class="row-even"><td>csv</td>
+<td>skip.montanaro (inactive)</td>
+</tr>
+<tr class="row-odd"><td>ctypes</td>
+<td>theller (inactive), belopolsky, amaury.forgeotdarc,
+meador.inge</td>
+</tr>
+<tr class="row-even"><td>curses</td>
+<td>twouters</td>
+</tr>
+<tr class="row-odd"><td>datetime</td>
+<td>belopolsky</td>
+</tr>
+<tr class="row-even"><td>dbm</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>decimal</td>
+<td>facundobatista, rhettinger, mark.dickinson, skrah</td>
+</tr>
+<tr class="row-even"><td>difflib</td>
+<td>tim.peters (inactive)</td>
+</tr>
+<tr class="row-odd"><td>dis</td>
+<td>ncoghlan, yselivanov</td>
+</tr>
+<tr class="row-even"><td>distutils</td>
+<td>eric.araujo, dstufft</td>
+</tr>
+<tr class="row-odd"><td>doctest</td>
+<td>tim.peters (inactive)</td>
+</tr>
+<tr class="row-even"><td>dummy_threading</td>
+<td>brett.cannon</td>
+</tr>
+<tr class="row-odd"><td>email</td>
+<td>barry, r.david.murray*</td>
+</tr>
+<tr class="row-even"><td>encodings</td>
+<td>lemburg, loewis</td>
+</tr>
+<tr class="row-odd"><td>ensurepip</td>
+<td>ncoghlan, dstufft</td>
+</tr>
+<tr class="row-even"><td>enum</td>
+<td>eli.bendersky*, barry, ethan.furman*</td>
+</tr>
+<tr class="row-odd"><td>errno</td>
+<td>twouters</td>
+</tr>
+<tr class="row-even"><td>exceptions</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>faulthandler</td>
+<td>haypo</td>
+</tr>
+<tr class="row-even"><td>fcntl</td>
+<td>twouters</td>
+</tr>
+<tr class="row-odd"><td>filecmp</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>fileinput</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>fnmatch</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>formatter</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>fpectl</td>
+<td>twouters</td>
+</tr>
+<tr class="row-even"><td>fractions</td>
+<td>mark.dickinson, rhettinger</td>
+</tr>
+<tr class="row-odd"><td>ftplib</td>
+<td>giampaolo.rodola*</td>
+</tr>
+<tr class="row-even"><td>functools</td>
+<td>ncoghlan, rhettinger</td>
+</tr>
+<tr class="row-odd"><td>gc</td>
+<td>pitrou</td>
+</tr>
+<tr class="row-even"><td>getopt</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>getpass</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>gettext</td>
+<td>loewis</td>
+</tr>
+<tr class="row-odd"><td>glob</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>grp</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>gzip</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>hashlib</td>
+<td>christian.heimes, gregory.p.smith</td>
+</tr>
+<tr class="row-odd"><td>heapq</td>
+<td>rhettinger, stutzbach</td>
+</tr>
+<tr class="row-even"><td>hmac</td>
+<td>christian.heimes, gregory.p.smith</td>
+</tr>
+<tr class="row-odd"><td>html</td>
+<td>ezio.melotti</td>
+</tr>
+<tr class="row-even"><td>http</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>idlelib</td>
+<td>kbk, terry.reedy, roger.serwy</td>
+</tr>
+<tr class="row-even"><td>imaplib</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>imghdr</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>imp</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>importlib</td>
+<td>brett.cannon</td>
+</tr>
+<tr class="row-even"><td>inspect</td>
+<td>yselivanov</td>
+</tr>
+<tr class="row-odd"><td>io</td>
+<td>pitrou, benjamin.peterson, stutzbach</td>
+</tr>
+<tr class="row-even"><td>ipaddress</td>
+<td>pmoody, ncoghlan</td>
+</tr>
+<tr class="row-odd"><td>itertools</td>
+<td>rhettinger</td>
+</tr>
+<tr class="row-even"><td>json</td>
+<td>bob.ippolito (inactive), ezio.melotti, rhettinger, pitrou</td>
+</tr>
+<tr class="row-odd"><td>keyword</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>lib2to3</td>
+<td>benjamin.peterson</td>
+</tr>
+<tr class="row-odd"><td>libmpdec</td>
+<td>skrah</td>
+</tr>
+<tr class="row-even"><td>linecache</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>locale</td>
+<td>loewis, lemburg</td>
+</tr>
+<tr class="row-even"><td>logging</td>
+<td>vinay.sajip</td>
+</tr>
+<tr class="row-odd"><td>lzma</td>
+<td>nadeem.vawda</td>
+</tr>
+<tr class="row-even"><td>macpath</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>mailbox</td>
+<td>petri.lehtinen</td>
+</tr>
+<tr class="row-even"><td>mailcap</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>marshal</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>math</td>
+<td>mark.dickinson, rhettinger, stutzbach</td>
+</tr>
+<tr class="row-odd"><td>memoryview</td>
+<td>skrah</td>
+</tr>
+<tr class="row-even"><td>mimetypes</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>mmap</td>
+<td>twouters</td>
+</tr>
+<tr class="row-even"><td>modulefinder</td>
+<td>theller (inactive), jvr</td>
+</tr>
+<tr class="row-odd"><td>msilib</td>
+<td>loewis</td>
+</tr>
+<tr class="row-even"><td>msvcrt</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>multiprocessing</td>
+<td>jnoller, sbt*</td>
+</tr>
+<tr class="row-even"><td>netrc</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>nis</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>nntplib</td>
+<td>pitrou</td>
+</tr>
+<tr class="row-odd"><td>numbers</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>operator</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>optparse</td>
+<td>aronacher</td>
+</tr>
+<tr class="row-even"><td>os</td>
+<td>loewis</td>
+</tr>
+<tr class="row-odd"><td>os.path</td>
+<td>serhiy.storchaka</td>
+</tr>
+<tr class="row-even"><td>ossaudiodev</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>parser</td>
+<td>benjamin.peterson</td>
+</tr>
+<tr class="row-even"><td>pathlib</td>
+<td>pitrou*</td>
+</tr>
+<tr class="row-odd"><td>pdb</td>
+<td>georg.brandl</td>
+</tr>
+<tr class="row-even"><td>pickle</td>
+<td>alexandre.vassalotti, pitrou</td>
+</tr>
+<tr class="row-odd"><td>pickletools</td>
+<td>alexandre.vassalotti</td>
+</tr>
+<tr class="row-even"><td>pipes</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>pkgutil</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>platform</td>
+<td>lemburg</td>
+</tr>
+<tr class="row-odd"><td>plistlib</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>poplib</td>
+<td>giampaolo.rodola</td>
+</tr>
+<tr class="row-odd"><td>posix</td>
+<td>larry</td>
+</tr>
+<tr class="row-even"><td>pprint</td>
+<td>fdrake</td>
+</tr>
+<tr class="row-odd"><td>profile</td>
+<td>georg.brandl</td>
+</tr>
+<tr class="row-even"><td>pstats</td>
+<td>georg.brandl</td>
+</tr>
+<tr class="row-odd"><td>pty</td>
+<td>twouters*</td>
+</tr>
+<tr class="row-even"><td>pwd</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>py_compile</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>pybench</td>
+<td>lemburg, pitrou</td>
+</tr>
+<tr class="row-odd"><td>pyclbr</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>pydoc</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>queue</td>
+<td>rhettinger</td>
+</tr>
+<tr class="row-even"><td>quopri</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>random</td>
+<td>rhettinger, mark.dickinson</td>
+</tr>
+<tr class="row-even"><td>re</td>
+<td>effbot (inactive), pitrou, ezio.melotti, serhiy.storchaka</td>
+</tr>
+<tr class="row-odd"><td>readline</td>
+<td>twouters</td>
+</tr>
+<tr class="row-even"><td>reprlib</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>resource</td>
+<td>twouters</td>
+</tr>
+<tr class="row-even"><td>rlcompleter</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>runpy</td>
+<td>ncoghlan</td>
+</tr>
+<tr class="row-even"><td>sched</td>
+<td>giampaolo.rodola</td>
+</tr>
+<tr class="row-odd"><td>select</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>selectors</td>
+<td>neologix, giampaolo.rodola</td>
+</tr>
+<tr class="row-odd"><td>shelve</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>shlex</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>shutil</td>
+<td>tarek</td>
+</tr>
+<tr class="row-even"><td>signal</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>site</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>smtpd</td>
+<td>giampaolo.rodola</td>
+</tr>
+<tr class="row-odd"><td>smtplib</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>sndhdr</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>socket</td>
+<td>pitrou</td>
+</tr>
+<tr class="row-even"><td>socketserver</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>spwd</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>sqlite3</td>
+<td>ghaering</td>
+</tr>
+<tr class="row-odd"><td>ssl</td>
+<td>janssen, pitrou, giampaolo.rodola, christian.heimes, dstufft, alex</td>
+</tr>
+<tr class="row-even"><td>stat</td>
+<td>christian.heimes</td>
+</tr>
+<tr class="row-odd"><td>statistics</td>
+<td>steven.daprano</td>
+</tr>
+<tr class="row-even"><td>string</td>
+<td>georg.brandl</td>
+</tr>
+<tr class="row-odd"><td>stringprep</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>struct</td>
+<td>mark.dickinson, meador.inge</td>
+</tr>
+<tr class="row-odd"><td>subprocess</td>
+<td>astrand (inactive)</td>
+</tr>
+<tr class="row-even"><td>sunau</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>symbol</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>symtable</td>
+<td>benjamin.peterson</td>
+</tr>
+<tr class="row-odd"><td>sys</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>sysconfig</td>
+<td>tarek</td>
+</tr>
+<tr class="row-odd"><td>syslog</td>
+<td>jafo*</td>
+</tr>
+<tr class="row-even"><td>tabnanny</td>
+<td>tim.peters (inactive)</td>
+</tr>
+<tr class="row-odd"><td>tarfile</td>
+<td>lars.gustaebel</td>
+</tr>
+<tr class="row-even"><td>telnetlib</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>tempfile</td>
+<td>georg.brandl, ncoghlan</td>
+</tr>
+<tr class="row-even"><td>termios</td>
+<td>twouters</td>
+</tr>
+<tr class="row-odd"><td>test</td>
+<td>ezio.melotti</td>
+</tr>
+<tr class="row-even"><td>textwrap</td>
+<td>georg.brandl</td>
+</tr>
+<tr class="row-odd"><td>threading</td>
+<td>pitrou</td>
+</tr>
+<tr class="row-even"><td>time</td>
+<td>belopolsky</td>
+</tr>
+<tr class="row-odd"><td>timeit</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>tkinter</td>
+<td>gpolo, serhiy.storchaka</td>
+</tr>
+<tr class="row-odd"><td>token</td>
+<td>georg.brandl</td>
+</tr>
+<tr class="row-even"><td>tokenize</td>
+<td>meador.inge</td>
+</tr>
+<tr class="row-odd"><td>trace</td>
+<td>belopolsky</td>
+</tr>
+<tr class="row-even"><td>traceback</td>
+<td>georg.brandl*</td>
+</tr>
+<tr class="row-odd"><td>tracemalloc</td>
+<td>haypo</td>
+</tr>
+<tr class="row-even"><td>tty</td>
+<td>twouters*</td>
+</tr>
+<tr class="row-odd"><td>turtle</td>
+<td>gregorlingl</td>
+</tr>
+<tr class="row-even"><td>types</td>
+<td>yselivanov</td>
+</tr>
+<tr class="row-odd"><td>typing</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>unicodedata</td>
+<td>loewis, lemburg, ezio.melotti</td>
+</tr>
+<tr class="row-odd"><td>unittest</td>
+<td>michael.foord*, ezio.melotti, rbcollins</td>
+</tr>
+<tr class="row-even"><td>unittest.mock</td>
+<td>michael.foord*</td>
+</tr>
+<tr class="row-odd"><td>urllib</td>
+<td>orsenthil</td>
+</tr>
+<tr class="row-even"><td>uu</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>uuid</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>venv</td>
+<td>vinay.sajip</td>
+</tr>
+<tr class="row-odd"><td>warnings</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>wave</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>weakref</td>
+<td>fdrake, pitrou</td>
+</tr>
+<tr class="row-even"><td>webbrowser</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>winreg</td>
+<td>stutzbach</td>
+</tr>
+<tr class="row-even"><td>winsound</td>
+<td>effbot (inactive)</td>
+</tr>
+<tr class="row-odd"><td>wsgiref</td>
+<td>pje</td>
+</tr>
+<tr class="row-even"><td>xdrlib</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>xml.dom</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>xml.dom.minidom</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>xml.dom.pulldom</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>xml.etree</td>
+<td>effbot (inactive), eli.bendersky*, scoder</td>
+</tr>
+<tr class="row-odd"><td>xml.parsers.expat</td>
+<td>christian.heimes</td>
+</tr>
+<tr class="row-even"><td>xml.sax</td>
+<td>christian.heimes</td>
+</tr>
+<tr class="row-odd"><td>xml.sax.handler</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>xml.sax.saxutils</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>xml.sax.xmlreader</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>xmlrpc</td>
+<td>loewis</td>
+</tr>
+<tr class="row-odd"><td>zipfile</td>
+<td>alanmcintyre, serhiy.storchaka, twouters</td>
+</tr>
+<tr class="row-even"><td>zipimport</td>
+<td>twouters*</td>
+</tr>
+<tr class="row-odd"><td>zlib</td>
+<td>nadeem.vawda, twouters</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-2" id="tools">
+    <hgroup>
+      <h2>Tools</h2>
+    </hgroup>
+    <article class="">
+      <table border="1" class="docutils">
+<colgroup>
+<col width="62%" />
+<col width="38%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Tool</th>
+<th class="head">Maintainers</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Argument Clinic</td>
+<td>larry</td>
+</tr>
+<tr class="row-odd"><td>pybench</td>
+<td>lemburg</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-2" id="platforms">
+    <hgroup>
+      <h2>Platforms</h2>
+    </hgroup>
+    <article class="">
+      <table border="1" class="docutils">
+<colgroup>
+<col width="29%" />
+<col width="71%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Platform</th>
+<th class="head">Maintainers</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>AIX</td>
+<td>David.Edelsohn</td>
+</tr>
+<tr class="row-odd"><td>Cygwin</td>
+<td>jlt63, stutzbach</td>
+</tr>
+<tr class="row-even"><td>FreeBSD</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>HP-UX</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>Linux</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>Mac OS X</td>
+<td>ronaldoussoren, ned.deily</td>
+</tr>
+<tr class="row-even"><td>NetBSD1</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>OS2/EMX</td>
+<td>aimacintyre</td>
+</tr>
+<tr class="row-even"><td>Solaris/OpenIndiana</td>
+<td>jcea</td>
+</tr>
+<tr class="row-odd"><td>Windows</td>
+<td>tim.golden, zach.ware, steve.dower, paul.moore</td>
+</tr>
+<tr class="row-even"><td>JVM/Java</td>
+<td>frank.wierzbicki</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+    </article>
+  </slide>  <slide class="level-2" id="miscellaneous">
+    <hgroup>
+      <h2>Miscellaneous</h2>
+    </hgroup>
+    <article class="">
+      <table border="1" class="docutils">
+<colgroup>
+<col width="24%" />
+<col width="76%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Interest Area</th>
+<th class="head">Maintainers</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>algorithms</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>argument clinic</td>
+<td>larry</td>
+</tr>
+<tr class="row-even"><td>ast/compiler</td>
+<td>ncoghlan, benjamin.peterson, brett.cannon, georg.brandl</td>
+</tr>
+<tr class="row-odd"><td>autoconf/makefiles</td>
+<td>twouters*</td>
+</tr>
+<tr class="row-even"><td>bsd</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>benchmarks</td>
+<td>pitrou, brett.cannon</td>
+</tr>
+<tr class="row-even"><td>bug tracker</td>
+<td>ezio.melotti</td>
+</tr>
+<tr class="row-odd"><td>buildbots</td>
+<td>pitrou, zach.ware</td>
+</tr>
+<tr class="row-even"><td>bytecode</td>
+<td>benjamin.peterson, pitrou, georg.brandl</td>
+</tr>
+<tr class="row-odd"><td>context managers</td>
+<td>ncoghlan</td>
+</tr>
+<tr class="row-even"><td>coverity scan</td>
+<td>christian.heimes, brett.cannon, twouters</td>
+</tr>
+<tr class="row-odd"><td>cryptography</td>
+<td>christian.heimes, gregory.p.smith, dstufft</td>
+</tr>
+<tr class="row-even"><td>data formats</td>
+<td>mark.dickinson, georg.brandl</td>
+</tr>
+<tr class="row-odd"><td>database</td>
+<td>lemburg</td>
+</tr>
+<tr class="row-even"><td>devguide</td>
+<td>ncoghlan, eric.araujo, ezio.melotti, willingc</td>
+</tr>
+<tr class="row-odd"><td>documentation</td>
+<td>georg.brandl, ezio.melotti, eric.araujo</td>
+</tr>
+<tr class="row-even"><td>GUI</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>i18n</td>
+<td>lemburg, eric.araujo</td>
+</tr>
+<tr class="row-even"><td>import machinery</td>
+<td>brett.cannon, ncoghlan, eric.snow</td>
+</tr>
+<tr class="row-odd"><td>io</td>
+<td>pitrou, benjamin.peterson, stutzbach</td>
+</tr>
+<tr class="row-even"><td>locale</td>
+<td>lemburg, loewis</td>
+</tr>
+<tr class="row-odd"><td>mathematics</td>
+<td>mark.dickinson, eric.smith, lemburg, stutzbach</td>
+</tr>
+<tr class="row-even"><td>memory management</td>
+<td>tim.peters, lemburg, twouters</td>
+</tr>
+<tr class="row-odd"><td>networking</td>
+<td>giampaolo.rodola, pitrou</td>
+</tr>
+<tr class="row-even"><td>object model</td>
+<td>benjamin.peterson, twouters</td>
+</tr>
+<tr class="row-odd"><td>packaging</td>
+<td>tarek, lemburg, alexis, eric.araujo, dstufft, paul.moore</td>
+</tr>
+<tr class="row-even"><td>pip</td>
+<td>ncoghlan, dstufft, paul.moore, Marcus.Smith</td>
+</tr>
+<tr class="row-odd"><td>py3 transition</td>
+<td>benjamin.peterson</td>
+</tr>
+<tr class="row-even"><td>release management</td>
+<td>tarek, lemburg, benjamin.peterson, barry, loewis,
+gvanrossum, anthonybaxter, eric.araujo, ned.deily,
+georg.brandl</td>
+</tr>
+<tr class="row-odd"><td>str.format</td>
+<td>eric.smith</td>
+</tr>
+<tr class="row-even"><td>testing</td>
+<td>michael.foord, pitrou, ezio.melotti</td>
+</tr>
+<tr class="row-odd"><td>test coverage</td>
+<td>ncoghlan, giampaolo.rodola, christian.heimes</td>
+</tr>
+<tr class="row-even"><td>threads</td>
+<td>pitrou</td>
+</tr>
+<tr class="row-odd"><td>time and dates</td>
+<td>lemburg, belopolsky</td>
+</tr>
+<tr class="row-even"><td>unicode</td>
+<td>lemburg, ezio.melotti, haypo, benjamin.peterson, pitrou</td>
+</tr>
+<tr class="row-odd"><td>version control</td>
+<td>eric.araujo, georg.brandl, ezio.melotti</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+    </article>
+  </slide>
+
+
+    <slide class="thank-you-slide segue nobackground">
+    <article class="flexbox vleft auto-fadein">
+      <h2>&lt;Thank You!&gt;</h2>
+    </article>
+    <p class="auto-fadein" data-config-contact>
+      <!-- populated from slide_config.json -->
+    </p>
+  </slide>
+
+  <slide class="backdrop"></slide>
+
+</slides>
+
+<!--[if IE]>
+  <script src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js"></script>
+  <script>CFInstall.check({mode: 'overlay'});</script>
+<![endif]-->
+</body>
+</html>
